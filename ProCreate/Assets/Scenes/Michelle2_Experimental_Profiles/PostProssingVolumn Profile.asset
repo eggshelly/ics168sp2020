@@ -1,6 +1,68 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-4663775797766686877
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e6292b2c06870d4495f009f912b9600, type: 3}
+  m_Name: PostProssingVolumn Profile
+  m_EditorClassIdentifier: 
+  settings:
+  - {fileID: 7584093294151887568}
+  - {fileID: 7744781342931441546}
+--- !u!114 &7584093294151887568
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48a79b01ea5641d4aa6daa2e23605641, type: 3}
+  m_Name: Bloom
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  intensity:
+    overrideState: 1
+    value: 4.52
+  threshold:
+    overrideState: 1
+    value: 1.04
+  softKnee:
+    overrideState: 1
+    value: 0.56
+  clamp:
+    overrideState: 1
+    value: 65472
+  diffusion:
+    overrideState: 1
+    value: 7
+  anamorphicRatio:
+    overrideState: 1
+    value: 0
+  color:
+    overrideState: 1
+    value: {r: 1, g: 1, b: 1, a: 1}
+  fastMode:
+    overrideState: 1
+    value: 1
+  dirtTexture:
+    overrideState: 1
+    value: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
+    defaultState: 1
+  dirtIntensity:
+    overrideState: 1
+    value: 0
+--- !u!114 &7744781342931441546
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -24,25 +86,25 @@ MonoBehaviour:
     value: {fileID: 0}
     defaultState: 1
   tonemapper:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 2
   toneCurveToeStrength:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 1
   toneCurveToeLength:
-    overrideState: 0
-    value: 0.5
+    overrideState: 1
+    value: 0.36
   toneCurveShoulderStrength:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 0.01
   toneCurveShoulderLength:
-    overrideState: 0
-    value: 0.5
+    overrideState: 1
+    value: 1.5
   toneCurveShoulderAngle:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 1
   toneCurveGamma:
-    overrideState: 0
+    overrideState: 1
     value: 1
   ldrLut:
     overrideState: 0
@@ -52,32 +114,32 @@ MonoBehaviour:
     overrideState: 0
     value: 1
   temperature:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 18.76
   tint:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 8.46
   colorFilter:
-    overrideState: 0
+    overrideState: 1
     value: {r: 1, g: 1, b: 1, a: 1}
   hueShift:
     overrideState: 0
     value: 0
   saturation:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 11.38
   brightness:
     overrideState: 0
     value: 0
   postExposure:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 0.53
   contrast:
     overrideState: 0
     value: 0
   mixerRedOutRedIn:
     overrideState: 0
-    value: 100
+    value: 93.21
   mixerRedOutGreenIn:
     overrideState: 0
     value: 0
@@ -103,14 +165,14 @@ MonoBehaviour:
     overrideState: 0
     value: 100
   lift:
-    overrideState: 0
+    overrideState: 1
     value: {x: 1, y: 1, z: 1, w: 0}
   gamma:
-    overrideState: 0
+    overrideState: 1
     value: {x: 1, y: 1, z: 1, w: 0}
   gain:
-    overrideState: 0
-    value: {x: 1, y: 1, z: 1, w: 0}
+    overrideState: 1
+    value: {x: 1, y: 0.47979933, z: 0.28317064, w: 1}
   masterCurve:
     overrideState: 0
     value:
@@ -1311,132 +1373,3 @@ MonoBehaviour:
       - 0.5
       - 0.5
       - 0.5
---- !u!114 &-2901295322954386693
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 556797029e73b2347956b6579e77e05b, type: 3}
-  m_Name: DepthOfField
-  m_EditorClassIdentifier: 
-  active: 1
-  enabled:
-    overrideState: 1
-    value: 1
-  focusDistance:
-    overrideState: 0
-    value: 10
-  aperture:
-    overrideState: 1
-    value: 0.05
-  focalLength:
-    overrideState: 1
-    value: 1.57
-  kernelSize:
-    overrideState: 1
-    value: 0
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e6292b2c06870d4495f009f912b9600, type: 3}
-  m_Name: PostProssingVolumn Profile
-  m_EditorClassIdentifier: 
-  settings:
-  - {fileID: 8451857288532022751}
-  - {fileID: 2940662202218328237}
-  - {fileID: -2901295322954386693}
-  - {fileID: -4663775797766686877}
---- !u!114 &2940662202218328237
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3f6f3f7c722b4544b97e3c75840aa33, type: 3}
-  m_Name: AutoExposure
-  m_EditorClassIdentifier: 
-  active: 1
-  enabled:
-    overrideState: 1
-    value: 1
-  filtering:
-    overrideState: 0
-    value: {x: 50, y: 95}
-  minLuminance:
-    overrideState: 0
-    value: 0
-  maxLuminance:
-    overrideState: 0
-    value: 0
-  keyValue:
-    overrideState: 0
-    value: 1
-  eyeAdaptation:
-    overrideState: 0
-    value: 0
-  speedUp:
-    overrideState: 0
-    value: 2
-  speedDown:
-    overrideState: 0
-    value: 1
---- !u!114 &8451857288532022751
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48a79b01ea5641d4aa6daa2e23605641, type: 3}
-  m_Name: Bloom
-  m_EditorClassIdentifier: 
-  active: 1
-  enabled:
-    overrideState: 1
-    value: 1
-  intensity:
-    overrideState: 1
-    value: 2.68
-  threshold:
-    overrideState: 0
-    value: 1.25
-  softKnee:
-    overrideState: 0
-    value: 0.78
-  clamp:
-    overrideState: 0
-    value: 65472
-  diffusion:
-    overrideState: 0
-    value: 7
-  anamorphicRatio:
-    overrideState: 0
-    value: 0
-  color:
-    overrideState: 0
-    value: {r: 1, g: 1, b: 1, a: 1}
-  fastMode:
-    overrideState: 0
-    value: 0
-  dirtTexture:
-    overrideState: 0
-    value: {fileID: 0}
-    defaultState: 1
-  dirtIntensity:
-    overrideState: 0
-    value: 0
