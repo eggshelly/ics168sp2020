@@ -66,6 +66,7 @@ public class AnimalCanvas : MonoBehaviour
 
     IEnumerator OpenStatisticsUIRoutine()
     {
+        LookAtCamera();
         CanvasRect.gameObject.SetActive(true);
         if (CanvasInTransition)
         {

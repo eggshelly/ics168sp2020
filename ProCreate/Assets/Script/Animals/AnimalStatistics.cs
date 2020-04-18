@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnimalStatistics : MonoBehaviour, Statistics
+public class AnimalStatistics : MonoBehaviour, Statistics, Animal
 {
     [Header("Animal UI")]
     [SerializeField] AnimalCanvas AnimalCanvas;
