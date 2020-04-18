@@ -7,17 +7,17 @@ public class AnimalStatistics : MonoBehaviour, Statistics
     [Header("Animal UI")]
     [SerializeField] AnimalCanvas AnimalCanvas;
 
-    [Header("Animal Stats: Breeding")]
-    [SerializeField] float RequiredWillingnessToBreed;
-    [SerializeField] float WillingnessIncreaseAmount;
+    [Header("Animal")]
+    [SerializeField] ScriptableAnimal Animal;
 
-    [Header("Animal Stats: Health")]
-    [SerializeField] float MaxFoodNeeded;
-    [SerializeField] float MaxWaterNeeded;
-    [SerializeField] float MaxHealth;
-    [SerializeField] float FoodDecrease;
-    [SerializeField] float WaterDecrease;
-    [SerializeField] float HealthDecrease;
+    #region Animal Stats
+
+    [SerializeField] float StartingHungerPercent;
+    [SerializeField] float StartingThirstPercent;
+    [SerializeField] float CurrentHunger;
+    [SerializeField] float CurrentThirst;
+    [SerializeField] string Nickname;
+    #endregion
 
 
 
@@ -25,7 +25,9 @@ public class AnimalStatistics : MonoBehaviour, Statistics
     // Start is called before the first frame update
     void Start()
     {
-        
+        CurrentHunger = StartingHungerPercent * Animal.MaxFoodNeeded;
+        CurrentThirst = StartingThirstPercent * Animal.MaxWaterNeeded;
+        AnimalCanvas.CanUpdateCanvasUI += UpdateCanvasUI;
     }
 
     // Update is called once per frame
@@ -34,13 +36,18 @@ public class AnimalStatistics : MonoBehaviour, Statistics
         
     }
 
+    public void UpdateCanvasUI()
+    {
+        AnimalCanvas.UpdateCanvas((CurrentHunger / Animal.MaxFoodNeeded), (CurrentThirst / Animal.MaxWaterNeeded), Nickname, Animal.AnimalBreed);
+    }
+
     public void DisplayStatistics()
     {
-        AnimalCanvas.gameObject.SetActive(true);
+        AnimalCanvas.OpenStatisticsUI();
     }
 
     public void HideStatistics()
     {
-        AnimalCanvas.gameObject.SetActive(false);
+        AnimalCanvas.CloseStatisticsUI();
     }
 }
