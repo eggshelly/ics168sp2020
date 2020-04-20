@@ -48,7 +48,6 @@ public class AnimalCanvas : MonoBehaviour
     void LookAtCamera()
     {
         Vector3 pos = this.transform.position - Camera.main.transform.position;
-        pos.x = 0;
         this.transform.rotation = Quaternion.LookRotation(pos); /* + this.transform.position.y) *(3/4f), Camera.main.transform.position.z)));*/
     }
 
