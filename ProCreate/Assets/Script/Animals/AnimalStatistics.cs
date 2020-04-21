@@ -50,6 +50,7 @@ public class AnimalStatistics : MonoBehaviour, Statistics, Animal
         if(ThirstTimer <= 0)
         {
             CurrentThirst -= Animal.WaterDecrease;
+            CurrentThirst = (CurrentThirst >= 0 ? CurrentThirst : 0);
             ThirstTimer = Animal.WaterDecreaseTimer;
         }
         else
@@ -59,6 +60,7 @@ public class AnimalStatistics : MonoBehaviour, Statistics, Animal
         if(HungerTimer <= 0)
         {
             CurrentHunger -= Animal.FoodDecrease;
+            CurrentHunger = (CurrentHunger >= 0 ? CurrentHunger : 0);
             HungerTimer = Animal.FoodDecreaseTimer;
         }
         else
