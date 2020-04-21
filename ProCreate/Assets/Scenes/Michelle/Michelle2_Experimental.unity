@@ -6559,6 +6559,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: dog (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3083164033947203611, guid: 81d7229896fd5144386feb77f48f28b3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 81d7229896fd5144386feb77f48f28b3, type: 3}
 --- !u!1001 &1010703974
