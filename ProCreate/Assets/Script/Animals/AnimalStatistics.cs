@@ -19,6 +19,12 @@ public class AnimalStatistics : MonoBehaviour, Statistics, Animal
     [SerializeField] string Nickname;
     #endregion
 
+    #region Other Variables Needed to Update Stats
+
+    float ThirstTimer;
+    float HungerTimer;
+
+    #endregion
 
 
 
@@ -27,19 +33,72 @@ public class AnimalStatistics : MonoBehaviour, Statistics, Animal
     {
         CurrentHunger = StartingHungerPercent * Animal.MaxFoodNeeded;
         CurrentThirst = StartingThirstPercent * Animal.MaxWaterNeeded;
+        ThirstTimer = Animal.WaterDecreaseTimer;
+        HungerTimer = Animal.FoodDecreaseTimer;
         AnimalCanvas.CanUpdateCanvasUI += UpdateCanvasUI;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        DecrementHungerAndThirst();
     }
+
+    #region Changing Current Hunger and Thirst
+
+    void DecrementHungerAndThirst()
+    {
+        if(ThirstTimer <= 0)
+        {
+            CurrentThirst -= Animal.WaterDecrease;
+            ThirstTimer = Animal.WaterDecreaseTimer;
+        }
+        else
+        {
+            ThirstTimer -= Time.deltaTime;
+        }
+        if(HungerTimer <= 0)
+        {
+            CurrentHunger -= Animal.FoodDecrease;
+            HungerTimer = Animal.FoodDecreaseTimer;
+        }
+        else
+        {
+            HungerTimer -= Time.deltaTime;
+        }
+    }
+
+    public void GiveFoodAndWater(float food, float water)
+    {
+        Debug.Log("Original Hunger: " + CurrentHunger.ToString() + " Original Thirst: " + CurrentThirst.ToString());
+        CurrentHunger += food;
+        CurrentThirst += water;
+
+        Debug.Log("New Hunger: " + CurrentHunger.ToString() + " New Thirst: " + CurrentThirst.ToString());
+        CurrentHunger = (CurrentHunger > Animal.MaxFoodNeeded ? Animal.MaxFoodNeeded : CurrentHunger);
+        CurrentThirst = (CurrentThirst > Animal.MaxWaterNeeded ? Animal.MaxWaterNeeded : CurrentThirst);
+
+        UpdateCanvasUI();
+    }
+
+    #endregion
+
+    #region Changing Breeding Stats
+    //In progress
+
+    #endregion
+
+
+    #region Canvas Related Functions
+
+    #region Updating the Canvas objects
 
     public void UpdateCanvasUI()
     {
         AnimalCanvas.UpdateCanvas((CurrentHunger / Animal.MaxFoodNeeded), (CurrentThirst / Animal.MaxWaterNeeded), Nickname, Animal.AnimalBreed);
     }
+    #endregion
+
+    #region Open/Close Canvas
 
     public void DisplayStatistics()
     {
@@ -50,4 +109,7 @@ public class AnimalStatistics : MonoBehaviour, Statistics, Animal
     {
         AnimalCanvas.CloseStatisticsUI();
     }
+    #endregion
+
+    #endregion
 }

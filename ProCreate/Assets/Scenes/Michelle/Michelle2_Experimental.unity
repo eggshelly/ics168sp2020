@@ -4775,6 +4775,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: WaterSource
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 2a476a84334fc6a41914b3e9e3b09921,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2a476a84334fc6a41914b3e9e3b09921, type: 3}
 --- !u!4 &808520686 stripped

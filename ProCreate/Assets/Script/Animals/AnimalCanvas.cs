@@ -41,10 +41,6 @@ public class AnimalCanvas : MonoBehaviour
         CanvasRect.position = new Vector3(CanvasRect.position.x, CanvasMinY, CanvasRect.position.z);
     }
 
-    private void FixedUpdate()
-    {
-    }
-
     void LookAtCamera()
     {
         Vector3 pos = this.transform.position - Camera.main.transform.position;

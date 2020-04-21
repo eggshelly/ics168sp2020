@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e396536204a2d54b8bd97b854078f7f, type: 3}
   m_Name: Dog
   m_EditorClassIdentifier: 
-  Nickname: Betty
   AnimalBreed: Dog
   AnimalFamily: Canine
   RequiredWillingnessToBreed: 0
@@ -21,3 +20,5 @@ MonoBehaviour:
   MaxWaterNeeded: 30
   FoodDecrease: 2
   WaterDecrease: 2
+  FoodDecreaseTimer: 7
+  WaterDecreaseTimer: 3

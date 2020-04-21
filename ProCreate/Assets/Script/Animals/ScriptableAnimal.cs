@@ -18,4 +18,6 @@ public class ScriptableAnimal : ScriptableObject
     public float MaxWaterNeeded;
     public float FoodDecrease;
     public float WaterDecrease;
+    public float FoodDecreaseTimer;
+    public float WaterDecreaseTimer;
 }

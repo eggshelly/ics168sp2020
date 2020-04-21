@@ -30,6 +30,8 @@ public class PlayerInteraction : MonoBehaviour
     GameObject RaycastedObject;
 
     #endregion
+
+    #region Built In Functions
     private void Awake()
     {
         PlayerMovement = this.GetComponent<PlayerMovement>();
@@ -44,6 +46,7 @@ public class PlayerInteraction : MonoBehaviour
     {
         StatisticsRaycast();
     }
+    #endregion
 
     #region Input
 
@@ -51,7 +54,6 @@ public class PlayerInteraction : MonoBehaviour
     {
         if(Input.GetKeyDown(GeneralInteractKey))
         {
-            Debug.Log("Detected Input");
             switch(CurrentState)
             {
                 case PlayerState.Empty:
@@ -59,6 +61,9 @@ public class PlayerInteraction : MonoBehaviour
                     break;
                 case PlayerState.HoldingAnimal:
                     DropAnimal();
+                    break;
+                case PlayerState.HoldingObject:
+                    TryToUseObject();
                     break;
             }
 
@@ -121,7 +126,6 @@ public class PlayerInteraction : MonoBehaviour
         {
             if (hit.collider != null)
             {
-                Debug.Log(LayerMask.LayerToName(hit.collider.gameObject.layer));
                 Statistics s = hit.collider.GetComponent<Statistics>();
                 if (s != null)
                 {
@@ -169,6 +173,11 @@ public class PlayerInteraction : MonoBehaviour
                 {
                     PickupAnimal(hit.collider.gameObject);
                 }
+                else if(hit.collider.gameObject.GetComponent<Interactable>() != null)
+                {
+                    PickupObject(hit.collider.gameObject);
+                }
+
             }
         }
 
@@ -176,7 +185,7 @@ public class PlayerInteraction : MonoBehaviour
 
     #endregion
 
-    #region Pickup and Put Down Objects
+    #region Pickup and Put Down Animals
 
     void PickupAnimal(GameObject animal)
     {
@@ -206,8 +215,42 @@ public class PlayerInteraction : MonoBehaviour
         ObjectInHand.transform.parent = null;
         ObjectInHand.transform.position = worldPos;
 
+        ObjectInHand = null;
+    }
 
 
+    #endregion
+
+    #region Pickup and Use Objects
+
+    void PickupObject(GameObject obj)
+    {
+        CurrentState = PlayerState.HoldingObject;
+        Debug.Log("Picked up object: " + obj.GetComponent<Interactable>().GetTypeOfObject().ToString());
+        ObjectInHand = obj;
+    }
+
+    void TryToUseObject()
+    {
+        if(RaycastedObject != null && ObjectInHand != null)
+        {
+            AnimalStatistics stats = RaycastedObject.GetComponent<AnimalStatistics>();
+            Interactable interact = ObjectInHand.GetComponent<Interactable>();
+            float food = 0;
+            float water = 0;
+            switch(interact.GetTypeOfObject())
+            {
+                case TypeOfObject.Water:
+                    water = interact.UnitsTakenFromSource();
+                    break;
+                case TypeOfObject.AnimalFeed:
+                    food = interact.UnitsTakenFromSource();
+                    break;
+            }
+            Debug.Log("Used up object: " + ObjectInHand.GetComponent<Interactable>().GetTypeOfObject().ToString());
+            stats.GiveFoodAndWater(food, water);
+        }
+        CurrentState = PlayerState.Empty;
         ObjectInHand = null;
     }
 
