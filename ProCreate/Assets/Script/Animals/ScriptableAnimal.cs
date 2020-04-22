@@ -10,8 +10,10 @@ public class ScriptableAnimal : ScriptableObject
     public string AnimalFamily;
 
     [Header("Animal Stats: Breeding")]
-    public float RequiredWillingnessToBreed;
-    public float WillingnessIncreaseAmount;
+    public float MaxWillingnessToBreed;
+    public float RequiredWillingnessToBreedPercent;
+    public float WillingnessChangeAmount;
+    public float WillingnessChangeTimer;
 
     [Header("Animal Stats: Health")]
     public float MaxFoodNeeded;

@@ -11,6 +11,7 @@ public class AnimalCanvas : MonoBehaviour
     [SerializeField] GameObject UIPanel;
     [SerializeField] BarUI HungerBar;
     [SerializeField] BarUI ThirstBar;
+    [SerializeField] BarUI WillBreedBar;
     [SerializeField] TextMeshProUGUI AnimalNickname;
     [SerializeField] TextMeshProUGUI AnimalBreed;
 
@@ -32,22 +33,18 @@ public class AnimalCanvas : MonoBehaviour
 
     #endregion
 
-    private void Awake()
+    private void Start()
     {
+        CanvasRect.gameObject.GetComponent<Canvas>().worldCamera = Camera.main;
         LookAtCamera();
-        CanvasRect.gameObject.SetActive(false);
-        UIPanel.SetActive(false);
         CanvasRect.sizeDelta = new Vector2(CanvasRect.sizeDelta.x, 0);
         CanvasRect.position = new Vector3(CanvasRect.position.x, CanvasMinY, CanvasRect.position.z);
+        UIPanel.SetActive(false);
+        CanvasRect.gameObject.SetActive(false);
     }
 
-    void LookAtCamera()
-    {
-        Vector3 pos = this.transform.position - Camera.main.transform.position;
-        this.transform.rotation = Quaternion.LookRotation(pos); /* + this.transform.position.y) *(3/4f), Camera.main.transform.position.z)));*/
-    }
 
-    #region Open/Close the Animal UI Panel
+    #region Changing UI Panel State
 
     public void OpenStatisticsUI()
     {
@@ -116,14 +113,21 @@ public class AnimalCanvas : MonoBehaviour
         CanvasInTransition = false;
         CanvasRect.gameObject.SetActive(false);
     }
+
+    void LookAtCamera()
+    {
+        Vector3 pos = this.transform.position - Camera.main.transform.position;
+        this.transform.rotation = Quaternion.LookRotation(pos); /* + this.transform.position.y) *(3/4f), Camera.main.transform.position.z)));*/
+    }
     #endregion
 
     #region Input Information into the UI Panel Components
 
-    public void UpdateCanvas(float CurrentHungerPercent, float CurrentThirstPercent, string nickname, string breed)
+    public void UpdateCanvas(float CurrentHungerPercent, float CurrentThirstPercent, float CurrentBreedPercent, string nickname, string breed)
     {
         HungerBar.UpdateProgressBar(CurrentHungerPercent);
         ThirstBar.UpdateProgressBar(CurrentThirstPercent);
+        WillBreedBar.UpdateProgressBar(CurrentBreedPercent);
         AnimalNickname.text = nickname;
         AnimalBreed.text = breed;
     }

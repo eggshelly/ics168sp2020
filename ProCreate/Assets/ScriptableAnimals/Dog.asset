@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AnimalBreed: Dog
   AnimalFamily: Canine
-  RequiredWillingnessToBreed: 0
-  WillingnessIncreaseAmount: 0
+  MaxWillingnessToBreed: 100
+  RequiredWillingnessToBreedPercent: 0.8
+  WillingnessChangeAmount: 10
+  WillingnessChangeTimer: 4
   MaxFoodNeeded: 30
   MaxWaterNeeded: 30
   FoodDecrease: 2

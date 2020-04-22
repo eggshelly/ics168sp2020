@@ -7,7 +7,7 @@ public class AnimalStatistics : MonoBehaviour, Statistics, Animal
     [Header("Animal UI")]
     [SerializeField] AnimalCanvas AnimalCanvas;
 
-    [Header("Animal")]
+    [Header("Animal Health")]
     [SerializeField] ScriptableAnimal Animal;
 
     #region Animal Stats
@@ -19,12 +19,22 @@ public class AnimalStatistics : MonoBehaviour, Statistics, Animal
     [SerializeField] string Nickname;
     #endregion
 
+    #region Animal Breeding Variables
+    [Header("Breeding Variables")]
+    [SerializeField] float StartingWTBPercent;
+    [SerializeField] float CurrentWillingnessToBreed;
+
+
+    #endregion
+
     #region Other Variables Needed to Update Stats
 
     float ThirstTimer;
     float HungerTimer;
+    float WillingnessTimer;
 
     #endregion
+
 
 
 
@@ -33,14 +43,17 @@ public class AnimalStatistics : MonoBehaviour, Statistics, Animal
     {
         CurrentHunger = StartingHungerPercent * Animal.MaxFoodNeeded;
         CurrentThirst = StartingThirstPercent * Animal.MaxWaterNeeded;
+        CurrentWillingnessToBreed = StartingWTBPercent * Animal.MaxWillingnessToBreed;
         ThirstTimer = Animal.WaterDecreaseTimer;
         HungerTimer = Animal.FoodDecreaseTimer;
+        WillingnessTimer = Animal.WillingnessChangeTimer;
         AnimalCanvas.CanUpdateCanvasUI += UpdateCanvasUI;
     }
 
     private void Update()
     {
         DecrementHungerAndThirst();
+        ChangeWillingnessToBreed();
     }
 
     #region Changing Current Hunger and Thirst
@@ -67,6 +80,7 @@ public class AnimalStatistics : MonoBehaviour, Statistics, Animal
         {
             HungerTimer -= Time.deltaTime;
         }
+
     }
 
     public void GiveFoodAndWater(float food, float water)
@@ -85,7 +99,35 @@ public class AnimalStatistics : MonoBehaviour, Statistics, Animal
     #endregion
 
     #region Changing Breeding Stats
-    //In progress
+    void ChangeWillingnessToBreed()
+    {
+        if (WillingnessTimer <= 0)
+        {
+            float HungerPercent = (CurrentHunger / Animal.MaxFoodNeeded);
+            float ThirstPercent = (CurrentThirst / Animal.MaxWaterNeeded);
+
+            if (HungerPercent < 0.5f || ThirstPercent < 0.3f)
+            {
+                CurrentWillingnessToBreed -= Animal.WillingnessChangeAmount;
+            }
+            else
+            {
+                CurrentWillingnessToBreed += Animal.WillingnessChangeAmount;
+            }
+            CurrentWillingnessToBreed = (CurrentWillingnessToBreed > Animal.MaxWillingnessToBreed ? Animal.MaxWillingnessToBreed : (CurrentWillingnessToBreed < 0 ? 0 : CurrentWillingnessToBreed));
+            WillingnessTimer = Animal.WillingnessChangeTimer;
+        }
+        else
+        {
+            WillingnessTimer -= Time.deltaTime;
+        }
+
+    }
+
+    public bool isWillingToBreed()
+    {
+        return (CurrentWillingnessToBreed / Animal.MaxWillingnessToBreed) > Animal.RequiredWillingnessToBreedPercent;
+    }
 
     #endregion
 
@@ -96,7 +138,7 @@ public class AnimalStatistics : MonoBehaviour, Statistics, Animal
 
     public void UpdateCanvasUI()
     {
-        AnimalCanvas.UpdateCanvas((CurrentHunger / Animal.MaxFoodNeeded), (CurrentThirst / Animal.MaxWaterNeeded), Nickname, Animal.AnimalBreed);
+        AnimalCanvas.UpdateCanvas((CurrentHunger / Animal.MaxFoodNeeded), (CurrentThirst / Animal.MaxWaterNeeded), (CurrentWillingnessToBreed / Animal.MaxWillingnessToBreed), Nickname, Animal.AnimalBreed);
     }
     #endregion
 
