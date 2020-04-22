@@ -5,7 +5,10 @@ using UnityEngine;
 public class Breed : MonoBehaviour
 {
 
+
     [SerializeField] private GameObject other;
+
+    #region Built In Function
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +20,9 @@ public class Breed : MonoBehaviour
     {
         
     }
+    #endregion
+
+    #region Notes
     /*
      * Michelle's notes for breeding/spawn:
      * 
@@ -33,16 +39,20 @@ public class Breed : MonoBehaviour
      *      F_L
      *      F_R
      *  tail
+     *  AnimalCanvas
      * limb placement:
      * 
      * 
      * 
      */
 
-        //TODO: reorder children to accomodate for new grandparent scheme
+    #endregion
 
 
- 
+    //TODO: reorder children to accomodate for new grandparent scheme
+
+
+
     public void spawnChild(/*GameObject other*/)
     {
         //TODO REPLACE otherParent with other, using other parent is for debuggin
@@ -61,7 +71,7 @@ public class Breed : MonoBehaviour
             second = other.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().sharedMaterials[1];
 
 
-        GameObject[] newAnimal = new GameObject[4];
+        GameObject[] newAnimal = new GameObject[5];
         // body, head, legs, tail
 
         //get body
@@ -81,8 +91,6 @@ public class Breed : MonoBehaviour
             newAnimal[3] = this.gameObject.transform.GetChild(3).gameObject;
         else
             newAnimal[3] = other.transform.GetChild(3).gameObject;
-
-
         
         //get limbs
         if (Random.Range(0.0f, 1.0f) <= 0.5f)
@@ -90,7 +98,8 @@ public class Breed : MonoBehaviour
         else
             newAnimal[2] = other.transform.GetChild(2).gameObject;
 
-        
+        //get canvas
+            newAnimal[5] = other.transform.GetChild(5).gameObject;
 
         GameObject newchild = new GameObject("newHybrid");
 
@@ -100,7 +109,6 @@ public class Breed : MonoBehaviour
         for (int i = 0; i < newAnimal.Length; i++)
         {
             // body, head, legs, tailS
-            //need to map head, leg, tail to body piviot point
 
             GameObject newinstance = Instantiate(newAnimal[i]);
             newinstance.transform.parent = newchild.transform;
@@ -142,14 +150,7 @@ public class Breed : MonoBehaviour
            
 
         }
-  
-
-
-
-
-
-
-
-
     }
+
+
 }
