@@ -43,6 +43,14 @@ public class AnimalCanvas : MonoBehaviour
         CanvasRect.gameObject.SetActive(false);
     }
 
+    private void Update()
+    {
+        if(CanvasOpened)
+        {
+            LookAtCamera();
+        }
+    }
+
 
     #region Changing UI Panel State
 

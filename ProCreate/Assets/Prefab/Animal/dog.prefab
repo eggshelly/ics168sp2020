@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 30669527}
   - component: {fileID: 30669529}
   - component: {fileID: 30669528}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84,7 +84,7 @@ GameObject:
   - component: {fileID: 112358672}
   - component: {fileID: 112358674}
   - component: {fileID: 112358673}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BackgroundPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -158,7 +158,7 @@ GameObject:
   - component: {fileID: 203122428}
   - component: {fileID: 203122430}
   - component: {fileID: 203122429}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -232,7 +232,7 @@ GameObject:
   - component: {fileID: 349301675}
   - component: {fileID: 349301677}
   - component: {fileID: 349301676}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BarForCurrentStat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -304,7 +304,7 @@ GameObject:
   m_Component:
   - component: {fileID: 394349582}
   - component: {fileID: 394349581}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: AnimalCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -361,7 +361,7 @@ GameObject:
   - component: {fileID: 460427569}
   - component: {fileID: 460427568}
   - component: {fileID: 460427567}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -459,7 +459,7 @@ GameObject:
   - component: {fileID: 1211295424}
   - component: {fileID: 1211295426}
   - component: {fileID: 1211295425}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -531,7 +531,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1471493370}
   - component: {fileID: 1471493371}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: UIPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -578,7 +578,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1486287064}
   - component: {fileID: 1486287065}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: HungerStatBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -629,7 +629,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1827596933}
   - component: {fileID: 1827596934}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ThirstStatBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -681,7 +681,7 @@ GameObject:
   - component: {fileID: 1854574294}
   - component: {fileID: 1854574295}
   - component: {fileID: 1854574296}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Nickname
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -838,7 +838,7 @@ GameObject:
   - component: {fileID: 1898262527}
   - component: {fileID: 1898262529}
   - component: {fileID: 1898262528}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: AnimalImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -911,7 +911,7 @@ GameObject:
   - component: {fileID: 1916804089}
   - component: {fileID: 1916804091}
   - component: {fileID: 1916804090}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -985,7 +985,7 @@ GameObject:
   - component: {fileID: 1992525672}
   - component: {fileID: 1992525674}
   - component: {fileID: 1992525673}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BarForCurrentStat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1056,7 +1056,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2059933208}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: AnimalStats
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1094,7 +1094,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2075838813}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: AnimalInfo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1133,7 +1133,7 @@ GameObject:
   - component: {fileID: 2098311723}
   - component: {fileID: 2098311722}
   - component: {fileID: 2098311721}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Breed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1290,7 +1290,7 @@ GameObject:
   - component: {fileID: 3386619280347136172}
   - component: {fileID: 6217438919540064336}
   - component: {fileID: 5832528211788834515}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1363,6 +1363,7 @@ GameObject:
   - component: {fileID: 2058919646055631368}
   - component: {fileID: 115007538}
   - component: {fileID: 115007537}
+  - component: {fileID: 1407075461583194743}
   - component: {fileID: 1833941674}
   m_Layer: 9
   m_Name: dog
@@ -1424,7 +1425,26 @@ MonoBehaviour:
   Nickname: Dawn
   StartingWTBPercent: 0.5
   CurrentWillingnessToBreed: 0
-  UpdateWillingnessTime: 4
+--- !u!114 &1407075461583194743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3083164033947203611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1aedb3443195b4e4e9b011acaacfe326, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ProbabilityToMove: 0.35
+  DistanceToMove: 1
+  MoveSpeed: 1
+  ProbabilityToTurn: 0.7
+  DegreesToTurn: 90
+  RotationSpeed: 2
+  TimeBetweenMovements: 2
+  RaycastLength: 1
 --- !u!65 &1833941674
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1449,7 +1469,7 @@ GameObject:
   - component: {fileID: 13801975850025153}
   - component: {fileID: 5272261951648808020}
   - component: {fileID: 7890524472201978813}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: tail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1529,7 +1549,7 @@ GameObject:
   - component: {fileID: 1039202854926091201}
   - component: {fileID: 1300187245540188700}
   - component: {fileID: 7979024534076737940}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BarForCurrentStat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1602,7 +1622,7 @@ GameObject:
   - component: {fileID: 8246709723550469025}
   - component: {fileID: 5366804845980341162}
   - component: {fileID: 127647293056179813}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1682,7 +1702,7 @@ GameObject:
   - component: {fileID: 1846406020833236256}
   - component: {fileID: 4375967876308786759}
   - component: {fileID: 6385108070537198227}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1755,7 +1775,7 @@ GameObject:
   m_Component:
   - component: {fileID: 843383649030892240}
   - component: {fileID: 5871478799342707203}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WillingnessBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1807,7 +1827,7 @@ GameObject:
   - component: {fileID: 7845935943672469316}
   - component: {fileID: 1042488079198953609}
   - component: {fileID: 7754085466675641353}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: B_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1887,7 +1907,7 @@ GameObject:
   - component: {fileID: 4534478625608813039}
   - component: {fileID: 6913613446472021782}
   - component: {fileID: 3252131798488330957}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: F_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1965,7 +1985,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6478555936371788111}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: tail_attach
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1995,7 +2015,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6478555936844982859}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: head_attach
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2025,7 +2045,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6478555937207302386}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: legs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2059,7 +2079,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6478555937889011393}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: leg_attach
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2091,7 +2111,7 @@ GameObject:
   - component: {fileID: 5235978435465366712}
   - component: {fileID: 2439793875744636}
   - component: {fileID: 4317911609877683018}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2174,7 +2194,7 @@ GameObject:
   - component: {fileID: 80853037247131021}
   - component: {fileID: 6876592728646891667}
   - component: {fileID: 8931399912480570154}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: B_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2254,7 +2274,7 @@ GameObject:
   - component: {fileID: 7411827542221103074}
   - component: {fileID: 6660973344084019720}
   - component: {fileID: 4483741808647242277}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: F_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}

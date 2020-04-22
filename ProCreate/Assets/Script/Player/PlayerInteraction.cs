@@ -194,6 +194,7 @@ public class PlayerInteraction : MonoBehaviour
         Vector3 worldPos = animal.transform.position;
         Vector3 localPos = this.transform.InverseTransformPoint(worldPos);
 
+        animal.GetComponent<AnimalMovement>().Pickedup();
         animal.transform.parent = this.gameObject.transform;
         animal.transform.localPosition = localPos + Vector3.up * ChildVerticalOffset;
         animal.layer = LayerMask.NameToLayer("Player");
@@ -211,6 +212,8 @@ public class PlayerInteraction : MonoBehaviour
         Vector3 worldPos = this.transform.TransformPoint(localPos);
 
         ObjectInHand.layer = LayerMask.NameToLayer("Animal");
+
+        ObjectInHand.GetComponent<AnimalMovement>().SetDown();
 
         ObjectInHand.transform.parent = null;
         ObjectInHand.transform.position = worldPos;
