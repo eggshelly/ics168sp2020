@@ -23,10 +23,12 @@ public class PenList : MonoBehaviour
 
     public void addAnimal(GameObject animal)
     {
+        Debug.Log("added : " + animal.name);
         animals.Add(animal);
     }
     public void removeAnimal(GameObject animal)
     {
+        Debug.Log("removed : " + animal.name);
         animals.Remove(animal);
     }
 }

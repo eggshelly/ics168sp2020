@@ -35,7 +35,7 @@ public class AnimalBreedState : MonoBehaviour
         {
             other.gameObject.GetComponent<PenList>().addAnimal(gameObject);
         }
-        else if (other.CompareTag("BreedingPen"))
+        else if (other.gameObject.CompareTag("BreedingPen"))
         {
             other.gameObject.GetComponent<PenList>().addAnimal(gameObject);
         }
