@@ -243,7 +243,7 @@ public class PlayerInteraction : MonoBehaviour
                 case TypeOfObject.Water:
                     water = interact.UnitsTakenFromSource();
                     break;
-                case TypeOfObject.AnimalFeed:
+                case TypeOfObject.BasicFeed:
                     food = interact.UnitsTakenFromSource();
                     break;
             }

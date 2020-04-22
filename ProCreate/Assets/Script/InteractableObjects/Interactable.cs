@@ -5,7 +5,7 @@ using UnityEngine;
 public enum TypeOfObject
 {
     Water,
-    AnimalFeed,
+    BasicFeed,
     None
 }
 
