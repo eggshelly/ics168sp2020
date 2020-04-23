@@ -18,6 +18,7 @@ MonoBehaviour:
   RequiredWillingnessToBreedPercent: 0.8
   WillingnessChangeAmount: 10
   WillingnessChangeTimer: 4
+  PostBreedChangeAmount: 50
   MaxFoodNeeded: 30
   MaxWaterNeeded: 30
   FoodDecrease: 2

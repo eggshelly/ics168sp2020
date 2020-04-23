@@ -14,6 +14,7 @@ public class ScriptableAnimal : ScriptableObject
     public float RequiredWillingnessToBreedPercent;
     public float WillingnessChangeAmount;
     public float WillingnessChangeTimer;
+    public float PostBreedChangeAmount;
 
     [Header("Animal Stats: Health")]
     public float MaxFoodNeeded;

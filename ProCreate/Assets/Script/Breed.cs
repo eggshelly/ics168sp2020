@@ -72,43 +72,32 @@ public class Breed : MonoBehaviour
 
 
         GameObject[] newAnimal = new GameObject[5];
-        // body, head, legs, tail
+        // body, head, legs, tail, canvas
 
-        //get body
-        if (Random.Range(0.0f, 1.0f) <= 0.5f)
-            newAnimal[0] = this.gameObject.transform.GetChild(0).gameObject;
-        else
-            newAnimal[0] = other.transform.GetChild(0).gameObject;
+        for(int i = 0;i < newAnimal.Length; i++)
+        {
+            if (Random.Range(0.0f, 1.0f) <= 0.5f)
+                newAnimal[i] = this.gameObject.transform.GetChild(i).gameObject;
+            else
+                newAnimal[i] = other.transform.GetChild(i).gameObject;
+        }
 
-        //get head
-        if (Random.Range(0.0f, 1.0f) <= 0.5f)
-            newAnimal[1] = this.gameObject.transform.GetChild(1).gameObject;
-        else
-            newAnimal[1] = other.transform.GetChild(1).gameObject;
 
-        //get tail
-        if (Random.Range(0.0f, 1.0f) <= 0.5f)
-            newAnimal[3] = this.gameObject.transform.GetChild(3).gameObject;
-        else
-            newAnimal[3] = other.transform.GetChild(3).gameObject;
-        
-        //get limbs
-        if (Random.Range(0.0f, 1.0f) <= 0.5f)
-            newAnimal[2] = this.gameObject.transform.GetChild(2).gameObject;
-        else
-            newAnimal[2] = other.transform.GetChild(2).gameObject;
-
-        //get canvas
-            newAnimal[5] = other.transform.GetChild(5).gameObject;
-
-        GameObject newchild = new GameObject("newHybrid");
+        GameObject newchild = (Random.Range(0.0f, 1.0f) <= 0.5f ? Instantiate(gameObject) : Instantiate(other));
+        newchild.transform.position = Vector3.zero;
+        newchild.transform.rotation = Quaternion.identity;
+        newchild.transform.localScale = Vector3.one;
+        foreach (Transform child in newchild.transform)
+        {
+            Destroy(child.gameObject);
+        }
 
         GameObject newbody = null;
 
         //apply color/material
         for (int i = 0; i < newAnimal.Length; i++)
         {
-            // body, head, legs, tailS
+            // body, head, legs, tails, canvas
 
             GameObject newinstance = Instantiate(newAnimal[i]);
             newinstance.transform.parent = newchild.transform;
@@ -116,12 +105,12 @@ public class Breed : MonoBehaviour
             {
                 newbody = newinstance;
             }
-            else
+            else if(i != 4)
             {   // apply head/tail/leg pivots
                 newinstance.transform.position = newbody.transform.GetChild(i - 1).position;
             }
 
-            if (i != 2)
+            if (i != 2 && i != 4)   //head and legs
             {
                 MeshRenderer temp = newinstance.GetComponent<MeshRenderer>();
                 Material[] tempMat = temp.sharedMaterials;
@@ -132,7 +121,7 @@ public class Breed : MonoBehaviour
                 }
                 temp.materials = tempMat;
             }
-            else
+            else if( i == 2 )
             {   //specifically for legs
                 for(int j = 0; j < newinstance.transform.childCount; j++)
                 {

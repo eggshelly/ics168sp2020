@@ -8,21 +8,21 @@ public class AnimalStatistics : MonoBehaviour, Statistics, Animal
     [SerializeField] AnimalCanvas AnimalCanvas;
 
     [Header("Animal Health")]
-    [SerializeField] ScriptableAnimal Animal;
+    [SerializeField]public ScriptableAnimal Animal;
 
     #region Animal Stats
 
-    [SerializeField] float StartingHungerPercent;
-    [SerializeField] float StartingThirstPercent;
-    [SerializeField] float CurrentHunger;
-    [SerializeField] float CurrentThirst;
-    [SerializeField] string Nickname;
+    [SerializeField] public float StartingHungerPercent;
+    [SerializeField] public float StartingThirstPercent;
+    [SerializeField] public float CurrentHunger;
+    [SerializeField] public float CurrentThirst;
+    [SerializeField] public string Nickname;
     #endregion
 
     #region Animal Breeding Variables
     [Header("Breeding Variables")]
-    [SerializeField] float StartingWTBPercent;
-    [SerializeField] float CurrentWillingnessToBreed;
+    [SerializeField] public float StartingWTBPercent;
+    [SerializeField] public float CurrentWillingnessToBreed;
 
 
     #endregion
@@ -99,6 +99,7 @@ public class AnimalStatistics : MonoBehaviour, Statistics, Animal
     #endregion
 
     #region Changing Breeding Stats
+
     void ChangeWillingnessToBreed()
     {
         if (WillingnessTimer <= 0)
@@ -129,6 +130,11 @@ public class AnimalStatistics : MonoBehaviour, Statistics, Animal
         return (CurrentWillingnessToBreed / Animal.MaxWillingnessToBreed) > Animal.RequiredWillingnessToBreedPercent;
     }
 
+    public void postBreedChange()
+    {
+        CurrentWillingnessToBreed = Mathf.Clamp(CurrentWillingnessToBreed - Animal.PostBreedChangeAmount, 0,Animal.MaxWillingnessToBreed);
+    }
+
     #endregion
 
 
@@ -156,4 +162,5 @@ public class AnimalStatistics : MonoBehaviour, Statistics, Animal
     #endregion
 
     #endregion
+
 }

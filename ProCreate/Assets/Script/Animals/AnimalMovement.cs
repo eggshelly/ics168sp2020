@@ -8,13 +8,13 @@ public class AnimalMovement : MonoBehaviour
 
     [Header("Variables for Random Movement")]
     [Tooltip("If random value < ProbabilityToMove then animal will move")]
-    [SerializeField] float ProbabilityToMove;
-    [SerializeField] float DistanceToMove;
-    [SerializeField] float MoveSpeed;
+    [SerializeField] public float ProbabilityToMove;
+    [SerializeField] public float DistanceToMove;
+    [SerializeField] public float MoveSpeed;
     [Tooltip("If Move < random value < Turn then animal will turn")]
-    [SerializeField] float ProbabilityToTurn;
-    [SerializeField] float DegreesToTurn;
-    [SerializeField] float RotationSpeed;
+    [SerializeField] public float ProbabilityToTurn;
+    [SerializeField] public float DegreesToTurn;
+    [SerializeField] public float RotationSpeed;
 
     [SerializeField] float TimeBetweenMovements;
 

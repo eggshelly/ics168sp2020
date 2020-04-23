@@ -31,4 +31,9 @@ public class PenList : MonoBehaviour
         Debug.Log("removed : " + animal.name);
         animals.Remove(animal);
     }
+
+    public List<GameObject> getAnimals()
+    {
+        return animals;
+    }
 }
