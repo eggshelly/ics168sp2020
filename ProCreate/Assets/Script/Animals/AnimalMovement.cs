@@ -132,6 +132,7 @@ public class AnimalMovement : MonoBehaviour
     public void SetDown()
     {
         isPickedUp = false;
+        GetComponent<AnimalBreed>().attemptBreed();
     }
 
     #endregion
@@ -154,5 +155,12 @@ public class AnimalMovement : MonoBehaviour
 
     #endregion
 
+
+    #region getter/setter
+    public bool getIsPickedUp()
+    {
+        return isPickedUp;
+    }
+    #endregion
 
 }

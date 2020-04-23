@@ -31,6 +31,15 @@ public class PenList : MonoBehaviour
         Debug.Log("removed : " + animal.name);
         animals.Remove(animal);
     }
+    public void removePartner(GameObject other)
+    {
+        foreach(GameObject animal in animals){
+            if(animal.GetComponent<AnimalBreed>().getPartner() == other)
+            {
+                animal.GetComponent<AnimalBreed>().setPartner(null);
+            }
+        }
+    }
 
     public List<GameObject> getAnimals()
     {
