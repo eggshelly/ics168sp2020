@@ -6,8 +6,7 @@ public class AnimalBreed : MonoBehaviour
 {
     private AnimalStatistics CurrentAnimalStatistics;
     private AnimalMovement AnimalMovement;
-    [SerializeField] GameObject partner;
-    //private Breed breedscript;
+    [SerializeField] private GameObject partner;
 
     #region Built In Functions
 
@@ -125,6 +124,67 @@ public class AnimalBreed : MonoBehaviour
         }
 
 
+        GameObject newchild = createParent(other);
+        NewMethod(main, second, newAnimal, newchild);
+        //set child between to parent
+        newchild.transform.position = (gameObject.transform.position + other.transform.position) / 2 + Vector3.up * 2;
+    }
+
+    private static void NewMethod(Material main, Material second, GameObject[] newAnimal, GameObject newchild)
+    {
+        GameObject newbody = null;
+
+        for (int i = 0; i < newAnimal.Length; i++)
+        {
+            // body, head, legs, tails, canvas
+
+            GameObject newinstance = Instantiate(newAnimal[i]);
+            newinstance.transform.parent = newchild.transform;
+        
+            if (i == 0)
+            {
+                newbody = newinstance;
+            }
+            else if (i == 4)
+            {
+                newchild.GetComponent<AnimalStatistics>().setCanvas(newinstance.GetComponent<AnimalCanvas>());
+            }
+            else
+            {   // apply head/tail/leg pivots
+                newinstance.transform.position = newbody.transform.GetChild(i - 1).position;
+            }
+
+            //apply material
+            if (i == 2)
+            {   //specifically for legs
+                for (int j = 0; j < newinstance.transform.childCount; j++)
+                {
+                    MeshRenderer temp = newinstance.transform.GetChild(j).GetComponent<MeshRenderer>();
+                    applyMaterial(main, second, temp);
+                }
+            }
+            else if(i != 4)   //head and legs
+            {
+                MeshRenderer temp = newinstance.GetComponent<MeshRenderer>();
+                applyMaterial(main, second, temp);
+            }
+        }
+        
+    }
+
+    private static void applyMaterial(Material main, Material second, MeshRenderer temp)
+    {
+        Material[] tempMat = temp.sharedMaterials;
+        tempMat[0] = main;
+        if (tempMat.Length == 2)
+        {
+            tempMat[1] = second;
+        }
+        temp.materials = tempMat;
+    }
+
+    private GameObject createParent(GameObject other)
+    {
         GameObject newchild = (Random.Range(0.0f, 1.0f) <= 0.5f ? Instantiate(gameObject) : Instantiate(other));
         newchild.transform.position = Vector3.zero;
         newchild.transform.rotation = Quaternion.identity;
@@ -134,60 +194,9 @@ public class AnimalBreed : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        GameObject newbody = null;
-
-        //apply color/material/pivot
-        for (int i = 0; i < newAnimal.Length; i++)
-        {
-            // body, head, legs, tails, canvas
-
-            GameObject newinstance = Instantiate(newAnimal[i]);
-            newinstance.transform.parent = newchild.transform;
-            if (i == 0)
-            {
-                newbody = newinstance;
-            }
-            else if (i != 4)
-            {   // apply head/tail/leg pivots
-                newinstance.transform.position = newbody.transform.GetChild(i - 1).position;
-            }
-
-            if (i != 2 && i != 4)   //head and legs
-            {
-                MeshRenderer temp = newinstance.GetComponent<MeshRenderer>();
-                Material[] tempMat = temp.sharedMaterials;
-                tempMat[0] = main;
-                if (tempMat.Length == 2)
-                {
-                    tempMat[1] = second;
-                }
-                temp.materials = tempMat;
-            }
-            else if (i == 2)
-            {   //specifically for legs
-                for (int j = 0; j < newinstance.transform.childCount; j++)
-                {
-                    MeshRenderer temp = newinstance.transform.GetChild(j).GetComponent<MeshRenderer>();
-                    Material[] tempMat = temp.sharedMaterials;
-                    tempMat[0] = main;
-                    if (tempMat.Length == 2)
-                    {
-                        tempMat[1] = second;
-                    }
-                    temp.materials = tempMat;
-                }
-
-            }
-        }
-
-        //set child between to parent
-        newchild.transform.position = (gameObject.transform.position + other.transform.position) / 2 + Vector3.up * 2;
-
-
+        return newchild;
     }
     #endregion
-
-
 
 
     #region getter/setter

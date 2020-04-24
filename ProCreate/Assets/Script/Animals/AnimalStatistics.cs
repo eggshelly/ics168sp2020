@@ -163,4 +163,11 @@ public class AnimalStatistics : MonoBehaviour, Statistics, Animal
 
     #endregion
 
+    #region getters, setters
+    public void setCanvas(AnimalCanvas other)
+    {
+        AnimalCanvas = other;
+    }
+    #endregion
+
 }
