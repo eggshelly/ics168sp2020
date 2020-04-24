@@ -168,6 +168,10 @@ public class AnimalStatistics : MonoBehaviour, Statistics, Animal
     {
         AnimalCanvas = other;
     }
+    public void setStartingWTB(float other)
+    {
+        StartingWTBPercent = other;
+    }
     #endregion
 
 }

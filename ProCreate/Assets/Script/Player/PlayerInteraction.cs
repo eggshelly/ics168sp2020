@@ -217,7 +217,7 @@ public class PlayerInteraction : MonoBehaviour
 
         ObjectInHand.transform.parent = null;
         ObjectInHand.transform.position = worldPos;
-
+        //ObjectInHand.GetComponent<AnimalBreed>().attemptBreed();
         ObjectInHand = null;
     }
 

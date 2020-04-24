@@ -18,6 +18,7 @@ public class AnimalMovement : MonoBehaviour
 
     [SerializeField] float TimeBetweenMovements;
 
+    [SerializeField] public bool Debugging;
     float CurrentTimer;
 
     bool isPickedUp;
@@ -69,7 +70,7 @@ public class AnimalMovement : MonoBehaviour
             }
             else
             {
-                Debug.Log("Doing nothing");
+                if(Debugging) Debug.Log("Doing nothing");
             }
         }
         else
@@ -84,7 +85,7 @@ public class AnimalMovement : MonoBehaviour
             }
             else
             {
-                Debug.Log("Doing nothing");
+                if (Debugging) Debug.Log("Doing nothing");
             }
         }
     }
@@ -92,7 +93,7 @@ public class AnimalMovement : MonoBehaviour
     IEnumerator MoveAnimal()
     {
         Vector3 TargetPos = this.transform.position + transform.forward * Random.Range(1, DistanceToMove);
-        Debug.Log("Moving Animal");
+        if (Debugging) Debug.Log("Moving Animal");
         while(this.transform.position != TargetPos)
         {
             if(isPickedUp)
@@ -108,10 +109,10 @@ public class AnimalMovement : MonoBehaviour
     IEnumerator TurnAnimal()
     {
         float direction = Random.value < 0.5f ? -1 : 1;
-        Debug.Log(transform.rotation.y * Mathf.Rad2Deg);
+        if (Debugging) Debug.Log(transform.rotation.y * Mathf.Rad2Deg);
         Quaternion NewRotation = transform.rotation * Quaternion.AngleAxis(DegreesToTurn, Vector3.up);
 
-        Debug.Log(NewRotation.y * Mathf.Rad2Deg);
+        if (Debugging) Debug.Log(NewRotation.y * Mathf.Rad2Deg);
         while (this.transform.rotation != NewRotation)
         {
             if (isPickedUp)
@@ -132,7 +133,6 @@ public class AnimalMovement : MonoBehaviour
     public void SetDown()
     {
         isPickedUp = false;
-        GetComponent<AnimalBreed>().attemptBreed();
     }
 
     #endregion

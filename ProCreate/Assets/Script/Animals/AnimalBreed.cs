@@ -33,6 +33,7 @@ public class AnimalBreed : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("collider");
         if (other.CompareTag("LivingPen"))
         {
             other.gameObject.GetComponent<PenList>().addAnimal(gameObject);
@@ -40,6 +41,7 @@ public class AnimalBreed : MonoBehaviour
         else if (other.gameObject.CompareTag("BreedingPen"))
         {
             PenList OtherPenList = other.gameObject.GetComponent<PenList>();
+            
             if (CurrentAnimalStatistics.isWillingToBreed() && partner==null)
             {
                 Debug.Log("is willing LF> GF");
@@ -53,13 +55,15 @@ public class AnimalBreed : MonoBehaviour
                         Debug.Log("SPAWNING BABY SOON");
                         partner = obj;
                         otherBreed.setPartner(gameObject);
+                        Debug.Log(this.gameObject.name + "birthing");
+                        this.attemptBreed();
                         break;
                     }
                 }
 
             }
             OtherPenList.addAnimal(gameObject);
-
+           
         }
 
     }
@@ -84,8 +88,10 @@ public class AnimalBreed : MonoBehaviour
     #region spawn child
     public void attemptBreed()
     {
+        
         if (partner)
         {
+            Debug.Log("attemping breeding");
             spawnChild(partner);
             partner.GetComponent<AnimalStatistics>().postBreedChange();
             CurrentAnimalStatistics.postBreedChange();
@@ -127,7 +133,7 @@ public class AnimalBreed : MonoBehaviour
         GameObject newchild = createParent(other);
         NewMethod(main, second, newAnimal, newchild);
         //set child between to parent
-        newchild.transform.position = (gameObject.transform.position + other.transform.position) / 2 + Vector3.up * 2;
+        newchild.transform.position = (gameObject.transform.position + other.transform.position) / 2;
     }
 
     private static void NewMethod(Material main, Material second, GameObject[] newAnimal, GameObject newchild)
@@ -193,7 +199,9 @@ public class AnimalBreed : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
-
+        //ensures the child will not breed when they spawn
+        //or else when spawn, and added to breeding pen: will check for potential mates and breed
+        newchild.GetComponent<AnimalStatistics>().setStartingWTB(0.0f);
         return newchild;
     }
     #endregion
