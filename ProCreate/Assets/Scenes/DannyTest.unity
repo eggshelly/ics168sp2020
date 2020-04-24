@@ -5639,7 +5639,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpeedMultiplier: 10
   FacingDirection: 8
-  RaycastLength: 2
+  RaycastLength: 0.5
 --- !u!65 &1953518199
 BoxCollider:
   m_ObjectHideFlags: 0

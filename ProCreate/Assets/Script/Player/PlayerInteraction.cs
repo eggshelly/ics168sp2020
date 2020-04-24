@@ -26,26 +26,17 @@ public class PlayerInteraction : MonoBehaviour
     #region Raycast Variables
     [Header("Raycast Variables")]
     [SerializeField] float RaycastLength = 2f;
-    PlayerMovement PlayerMovement;
     GameObject RaycastedObject;
 
     #endregion
 
     #region Built In Functions
-    private void Awake()
-    {
-        PlayerMovement = this.GetComponent<PlayerMovement>();
-    }
 
     private void Update()
     {
         CheckForGeneralInteract();
     }
 
-    private void FixedUpdate()
-    {
-        StatisticsRaycast();
-    }
     #endregion
 
     #region Input
@@ -73,92 +64,6 @@ public class PlayerInteraction : MonoBehaviour
     #endregion
 
     #region Raycast Entities
-
-    //Raycasts in the direction the player is looking to check for  
-    Vector2 GetCastedDirection()
-    {
-        Vector3 CastDirection = new Vector3();
-
-        switch (PlayerMovement.GetCurrentDirection())
-        {
-            case Directions.backwards:
-                CastDirection.x = 0;
-                CastDirection.z = -1;
-                break;
-            case Directions.forward:
-                CastDirection.x = 0;
-                CastDirection.z = 1;
-                break;
-            case Directions.left:
-                CastDirection.x = -1;
-                CastDirection.z = 0;
-                break;
-            case Directions.right:
-                CastDirection.x = 1;
-                CastDirection.z = 0;
-                break;
-            case Directions.b_left:
-                CastDirection.x = -1;
-                CastDirection.z = -1;
-                break;
-            case Directions.b_right:
-                CastDirection.x = 1;
-                CastDirection.z = -1;
-                break;
-            case Directions.f_left:
-                CastDirection.x = -1;
-                CastDirection.z = 1;
-                break;
-            case Directions.f_right:
-                CastDirection.x = 1;
-                CastDirection.z = 1;
-                break;
-        }
-        return CastDirection;
-    }
-    
-    void StatisticsRaycast()
-    {
-        RaycastHit hit;
-
-        Debug.DrawRay(this.transform.position, transform.forward * RaycastLength, Color.red);
-        if (Physics.Raycast(this.transform.position, transform.forward, out hit, RaycastLength, ~(1<<LayerMask.NameToLayer("Player"))))
-        {
-            if (hit.collider != null)
-            {
-                Statistics s = hit.collider.GetComponent<Statistics>();
-                if (s != null)
-                {
-                    if (RaycastedObject != hit.collider.gameObject)
-                    {
-                        s.DisplayStatistics();
-                        RaycastedObject = hit.collider.gameObject;
-                    }
-                }
-                else
-                {
-                    NoLongerRaycastingObject();
-                }
-            }
-            else
-            {
-                NoLongerRaycastingObject();
-            }
-        }
-        else
-        {
-            NoLongerRaycastingObject();
-        }
-    }
-
-    void NoLongerRaycastingObject()
-    {
-        if (RaycastedObject != null)
-        {
-            RaycastedObject.GetComponent<Statistics>().HideStatistics();
-        }
-        RaycastedObject = null;
-    }
 
     void InteractionRaycast()
     {

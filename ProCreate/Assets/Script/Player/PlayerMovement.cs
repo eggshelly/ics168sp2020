@@ -20,7 +20,9 @@ public class PlayerMovement : MonoBehaviour
     #region Movement Variables
     [Header("Movement Settings")]
     [SerializeField] float SpeedMultiplier = 0.25f;
-    [SerializeField] Directions FacingDirection = Directions.neutral;
+    [SerializeField] Directions FacingDirection = Directions.forward;
+
+    Vector2 ObjectInDirection = new Vector2();
 
     #endregion
 
@@ -29,22 +31,43 @@ public class PlayerMovement : MonoBehaviour
 
     GameObject RaycastedObject;
 
+    Vector3 BoxCenter;
+    Vector3 BoxSize;
+
+
     #endregion
+
+    #region Components
+
+    BoxCollider box;
+
+    #endregion
+
+    private void Awake()
+    {
+        box = this.GetComponent<BoxCollider>();
+        BoxCenter = box.center;
+        BoxSize = new Vector3(box.size.x, box.size.y / 2, box.size.z);
+    }
 
     private void FixedUpdate()
     {
-        MovePlayer();
+        Vector2 directions = ChangePlayerDirection();
+        GeneralRaycast();
+        MovePlayer(directions);
     }
+
 
     #region Movement
 
 
     //Moves the transform of the player 
-    void MovePlayer()
+    void MovePlayer(Vector2 directions)
     {
-        Vector2 directions = ChangePlayerDirection();
 
-        this.transform.position += (Vector3.right * directions.x + Vector3.forward * directions.y) * Time.deltaTime * SpeedMultiplier;
+        Debug.Log(ObjectInDirection);
+
+        this.transform.position += (Vector3.right * directions.x * ObjectInDirection.x + Vector3.forward * directions.y * ObjectInDirection.y) * Time.deltaTime * SpeedMultiplier;
     }
 
     //Updates the Directions variable holding the direction the player is facing
@@ -106,11 +129,202 @@ public class PlayerMovement : MonoBehaviour
         return new Vector2(horizontal, vertical);
     }
 
-    public Directions GetCurrentDirection()
+
+    #endregion
+
+    #region Raycast Entities
+
+    void UpdateObjectInDirection(GameObject obstacle = null)
     {
-        return FacingDirection;
+        if(obstacle == null)
+        {
+            ObjectInDirection = Vector2.one;
+            return;
+        }
+
+
+        bool HitObject = false;
+
+        switch (FacingDirection)
+        {
+            case Directions.backwards:
+                ObjectInDirection.y = 0;
+                break;
+            case Directions.forward:
+                ObjectInDirection.y = 0;
+                break;
+            case Directions.left:
+                ObjectInDirection.x = 0;
+                break;
+            case Directions.right:
+                ObjectInDirection.x = 0;
+                break;
+            case Directions.b_left:
+                if (DirectionalRaycast(Vector3.right * -1))
+                {
+                    HitObject = true;
+                    ObjectInDirection.x = 0;
+                }
+                if (DirectionalRaycast(Vector3.back))
+                {
+                    HitObject = true;
+                    ObjectInDirection.y = 0;
+                }
+
+                if (!HitObject)
+                {
+                    if (DirectionalRaycast(transform.forward))
+                    {
+                        ObjectInDirection = Vector2.zero;
+                    }
+                }
+
+                break;
+            case Directions.b_right:
+                if (DirectionalRaycast(Vector3.right))
+                {
+                    HitObject = true;
+                    ObjectInDirection.x = 0;
+                }
+                if (DirectionalRaycast(Vector3.back))
+                {
+                    HitObject = true;
+                    ObjectInDirection.y = 0;
+                }
+
+                if (!HitObject)
+                {
+                    if (DirectionalRaycast(transform.forward))
+                    {
+                        ObjectInDirection = Vector2.zero;
+                    }
+                }
+
+                break;
+            case Directions.f_left:
+                if (DirectionalRaycast(Vector3.right * -1))
+                {
+                    HitObject = true;
+                    ObjectInDirection.x = 0;
+                }
+                if (DirectionalRaycast(Vector3.forward))
+                {
+                    HitObject = true;
+                    ObjectInDirection.y = 0;
+                }
+
+                if (!HitObject)
+                {
+                    if (DirectionalRaycast(transform.forward))
+                    {
+                        ObjectInDirection = Vector2.zero;
+                    }
+                }
+                break;
+            case Directions.f_right:
+                if (DirectionalRaycast(Vector3.right))
+                {
+                    HitObject = true;
+                    ObjectInDirection.x = 0;
+                }
+                if (DirectionalRaycast(Vector3.forward))
+                {
+                    HitObject = true;
+                    ObjectInDirection.y = 0;
+                }
+
+                if (!HitObject)
+                {
+                    if (DirectionalRaycast(transform.forward))
+                    {
+                        ObjectInDirection = Vector2.zero;
+                    }
+                }
+
+                break;
+        }
+
+    }
+
+    bool DirectionalRaycast(Vector3 dir, bool isDiagonal = false)
+    {
+        RaycastHit hit;
+
+        Vector3 pos = this.transform.position + transform.forward * (BoxCenter.z + BoxSize.z / 2);
+
+
+        float longerRay = 2 * RaycastLength;
+
+        Debug.DrawRay(pos, dir * RaycastLength, Color.red, 3f);
+        if (Physics.Raycast(pos, dir, out hit, (isDiagonal ? Mathf.Sqrt(2 * Mathf.Pow(longerRay, 2)) : longerRay), ~(1 << LayerMask.NameToLayer("Player"))))
+        {
+            if (hit.collider != null)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    void GeneralRaycast()
+    {
+        RaycastHit hit;
+        Collider[] colls;
+        Collider coll;
+
+        Vector3 pos = this.transform.position + transform.forward * BoxCenter.z ;
+        //Debug.DrawRay(pos, transform.forward * RaycastLength, Color.red);
+        ExtDebug.DrawBoxCastOnHit(pos, BoxSize / 2, this.transform.rotation, transform.forward, RaycastLength, Color.red);
+        //if (Physics.BoxCast(pos, box.size / 2f, transform.forward, out hit, this.transform.rotation, RaycastLength, ~(1 << LayerMask.NameToLayer("Player"))))
+        //    Debug.Log((hit.collider == null ? "Hit nothing" : hit.collider.gameObject.name));
+        //if (Physics.Raycast(this.transform.position, transform.forward, out hit, RaycastLength, ~(1 << LayerMask.NameToLayer("Player"))))
+
+        bool hitByBoxCast = Physics.BoxCast(pos, BoxSize / 2, transform.forward, out hit, this.transform.rotation, RaycastLength, ~(1 << LayerMask.NameToLayer("Player")));
+        colls = Physics.OverlapBox(pos + transform.forward * BoxSize.z / 2, BoxSize / 2, this.transform.rotation, ~(1 << LayerMask.NameToLayer("Player")));
+
+        if (hitByBoxCast || colls.Length > 0)
+        {
+            coll = (hit.collider != null ? hit.collider : colls[0]);
+            if (coll != null)
+            {
+                UpdateObjectInDirection(coll.gameObject);
+                Statistics s = coll.GetComponent<Statistics>();
+                if (s != null)
+                {
+                    if (RaycastedObject != coll.gameObject)
+                    {
+                        s.DisplayStatistics();
+                        RaycastedObject = coll.gameObject;
+                    }
+                }
+                else
+                {
+                    NoLongerRaycastingObject();
+                }
+            }
+            else
+            {
+                UpdateObjectInDirection();
+                NoLongerRaycastingObject();
+            }
+        }
+        else
+        {
+            UpdateObjectInDirection();
+            NoLongerRaycastingObject();
+        }
+    }
+
+    void NoLongerRaycastingObject()
+    {
+        if (RaycastedObject != null)
+        {
+            RaycastedObject.GetComponent<Statistics>().HideStatistics();
+        }
+        RaycastedObject = null;
     }
     #endregion
+
 
 
 }
