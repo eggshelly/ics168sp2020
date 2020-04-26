@@ -273,11 +273,8 @@ public class PlayerMovement : MonoBehaviour
         Collider coll;
 
         Vector3 pos = this.transform.position + transform.forward * BoxCenter.z ;
-        //Debug.DrawRay(pos, transform.forward * RaycastLength, Color.red);
+
         ExtDebug.DrawBoxCastOnHit(pos, BoxSize / 2, this.transform.rotation, transform.forward, RaycastLength, Color.red);
-        //if (Physics.BoxCast(pos, box.size / 2f, transform.forward, out hit, this.transform.rotation, RaycastLength, ~(1 << LayerMask.NameToLayer("Player"))))
-        //    Debug.Log((hit.collider == null ? "Hit nothing" : hit.collider.gameObject.name));
-        //if (Physics.Raycast(this.transform.position, transform.forward, out hit, RaycastLength, ~(1 << LayerMask.NameToLayer("Player"))))
 
         bool hitByBoxCast = Physics.BoxCast(pos, BoxSize / 2, transform.forward, out hit, this.transform.rotation, RaycastLength, ~(1 << LayerMask.NameToLayer("Player")));
         colls = Physics.OverlapBox(pos + transform.forward * BoxSize.z / 2, BoxSize / 2, this.transform.rotation, ~(1 << LayerMask.NameToLayer("Player")));
