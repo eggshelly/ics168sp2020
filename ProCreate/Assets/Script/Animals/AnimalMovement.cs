@@ -8,17 +8,17 @@ public class AnimalMovement : MonoBehaviour
 
     [Header("Variables for Random Movement")]
     [Tooltip("If random value < ProbabilityToMove then animal will move")]
-    [SerializeField] public float ProbabilityToMove;
+    [SerializeField] public float ProbabilityToMove = 0.5f;
     [SerializeField] public float DistanceToMove;
     [SerializeField] public float MoveSpeed;
     [Tooltip("If Move < random value < Turn then animal will turn")]
-    [SerializeField] public float ProbabilityToTurn;
+    [SerializeField] public float ProbabilityToTurn = 0.8f;
     [SerializeField] public float DegreesToTurn;
     [SerializeField] public float RotationSpeed;
 
     [SerializeField] float TimeBetweenMovements;
 
-    [SerializeField] public bool Debugging;
+    //[SerializeField] public bool Debugging;
     float CurrentTimer;
 
     bool isPickedUp;
@@ -28,6 +28,8 @@ public class AnimalMovement : MonoBehaviour
     [Header("Raycast Variables")]
     [SerializeField] float RaycastLength;
 
+
+    #region Built In / Setup Functions
 
     private void Start()
     {
@@ -46,7 +48,7 @@ public class AnimalMovement : MonoBehaviour
 
     void DecrementTimer()
     {
-        if(CurrentTimer <= 0)
+        if (CurrentTimer <= 0)
         {
             TryToMove();
             CurrentTimer = TimeBetweenMovements;
@@ -56,6 +58,18 @@ public class AnimalMovement : MonoBehaviour
             CurrentTimer -= Time.deltaTime;
         }
     }
+
+    public void SetVariables(float MoveDist, float MoveSpeed, float TurnDeg, float TurnSpeed, float BetweenTime)
+    {
+        this.DistanceToMove = MoveDist;
+        this.MoveSpeed = MoveSpeed;
+        this.DegreesToTurn = TurnDeg;
+        this.RotationSpeed = TurnSpeed;
+        this.TimeBetweenMovements = BetweenTime;
+    }
+
+    #endregion
+
 
     #region Movement Functions
 
@@ -70,7 +84,7 @@ public class AnimalMovement : MonoBehaviour
             }
             else
             {
-                if(Debugging) Debug.Log("Doing nothing");
+                //if(Debugging) Debug.Log("Doing nothing");
             }
         }
         else
@@ -85,7 +99,7 @@ public class AnimalMovement : MonoBehaviour
             }
             else
             {
-                if (Debugging) Debug.Log("Doing nothing");
+                //if (Debugging) Debug.Log("Doing nothing");
             }
         }
     }
@@ -93,7 +107,7 @@ public class AnimalMovement : MonoBehaviour
     IEnumerator MoveAnimal()
     {
         Vector3 TargetPos = this.transform.position + transform.forward * Random.Range(1, DistanceToMove);
-        if (Debugging) Debug.Log("Moving Animal");
+        //if (Debugging) Debug.Log("Moving Animal");
         while(this.transform.position != TargetPos)
         {
             if(isPickedUp)
@@ -109,10 +123,10 @@ public class AnimalMovement : MonoBehaviour
     IEnumerator TurnAnimal()
     {
         float direction = Random.value < 0.5f ? -1 : 1;
-        if (Debugging) Debug.Log(transform.rotation.y * Mathf.Rad2Deg);
+        //if (Debugging) Debug.Log(transform.rotation.y * Mathf.Rad2Deg);
         Quaternion NewRotation = transform.rotation * Quaternion.AngleAxis(DegreesToTurn, Vector3.up);
 
-        if (Debugging) Debug.Log(NewRotation.y * Mathf.Rad2Deg);
+        //if (Debugging) Debug.Log(NewRotation.y * Mathf.Rad2Deg);
         while (this.transform.rotation != NewRotation)
         {
             if (isPickedUp)
@@ -155,12 +169,34 @@ public class AnimalMovement : MonoBehaviour
 
     #endregion
 
+    #region Get Attributes
 
-    #region getter/setter
-    public bool getIsPickedUp()
+    public float GetMoveDist()
     {
-        return isPickedUp;
+        return DistanceToMove;
     }
+
+    public float GetMoveSpeed()
+    {
+        return MoveSpeed;
+    }
+
+    public float GetDegTurn()
+    {
+        return DegreesToTurn;
+    }
+
+    public float GetRotSpeed()
+    {
+        return RotationSpeed;
+    }
+
+    public float GetMoveTimer()
+    {
+        return TimeBetweenMovements;
+    }
+
     #endregion
+
 
 }

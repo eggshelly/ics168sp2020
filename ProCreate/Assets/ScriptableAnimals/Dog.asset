@@ -15,10 +15,10 @@ MonoBehaviour:
   AnimalBreed: Dog
   AnimalFamily: Canine
   MaxWillingnessToBreed: 100
-  RequiredWillingnessToBreedPercent: 0.8
+  RequiredWillingnessToBreedPercent: 0.7
   WillingnessChangeAmount: 10
-  WillingnessChangeTimer: 4
-  PostBreedChangeAmount: 50
+  WillingnessChangeTimer: 5
+  PostBreedPercent: 0.1
   MaxFoodNeeded: 30
   MaxWaterNeeded: 30
   FoodDecrease: 2

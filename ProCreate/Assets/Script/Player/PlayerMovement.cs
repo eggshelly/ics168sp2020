@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
 {
     #region Movement Variables
     [Header("Movement Settings")]
-    [SerializeField] float SpeedMultiplier = 0.25f;
+    [SerializeField] float SpeedMultiplier = 10f;
     [SerializeField] Directions FacingDirection = Directions.forward;
 
     Vector2 ObjectInDirection = new Vector2();
@@ -27,13 +27,20 @@ public class PlayerMovement : MonoBehaviour
     #endregion
 
     #region Raycast Variables
-    [SerializeField] float RaycastLength = 2f;
+    [SerializeField] float RaycastLength = 0.5f;
 
     GameObject RaycastedObject;
 
     Vector3 BoxCenter;
     Vector3 BoxSize;
 
+
+    #endregion
+
+    #region Detecting Player Inside Structure Variables
+    [Header("Debugging Entering Pen")] // comment this header out if not debugging
+    [SerializeField] bool IsInsidePen= false;
+    [SerializeField] GameObject PenStructure;
 
     #endregion
 
@@ -47,7 +54,8 @@ public class PlayerMovement : MonoBehaviour
     {
         box = this.GetComponent<BoxCollider>();
         BoxCenter = box.center;
-        BoxSize = new Vector3(box.size.x, box.size.y / 2, box.size.z);
+        BoxSize = new Vector3(box.size.x * 0.8f, box.size.y / 2, box.size.z);
+        Physics.queriesHitBackfaces = true;
     }
 
     private void FixedUpdate()
@@ -64,9 +72,6 @@ public class PlayerMovement : MonoBehaviour
     //Moves the transform of the player 
     void MovePlayer(Vector2 directions)
     {
-
-        Debug.Log(ObjectInDirection);
-
         this.transform.position += (Vector3.right * directions.x * ObjectInDirection.x + Vector3.forward * directions.y * ObjectInDirection.y) * Time.deltaTime * SpeedMultiplier;
     }
 
@@ -279,12 +284,21 @@ public class PlayerMovement : MonoBehaviour
         bool hitByBoxCast = Physics.BoxCast(pos, BoxSize / 2, transform.forward, out hit, this.transform.rotation, RaycastLength, ~(1 << LayerMask.NameToLayer("Player")));
         colls = Physics.OverlapBox(pos + transform.forward * BoxSize.z / 2, BoxSize / 2, this.transform.rotation, ~(1 << LayerMask.NameToLayer("Player")));
 
+        CheckIfEnterOrLeftPen(colls);
+
+
         if (hitByBoxCast || colls.Length > 0)
         {
             coll = (hit.collider != null ? hit.collider : colls[0]);
-            if (coll != null)
+            Crossable cross = coll.gameObject.GetComponent<Crossable>();
+            Pen pen = coll.gameObject.GetComponent<Pen>();
+            if ((cross != null && cross.IsOpen()) || pen != null)
             {
-                UpdateObjectInDirection(coll.gameObject);
+                UpdateObjectInDirection();
+            }
+            else
+            {
+                
                 Statistics s = coll.GetComponent<Statistics>();
                 if (s != null)
                 {
@@ -298,12 +312,13 @@ public class PlayerMovement : MonoBehaviour
                 {
                     NoLongerRaycastingObject();
                 }
+
+                NotInFrontOfAnimal(colls);
+
+                UpdateObjectInDirection(coll.gameObject);
             }
-            else
-            {
-                UpdateObjectInDirection();
-                NoLongerRaycastingObject();
-            }
+
+
         }
         else
         {
@@ -311,6 +326,36 @@ public class PlayerMovement : MonoBehaviour
             NoLongerRaycastingObject();
         }
     }
+
+    void NotInFrontOfAnimal(Collider[] colls)
+    {
+        Statistics stats;
+        for(int i = 0; i < colls.Length; ++i)
+        {
+            if((stats = colls[i].GetComponent<Statistics>()) != null && colls[i].gameObject != RaycastedObject)
+            {
+                stats.HideStatistics();
+            }
+        }
+    }
+
+    void CheckIfEnterOrLeftPen(Collider[] colls)
+    {
+        for(int i = 0; i < colls.Length; ++i)
+        {
+            Pen pen = colls[i].GetComponent<Pen>();
+            if (pen != null)
+            {
+                IsInsidePen = true;
+                PenStructure = pen.GetPenStructure();
+                return;
+            }
+        }
+        IsInsidePen = false;
+        PenStructure = null;
+
+    }
+
 
     void NoLongerRaycastingObject()
     {
@@ -320,6 +365,20 @@ public class PlayerMovement : MonoBehaviour
         }
         RaycastedObject = null;
     }
+    #endregion
+
+    #region Get Attributes
+
+    public bool PlayerInsidePen()
+    {
+        return IsInsidePen;
+    }
+
+    public GameObject GetPenStructure()
+    {
+        return PenStructure;
+    }
+
     #endregion
 
 

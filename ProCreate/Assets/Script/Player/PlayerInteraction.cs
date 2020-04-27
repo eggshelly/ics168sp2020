@@ -16,7 +16,7 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] KeyCode GeneralInteractKey;
 
     [Header("Picking Up/Placing Variables")]
-    [SerializeField] float ChildVerticalOffset;
+    [SerializeField] float ChildVerticalOffset = 0.5f;
 
     PlayerState CurrentState = PlayerState.Empty;
     GameObject ObjectInHand;
@@ -25,12 +25,23 @@ public class PlayerInteraction : MonoBehaviour
 
     #region Raycast Variables
     [Header("Raycast Variables")]
-    [SerializeField] float RaycastLength = 2f;
+    [SerializeField] float RaycastLength = 1f;
     GameObject RaycastedObject;
 
     #endregion
 
+    #region Needed Components
+
+    PlayerMovement PlayerMove;
+
+    #endregion
+
     #region Built In Functions
+
+    private void Awake()
+    {
+        PlayerMove = this.GetComponent<PlayerMovement>();
+    }
 
     private void Update()
     {
@@ -70,6 +81,8 @@ public class PlayerInteraction : MonoBehaviour
 
         RaycastHit hit;
 
+        
+
         if (Physics.Raycast(this.transform.position, transform.forward, out hit, RaycastLength, ~LayerMask.NameToLayer("Player")))
         {
             if (hit.collider != null)
@@ -81,6 +94,10 @@ public class PlayerInteraction : MonoBehaviour
                 else if(hit.collider.gameObject.GetComponent<Interactable>() != null)
                 {
                     PickupObject(hit.collider.gameObject);
+                }
+                else if(hit.collider.gameObject.GetComponent<Crossable>() != null)
+                {
+                    hit.collider.gameObject.GetComponent<Crossable>().ToggleObjectState();
                 }
 
             }
@@ -105,11 +122,17 @@ public class PlayerInteraction : MonoBehaviour
         animal.layer = LayerMask.NameToLayer("Player");
 
         ObjectInHand = animal;
+
+        RemoveAnimalFromPen();
     }
 
     void DropAnimal()
     {
-        Debug.Log("Dropped up animal: " + ObjectInHand.name);
+        if(PlayerMove.PlayerInsidePen())
+        {
+            if (!AddAnimalToPen())
+                return;
+        }
 
         CurrentState = PlayerState.Empty;
 
@@ -122,10 +145,29 @@ public class PlayerInteraction : MonoBehaviour
 
         ObjectInHand.transform.parent = null;
         ObjectInHand.transform.position = worldPos;
-        //ObjectInHand.GetComponent<AnimalBreed>().attemptBreed();
         ObjectInHand = null;
     }
 
+    bool AddAnimalToPen()
+    {
+        Pen pen = PlayerMove.GetPenStructure().GetComponent<Pen>();
+        if(pen.HasRoomForAnimal())
+        {
+            pen.AddAnimalToPen(ObjectInHand);
+            return true;
+        }
+        return false;
+
+    }
+
+    void RemoveAnimalFromPen()
+    {
+        if(PlayerMove.PlayerInsidePen())
+        {
+            Pen pen = PlayerMove.GetPenStructure().GetComponent<Pen>();
+            pen.RemoveAnimalFromPen(ObjectInHand);
+        }
+    }
 
     #endregion
 

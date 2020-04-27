@@ -1885,7 +1885,6 @@ GameObject:
   - component: {fileID: 6729404918241909571}
   - component: {fileID: 4277436271863193067}
   - component: {fileID: 2826574181979281455}
-  - component: {fileID: 1547804057}
   m_Layer: 9
   m_Name: rabbit
   m_TagString: Untagged
@@ -1937,7 +1936,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a649bcc385801984eabc4dedbfbc423f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AnimalCanvas: {fileID: 0}
+  AnimalCanvas: {fileID: 7685560573839335313}
   Animal: {fileID: 11400000, guid: dec7d77f1aca35946953401f84a56180, type: 2}
   StartingHungerPercent: 0.8
   StartingThirstPercent: 0.8
@@ -1953,7 +1952,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7922829774642820677}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1aedb3443195b4e4e9b011acaacfe326, type: 3}
   m_Name: 
@@ -1965,21 +1964,7 @@ MonoBehaviour:
   DegreesToTurn: 90
   RotationSpeed: 2
   TimeBetweenMovements: 2
-  Debugging: 0
   RaycastLength: 1
---- !u!114 &1547804057
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7922829774642820677}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a7aa99151b68aa44b71851c41390bfc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  partner: {fileID: 0}
 --- !u!1 &8376067487824260071
 GameObject:
   m_ObjectHideFlags: 0

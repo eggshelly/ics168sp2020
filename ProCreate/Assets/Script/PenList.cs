@@ -5,7 +5,7 @@ using UnityEngine;
 public class PenList : MonoBehaviour
 {
     [Header("List of Animals")]
-    List<GameObject> animals = new List<GameObject>();
+    [SerializeField] List<GameObject> animals = new List<GameObject>();
 
     #region Built In Functions
     // Start is called before the first frame update

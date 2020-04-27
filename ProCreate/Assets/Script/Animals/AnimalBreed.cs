@@ -31,7 +31,7 @@ public class AnimalBreed : MonoBehaviour
 
     #region trigger enter/exit
 
-    private void OnTriggerEnter(Collider other)
+    /*private void OnTriggerEnter(Collider other)
     {
         Debug.Log("collider");
         if (other.CompareTag("LivingPen"))
@@ -66,7 +66,7 @@ public class AnimalBreed : MonoBehaviour
            
         }
 
-    }
+    }*/
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("LivingPen"))
@@ -93,8 +93,8 @@ public class AnimalBreed : MonoBehaviour
         {
             Debug.Log("attemping breeding");
             spawnChild(partner);
-            partner.GetComponent<AnimalStatistics>().postBreedChange();
-            CurrentAnimalStatistics.postBreedChange();
+            //partner.GetComponent<AnimalStatistics>().postBreedChange();
+            //CurrentAnimalStatistics.postBreedChange();
             //maybe will get rid of this
             partner.GetComponent<AnimalBreed>().setPartner(null);
             partner = null;

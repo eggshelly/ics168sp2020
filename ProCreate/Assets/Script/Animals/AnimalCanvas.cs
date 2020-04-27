@@ -16,10 +16,10 @@ public class AnimalCanvas : MonoBehaviour
     [SerializeField] TextMeshProUGUI AnimalBreed;
 
     [Header("UI Variables")]
-    [SerializeField] float CanvasHeight;
-    [SerializeField] float CanvasMinY;
-    [SerializeField] float CanvasMaxY;
-    [SerializeField] float CanvasMovementMultiplier;
+    [SerializeField] float CanvasHeight = 100;
+    [SerializeField] float CanvasMinY = 2;
+    [SerializeField] float CanvasMaxY = 6;
+    [SerializeField] float CanvasMovementMultiplier = 5;
 
     public delegate void CanUpdateUI();
     public CanUpdateUI CanUpdateCanvasUI;
@@ -83,6 +83,7 @@ public class AnimalCanvas : MonoBehaviour
             if(StopCurrentRoutine)
             {
                 StopCurrentRoutine = false;
+                CanvasInTransition = false;
                 yield break;
             }
         }
@@ -112,6 +113,7 @@ public class AnimalCanvas : MonoBehaviour
             if (StopCurrentRoutine)
             {
                 StopCurrentRoutine = false;
+                CanvasInTransition = false;
                 yield break;
             }
         }
@@ -131,7 +133,7 @@ public class AnimalCanvas : MonoBehaviour
 
     #region Input Information into the UI Panel Components
 
-    public void UpdateCanvas(float CurrentHungerPercent, float CurrentThirstPercent, float CurrentBreedPercent, string nickname, string breed)
+    public void UpdateCanvas(float CurrentHungerPercent, float CurrentThirstPercent, float CurrentBreedPercent, string nickname = "None", string breed = "None")
     {
         HungerBar.UpdateProgressBar(CurrentHungerPercent);
         ThirstBar.UpdateProgressBar(CurrentThirstPercent);
