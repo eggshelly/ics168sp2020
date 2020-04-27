@@ -6,7 +6,7 @@ public enum PlayerState
 {
     HoldingObject,
     HoldingAnimal,
-    Empty
+    EmptyHand
 }
 
 public class PlayerInteraction : MonoBehaviour
@@ -18,7 +18,7 @@ public class PlayerInteraction : MonoBehaviour
     [Header("Picking Up/Placing Variables")]
     [SerializeField] float ChildVerticalOffset = 0.5f;
 
-    PlayerState CurrentState = PlayerState.Empty;
+    PlayerState CurrentState = PlayerState.EmptyHand;
     GameObject ObjectInHand;
 
     #endregion
@@ -58,14 +58,14 @@ public class PlayerInteraction : MonoBehaviour
         {
             switch(CurrentState)
             {
-                case PlayerState.Empty:
+                case PlayerState.EmptyHand:
                     InteractionRaycast();
                     break;
                 case PlayerState.HoldingAnimal:
                     DropAnimal();
                     break;
                 case PlayerState.HoldingObject:
-                    TryToUseObject();
+                    RaycastForObjectUse();
                     break;
             }
 
@@ -81,9 +81,9 @@ public class PlayerInteraction : MonoBehaviour
 
         RaycastHit hit;
 
-        
 
-        if (Physics.Raycast(this.transform.position, transform.forward, out hit, RaycastLength, ~LayerMask.NameToLayer("Player")))
+        Debug.DrawRay(this.transform.position + Vector3.down * 0.3f, transform.forward, Color.red, 3f);
+        if (Physics.Raycast(this.transform.position + Vector3.down * 0.3f, transform.forward, out hit, RaycastLength, ~(1 << LayerMask.NameToLayer("Player"))))
         {
             if (hit.collider != null)
             {
@@ -91,18 +91,48 @@ public class PlayerInteraction : MonoBehaviour
                 {
                     PickupAnimal(hit.collider.gameObject);
                 }
-                else if(hit.collider.gameObject.GetComponent<Interactable>() != null)
+                else if(hit.collider.gameObject.GetComponent<ResourceSource>() != null)
                 {
-                    PickupObject(hit.collider.gameObject);
+                    CollectResource(hit.collider.gameObject);
                 }
                 else if(hit.collider.gameObject.GetComponent<Crossable>() != null)
                 {
-                    hit.collider.gameObject.GetComponent<Crossable>().ToggleObjectState();
+                    hit.collider.gameObject.GetComponent<Crossable>().ChangeCrossableState();
+                }
+                else if(hit.collider.gameObject.GetComponent<HeldObject>() != null)
+                {
+                    PickupObject(hit.collider.gameObject);
                 }
 
             }
         }
 
+    }
+
+    void RaycastForObjectUse()
+    {
+        RaycastHit hit;
+
+
+        Debug.DrawRay(this.transform.position + Vector3.down * 0.3f, transform.forward, Color.red, 3f);
+        if (Physics.Raycast(this.transform.position + Vector3.down * 0.3f, transform.forward, out hit, RaycastLength, ~(1 << LayerMask.NameToLayer("Player"))))
+        {
+            if (hit.collider != null)
+            {
+                Debug.Log(hit.collider.gameObject.name + " " + LayerMask.LayerToName(hit.collider.gameObject.layer));
+                if (hit.collider.gameObject.GetComponent<Animal>() != null)
+                {
+                    TryToUseObject(hit.collider.gameObject);
+                    return;
+                }
+                else if (hit.collider.gameObject.GetComponent<ResourceSource>() != null)
+                {
+                    CollectResource(hit.collider.gameObject);
+                    return;
+                }
+            }
+        }
+        PutdownObject();
     }
 
     #endregion
@@ -111,7 +141,6 @@ public class PlayerInteraction : MonoBehaviour
 
     void PickupAnimal(GameObject animal)
     {
-        Debug.Log("Picked up animal: " + animal.name);
         CurrentState = PlayerState.HoldingAnimal;
         Vector3 worldPos = animal.transform.position;
         Vector3 localPos = this.transform.InverseTransformPoint(worldPos);
@@ -134,7 +163,7 @@ public class PlayerInteraction : MonoBehaviour
                 return;
         }
 
-        CurrentState = PlayerState.Empty;
+        CurrentState = PlayerState.EmptyHand;
 
         Vector3 localPos = ObjectInHand.transform.localPosition - Vector3.up * ChildVerticalOffset;
         Vector3 worldPos = this.transform.TransformPoint(localPos);
@@ -173,36 +202,109 @@ public class PlayerInteraction : MonoBehaviour
 
     #region Pickup and Use Objects
 
+    void CollectResource(GameObject obj)
+    {
+        ResourceSource source = obj.GetComponent<ResourceSource>();
+
+        switch(CurrentState)
+        {
+            case PlayerState.EmptyHand:
+                if(source.GetTypeOfSource() == TypeOfSource.Feed)
+                {
+                    GameObject held = source.GetHeldObject();
+                    if (held== null)
+                        break;
+
+                    held.GetComponent<HeldObject>().SetNumUnitsHeld(source.UnitsTakenFromSource());
+                    PickupObject(held);
+                }
+                break;
+            case PlayerState.HoldingObject:
+                if(source.GetTypeOfSource() == TypeOfSource.Water)
+                {
+                    HeldObject held = ObjectInHand.GetComponent<HeldObject>();
+                    if (held.GetTypeOfObject() != TypeOfObject.Bucket || held.IsCarryingUnits())
+                    {
+                        Debug.Log("Breaking");
+                        break;
+                    }
+                    held.SetNumUnitsHeld(source.UnitsTakenFromSource());
+                    Debug.Log("Changing state?");
+                    held.ChangeObjectState();
+                }
+                break;
+        }
+    }
+
     void PickupObject(GameObject obj)
     {
         CurrentState = PlayerState.HoldingObject;
-        Debug.Log("Picked up object: " + obj.GetComponent<Interactable>().GetTypeOfObject().ToString());
+
+        obj.transform.parent = this.transform;
+        obj.transform.localPosition = transform.InverseTransformPoint(this.transform.position + transform.forward * 0.6f);
+        obj.layer = LayerMask.NameToLayer("Player");
+
         ObjectInHand = obj;
     }
 
-    void TryToUseObject()
+    void PutdownObject()
     {
-        if(RaycastedObject != null && ObjectInHand != null)
+        if(ObjectInHand != null && CurrentState == PlayerState.HoldingObject)
         {
-            AnimalStatistics stats = RaycastedObject.GetComponent<AnimalStatistics>();
-            Interactable interact = ObjectInHand.GetComponent<Interactable>();
+            Vector3 worldPos = this.transform.TransformPoint(ObjectInHand.transform.localPosition) + transform.forward * 0.4f;
+            
+
+            ObjectInHand.transform.parent = null;
+            ObjectInHand.transform.position = worldPos;
+            ObjectInHand.GetComponent<HeldObject>().PutOnGround();
+
+            ObjectInHand.layer = LayerMask.NameToLayer("Obstacle");
+
+            ObjectInHand = null;
+            CurrentState = PlayerState.EmptyHand;
+
+        }
+    }
+
+    void TryToUseObject(GameObject animal)
+    {
+        if(ObjectInHand != null)
+        {
+            AnimalStatistics stats = animal.GetComponent<AnimalStatistics>();
+            HeldObject obj = ObjectInHand.GetComponent<HeldObject>();
+
+            if (!obj.IsCarryingUnits())
+                return;
+
             float food = 0;
             float water = 0;
-            switch(interact.GetTypeOfObject())
+            switch(obj.GetTypeOfObject())
             {
-                case TypeOfObject.Water:
-                    water = interact.UnitsTakenFromSource();
+                case TypeOfObject.Bucket:                    
+                    water = (obj.IsCarryingUnits() ? obj.GetNumUnitsHeld() : 0);
+                    ConsumedPerpetualObject();
                     break;
-                case TypeOfObject.BasicFeed:
-                    food = interact.UnitsTakenFromSource();
+                case TypeOfObject.Hay:
+                    food = obj.GetNumUnitsHeld();
+                    ConsumedOneTimeUseObject();
                     break;
             }
-            Debug.Log("Used up object: " + ObjectInHand.GetComponent<Interactable>().GetTypeOfObject().ToString());
             stats.GiveFoodAndWater(food, water);
         }
-        CurrentState = PlayerState.Empty;
+    }
+
+    void ConsumedOneTimeUseObject()
+    {
+        Destroy(ObjectInHand);
+        CurrentState = PlayerState.EmptyHand;
         ObjectInHand = null;
     }
 
+    void ConsumedPerpetualObject()
+    {
+        HeldObject obj = ObjectInHand.GetComponent<HeldObject>();
+        obj.ChangeObjectState();
+        obj.SetNumUnitsHeld();       
+    }
     #endregion
 }

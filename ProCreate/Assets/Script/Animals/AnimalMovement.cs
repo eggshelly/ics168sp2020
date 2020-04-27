@@ -22,6 +22,8 @@ public class AnimalMovement : MonoBehaviour
 
     bool isPickedUp;
 
+    bool InTransition = false;
+
     #endregion
 
     #region Raycast Variables
@@ -95,16 +97,17 @@ public class AnimalMovement : MonoBehaviour
 
     void TryToMove()
     {
+        if(InTransition)
+        {
+            return;
+        }
+
         float val = Random.value;
         if(RaycastForObstacle())
         {
             if(val < ProbabilityToTurn)
             {
                 StartCoroutine(TurnAnimal());
-            }
-            else
-            {
-                //if(Debugging) Debug.Log("Doing nothing");
             }
         }
         else
@@ -117,37 +120,35 @@ public class AnimalMovement : MonoBehaviour
             {
                 StartCoroutine(TurnAnimal());
             }
-            else
-            {
-                //if (Debugging) Debug.Log("Doing nothing");
-            }
         }
     }
 
     IEnumerator MoveAnimal()
     {
+        InTransition = true;
         Vector3 TargetPos = this.transform.position + transform.forward * Random.Range(1, DistanceToMove);
-        //if (Debugging) Debug.Log("Moving Animal");
-        while(this.transform.position != TargetPos)
+        while(Mathf.Abs(this.transform.position.sqrMagnitude - TargetPos.sqrMagnitude) > 0.2f)
         {
-            if(isPickedUp)
+            if (isPickedUp)
             {
+                InTransition = false;
                 yield break;
             }
             this.transform.position = Vector3.Lerp(this.transform.position, TargetPos, MoveSpeed * Time.deltaTime);
             yield return null;
             
         }
+        this.transform.position = TargetPos;
+        InTransition = false;
+        Debug.Log("Finished with moving");
     }
 
     IEnumerator TurnAnimal()
     {
+        InTransition = true;
         float direction = Random.value < 0.5f ? -1 : 1;
-        //if (Debugging) Debug.Log(transform.rotation.y * Mathf.Rad2Deg);
         Quaternion NewRotation = transform.rotation * Quaternion.AngleAxis(DegreesToTurn, Vector3.up);
-
-        //if (Debugging) Debug.Log(NewRotation.y * Mathf.Rad2Deg);
-        while (this.transform.rotation != NewRotation)
+        while (Mathf.Abs(this.transform.rotation.eulerAngles.sqrMagnitude - NewRotation.eulerAngles.sqrMagnitude) > 0.5f)
         {
             if (isPickedUp)
             {
@@ -156,6 +157,9 @@ public class AnimalMovement : MonoBehaviour
             this.transform.rotation = Quaternion.Lerp(transform.rotation, NewRotation, RotationSpeed * Time.deltaTime);
             yield return null;
         }
+        this.transform.rotation = NewRotation;
+        InTransition = false;
+        Debug.Log("Finished with turning");
 
     }
 
@@ -191,7 +195,7 @@ public class AnimalMovement : MonoBehaviour
     {
         if(!isPickedUp)
         {
-            Collider[] colls = Physics.OverlapSphere(this.transform.position + coll.center, 1f, 1 << LayerMask.NameToLayer("Player"));
+            Collider[] colls = Physics.OverlapSphere(this.transform.position + coll.center, 2f, 1 << LayerMask.NameToLayer("Player"));
             if(colls.Length > 0)
             {
                 if (!PlayerIsNear)
@@ -208,6 +212,15 @@ public class AnimalMovement : MonoBehaviour
                     PlayerIsNear = false;
                 }
             }
+        }
+        else
+        {
+            if (PlayerIsNear)
+            {
+                AnimalStats.HideStatistics();
+                PlayerIsNear = false;
+            }
+
         }
     }
 

@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WaterSource : MonoBehaviour, Interactable
+public class WaterSource : MonoBehaviour, ResourceSource
 {
     [Header("Interactable Attributes")]
-    [SerializeField] TypeOfObject type;
+    [SerializeField] TypeOfSource type;
 
 
     #region Variables unique to this object
@@ -25,7 +25,7 @@ public class WaterSource : MonoBehaviour, Interactable
 
     #region Functions for interacting with this object
 
-    public TypeOfObject GetTypeOfObject()
+    public TypeOfSource GetTypeOfSource()
     {
         return type;
     }
@@ -43,6 +43,11 @@ public class WaterSource : MonoBehaviour, Interactable
             return -1;
         }
         return NumUnitsToTakeFromSource;
+    }
+
+    public GameObject GetHeldObject()
+    {
+        return null;
     }
 
     #endregion

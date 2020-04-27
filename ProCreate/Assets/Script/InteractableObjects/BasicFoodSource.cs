@@ -2,16 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicFoodSource : MonoBehaviour, Interactable
+public class BasicFoodSource : MonoBehaviour, ResourceSource
 {
     [Header("Interactable Attributes")]
-    [SerializeField] TypeOfObject type;
+    [SerializeField] TypeOfSource type = TypeOfSource.Feed;
 
     #region Variables unique to this object
     [Header("Object Attributes")]
     [SerializeField] bool UnlimitedSource = true;
     [SerializeField] float NumUnitsToTakeFromSource;
     [SerializeField] float MaxNumberOfUnits;
+
+    [Header("Held Object For This Source")]
+    [SerializeField] GameObject HeldHayPrefab;
 
     float CurrentNumberOfUnits;
 
@@ -24,7 +27,7 @@ public class BasicFoodSource : MonoBehaviour, Interactable
 
     #region Functions for interacting with this object
 
-    public TypeOfObject GetTypeOfObject()
+    public TypeOfSource GetTypeOfSource()
     {
         return type;
     }
@@ -42,6 +45,11 @@ public class BasicFoodSource : MonoBehaviour, Interactable
             return -1;
         }
         return NumUnitsToTakeFromSource;
+    }
+
+    public GameObject GetHeldObject()
+    {
+        return Instantiate(HeldHayPrefab);
     }
 
     #endregion

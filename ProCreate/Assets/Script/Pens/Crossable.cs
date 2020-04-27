@@ -6,5 +6,5 @@ public interface Crossable
 {
     bool IsOpen();
 
-    void ToggleObjectState();
+    void ChangeCrossableState();
 }

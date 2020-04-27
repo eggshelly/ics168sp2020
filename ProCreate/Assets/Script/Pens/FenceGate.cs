@@ -17,7 +17,7 @@ public class FenceGate : MonoBehaviour, Crossable
         return Open;
     }
     
-    public void ToggleObjectState()
+    public void ChangeCrossableState()
     {
         if(Open)
         {
@@ -38,11 +38,6 @@ public class FenceGate : MonoBehaviour, Crossable
     public GameObject GetParentStructure()
     {
         return this.transform.parent.gameObject;
-    }
-
-    public Directions GetOpenDirection()
-    {
-        return OpenDirection;
     }
     
 }

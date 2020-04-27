@@ -11,7 +11,9 @@ GameObject:
   - component: {fileID: 2465910164036697910}
   - component: {fileID: 6873524947619251456}
   - component: {fileID: 891470760469232121}
-  m_Layer: 0
+  - component: {fileID: 7182307590133110142}
+  - component: {fileID: 501332798602813937}
+  m_Layer: 10
   m_Name: heldhay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1469288255554342181}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.052897, y: 0.75, z: -20.175486}
+  m_LocalPosition: {x: -3.1, y: 0.27000004, z: 8.345183}
   m_LocalScale: {x: 1.1, y: 1.1, z: 1.1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -80,3 +82,29 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &7182307590133110142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1469288255554342181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3daf787c9ac68534b8ae5a343e811d62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objType: 1
+--- !u!65 &501332798602813937
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1469288255554342181}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.7, y: 1, z: 0.4}
+  m_Center: {x: 0, y: 0.29, z: 0}
