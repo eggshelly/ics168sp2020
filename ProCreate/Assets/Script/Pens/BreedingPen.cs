@@ -52,7 +52,8 @@ public class BreedingPen : BasicPen
             parent2.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().sharedMaterials[0]);
         Material second = (Random.Range(0f, 1f) < 0.5f ? parent1.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().sharedMaterials[1] :
             parent2.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().sharedMaterials[1]);
-
+        //Debug.Log(main.name);
+       // Debug.Log(second.name);
         CreateChildObject(main, second, parent1, parent2);
 
     }
@@ -77,9 +78,10 @@ public class BreedingPen : BasicPen
         Body.transform.parent = Child.transform;
 
         GameObject NewPart;
-        MeshRenderer TempMeshRend;
+        MeshRenderer TempMeshRend = Body.GetComponent<MeshRenderer>();
+        ApplyMaterial(main, second, TempMeshRend);
 
-        for(int i = 1; i < 4; ++i)
+        for (int i = 1; i < 4; ++i)
         {
             NewPart = Instantiate(BodyParts[i]);
             NewPart.transform.parent = Child.transform;
@@ -90,14 +92,14 @@ public class BreedingPen : BasicPen
                 for(int j = 0; j < NewPart.transform.childCount; ++j)
                 {
                     TempMeshRend = NewPart.transform.GetChild(j).GetComponent<MeshRenderer>();
-                    ApplyMaterial(main, second, ref TempMeshRend);
+                    ApplyMaterial(main, second,TempMeshRend);
                 }
 
             }
             else
             {
                 TempMeshRend = NewPart.GetComponent<MeshRenderer>();
-                ApplyMaterial(main, second, ref TempMeshRend);
+                ApplyMaterial(main, second,TempMeshRend);
             }
         }
 
@@ -108,7 +110,7 @@ public class BreedingPen : BasicPen
         Child.transform.position = (parent1.transform.position + parent2.transform.position) / 2f;
     }
 
-    void ApplyMaterial(Material main, Material second, ref MeshRenderer mesh)
+    void ApplyMaterial(Material main, Material second, MeshRenderer mesh)
     {
         Material[] TempMats = mesh.sharedMaterials;
         TempMats[0] = main;
