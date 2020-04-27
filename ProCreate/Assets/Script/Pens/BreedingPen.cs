@@ -64,9 +64,7 @@ public class BreedingPen : BasicPen
         AnimalMovement move = Child.AddComponent<AnimalMovement>();
         BoxCollider coll = Child.AddComponent<BoxCollider>();
 
-        PassInNewGeneralStats(ref stats, parent1.GetComponent<AnimalStatistics>(), parent2.GetComponent<AnimalStatistics>());
-        PassInNewCollider(ref coll, (Random.value < 0.5f ? parent1.GetComponent<BoxCollider>() : parent2.GetComponent<BoxCollider>()));
-        PassInNewMoveVars(ref move, (Random.value < 0.5f ? parent1.GetComponent<AnimalMovement>() : parent2.GetComponent<AnimalMovement>()));
+
 
         GameObject[] BodyParts = new GameObject[4];
         for(int i = 0; i < 4; ++i)
@@ -103,6 +101,9 @@ public class BreedingPen : BasicPen
             }
         }
 
+        PassInNewGeneralStats(ref stats, parent1.GetComponent<AnimalStatistics>(), parent2.GetComponent<AnimalStatistics>());
+        PassInNewCollider(ref coll, (Random.value < 0.5f ? parent1.GetComponent<BoxCollider>() : parent2.GetComponent<BoxCollider>()));
+        PassInNewMoveVars(ref move, (Random.value < 0.5f ? parent1.GetComponent<AnimalMovement>() : parent2.GetComponent<AnimalMovement>()));
 
         Child.transform.position = (parent1.transform.position + parent2.transform.position) / 2f;
     }
