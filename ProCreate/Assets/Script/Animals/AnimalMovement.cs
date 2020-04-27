@@ -18,18 +18,36 @@ public class AnimalMovement : MonoBehaviour
 
     [SerializeField] float TimeBetweenMovements;
 
-    //[SerializeField] public bool Debugging;
     float CurrentTimer;
 
     bool isPickedUp;
 
     #endregion
 
+    #region Raycast Variables
+
     [Header("Raycast Variables")]
     [SerializeField] float RaycastLength;
 
+    bool PlayerIsNear = false;
+
+    #endregion
+
+    #region Components
+
+    AnimalStatistics AnimalStats;
+
+    BoxCollider coll;
+
+    #endregion
 
     #region Built In / Setup Functions
+
+    private void Awake()
+    {
+        coll = this.GetComponent<BoxCollider>();
+        AnimalStats = this.GetComponent<AnimalStatistics>();
+    }
 
     private void Start()
     {
@@ -44,6 +62,11 @@ public class AnimalMovement : MonoBehaviour
         {
             DecrementTimer();
         }
+    }
+
+    private void FixedUpdate()
+    {
+        CheckIfPlayerIsNear();
     }
 
     void DecrementTimer()
@@ -165,6 +188,30 @@ public class AnimalMovement : MonoBehaviour
             }
         }
         return false;
+    }
+
+    void CheckIfPlayerIsNear()
+    {
+        if(!isPickedUp)
+        {
+            Collider[] colls = Physics.OverlapSphere(this.transform.position + coll.center, 1f, 1 << LayerMask.NameToLayer("Player"));
+            if(colls.Length > 0)
+            {
+                if (!PlayerIsNear)
+                {
+                    AnimalStats.DisplayStatistics();
+                    PlayerIsNear = true;
+                }
+            }
+            else
+            {
+                if(PlayerIsNear)
+                {
+                    AnimalStats.HideStatistics();
+                    PlayerIsNear = false;
+                }
+            }
+        }
     }
 
     #endregion

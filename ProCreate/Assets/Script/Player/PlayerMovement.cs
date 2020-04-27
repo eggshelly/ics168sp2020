@@ -29,7 +29,6 @@ public class PlayerMovement : MonoBehaviour
     #region Raycast Variables
     [SerializeField] float RaycastLength = 0.5f;
 
-    GameObject RaycastedObject;
 
     Vector3 BoxCenter;
     Vector3 BoxSize;
@@ -290,31 +289,19 @@ public class PlayerMovement : MonoBehaviour
         if (hitByBoxCast || colls.Length > 0)
         {
             coll = (hit.collider != null ? hit.collider : colls[0]);
+
+
+            //Checks if the object it collided with is something that can be crossed or if the player is inside the pen
             Crossable cross = coll.gameObject.GetComponent<Crossable>();
             Pen pen = coll.gameObject.GetComponent<Pen>();
+
+
             if ((cross != null && cross.IsOpen()) || pen != null)
             {
                 UpdateObjectInDirection();
             }
             else
             {
-                
-                Statistics s = coll.GetComponent<Statistics>();
-                if (s != null)
-                {
-                    if (RaycastedObject != coll.gameObject)
-                    {
-                        s.DisplayStatistics();
-                        RaycastedObject = coll.gameObject;
-                    }
-                }
-                else
-                {
-                    NoLongerRaycastingObject();
-                }
-
-                NotInFrontOfAnimal(colls);
-
                 UpdateObjectInDirection(coll.gameObject);
             }
 
@@ -323,22 +310,8 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             UpdateObjectInDirection();
-            NoLongerRaycastingObject();
         }
     }
-
-    void NotInFrontOfAnimal(Collider[] colls)
-    {
-        Statistics stats;
-        for(int i = 0; i < colls.Length; ++i)
-        {
-            if((stats = colls[i].GetComponent<Statistics>()) != null && colls[i].gameObject != RaycastedObject)
-            {
-                stats.HideStatistics();
-            }
-        }
-    }
-
     void CheckIfEnterOrLeftPen(Collider[] colls)
     {
         for(int i = 0; i < colls.Length; ++i)
@@ -357,14 +330,6 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-    void NoLongerRaycastingObject()
-    {
-        if (RaycastedObject != null)
-        {
-            RaycastedObject.GetComponent<Statistics>().HideStatistics();
-        }
-        RaycastedObject = null;
-    }
     #endregion
 
     #region Get Attributes

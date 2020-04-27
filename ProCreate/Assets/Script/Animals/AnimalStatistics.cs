@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnimalStatistics : MonoBehaviour, Statistics, Animal
+public class AnimalStatistics : MonoBehaviour, Animal
 {
     [Header("Animal UI")]
     [SerializeField] AnimalCanvas AnimalCanvas;
@@ -304,5 +304,6 @@ public class AnimalStatistics : MonoBehaviour, Statistics, Animal
     }
 
     #endregion
+
 
 }
