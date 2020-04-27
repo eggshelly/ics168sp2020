@@ -43,14 +43,11 @@ public class AnimalMovement : MonoBehaviour
 
     #region Built In / Setup Functions
 
-    private void Awake()
-    {
-        coll = this.GetComponent<BoxCollider>();
-        AnimalStats = this.GetComponent<AnimalStatistics>();
-    }
 
     private void Start()
     {
+        coll = this.GetComponent<BoxCollider>();
+        AnimalStats = this.GetComponent<AnimalStatistics>();
         CurrentTimer = TimeBetweenMovements;
     }
 
