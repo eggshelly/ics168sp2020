@@ -41,6 +41,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] bool IsInsidePen= false;
     [SerializeField] GameObject PenStructure;
 
+    bool IsInShop = false;
+
     #endregion
 
     #region Components
@@ -59,6 +61,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (IsInShop)
+            return;
+
         Vector2 directions = ChangePlayerDirection();
         GeneralRaycast();
         MovePlayer(directions);
@@ -346,6 +351,14 @@ public class PlayerMovement : MonoBehaviour
 
     #endregion
 
+    #region Shop
+
+    public void UsingShop(bool b)
+    {
+        IsInShop = b;
+    }
+
+    #endregion
 
 
 }

@@ -87,6 +87,7 @@ public class PlayerInteraction : MonoBehaviour
         {
             if (hit.collider != null)
             {
+                Debug.Log("Not null");
                 if (hit.collider.gameObject.GetComponent<Animal>() != null)
                 {
                     PickupAnimal(hit.collider.gameObject);
@@ -95,9 +96,10 @@ public class PlayerInteraction : MonoBehaviour
                 {
                     CollectResource(hit.collider.gameObject);
                 }
-                else if(hit.collider.gameObject.GetComponent<Crossable>() != null)
+                else if(hit.collider.gameObject.GetComponent<Interactable>() != null)
                 {
-                    hit.collider.gameObject.GetComponent<Crossable>().ChangeCrossableState();
+                    Debug.Log("Here");
+                    hit.collider.gameObject.GetComponent<Interactable>().Interact();
                 }
                 else if(hit.collider.gameObject.GetComponent<HeldObject>() != null)
                 {

@@ -4,131 +4,34 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class AnimalCanvas : MonoBehaviour
+public class AnimalCanvas : GeneralCanvas
 {
-    [Header("UI Objects")]
-    [SerializeField] RectTransform CanvasRect;
-    [SerializeField] GameObject UIPanel;
+    [Header("UI Specific Objects")]
     [SerializeField] BarUI HungerBar;
     [SerializeField] BarUI ThirstBar;
     [SerializeField] BarUI WillBreedBar;
     [SerializeField] TextMeshProUGUI AnimalNickname;
     [SerializeField] TextMeshProUGUI AnimalBreed;
 
-    [Header("UI Variables")]
-    [SerializeField] float CanvasHeight = 100;
-    [SerializeField] float CanvasMinY = 2;
-    [SerializeField] float CanvasMaxY = 6;
-    [SerializeField] float CanvasMovementMultiplier = 5;
+
 
     public delegate void CanUpdateUI();
     public CanUpdateUI CanUpdateCanvasUI;
 
-
-    #region Open/Close Variables
-
-    bool CanvasInTransition = false;
-    bool StopCurrentRoutine = false;
-    bool CanvasOpened = false;
-
-    #endregion
-
-    private void Start()
+    private void Awake()
     {
-        CanvasRect.gameObject.GetComponent<Canvas>().worldCamera = Camera.main;
-        LookAtCamera();
-        CanvasRect.sizeDelta = new Vector2(CanvasRect.sizeDelta.x, 0);
-        CanvasRect.position = new Vector3(CanvasRect.position.x, CanvasMinY, CanvasRect.position.z);
-        UIPanel.SetActive(false);
-        CanvasRect.gameObject.SetActive(false);
-    }
-
-    private void Update()
-    {
-        if(CanvasOpened)
-        {
-            LookAtCamera();
-        }
+        this.transform.parent.GetComponent<AnimalMovement>().ToggleCanvas += base.ToggleCanvas;
     }
 
 
     #region Changing UI Panel State
 
-    public void OpenStatisticsUI()
+    protected override IEnumerator OpenCanvasRoutine()
     {
-        StartCoroutine(OpenStatisticsUIRoutine());
-    }
-    
-    public void CloseStatisticsUI()
-    {
-        StartCoroutine(CloseStatisticsUIRoutine());
-    }
-
-    IEnumerator OpenStatisticsUIRoutine()
-    {
-        LookAtCamera();
-        CanvasRect.gameObject.SetActive(true);
-        if (CanvasInTransition)
-        {
-            StopCurrentRoutine = true;
-            while (StopCurrentRoutine)
-                yield return null;
-        }
-        CanvasInTransition = true;
-        while(CanvasRect.sizeDelta.y < CanvasHeight)
-        {
-            CanvasRect.sizeDelta += Vector2.up * CanvasHeight * Time.deltaTime * CanvasMovementMultiplier;
-            CanvasRect.position += Vector3.up * (CanvasMaxY - CanvasMinY) * Time.deltaTime * CanvasMovementMultiplier;
-            yield return null;
-            if(StopCurrentRoutine)
-            {
-                StopCurrentRoutine = false;
-                CanvasInTransition = false;
-                yield break;
-            }
-        }
-        CanvasRect.sizeDelta = new Vector2(CanvasRect.sizeDelta.x, CanvasHeight);
-        CanvasRect.position = new Vector3(CanvasRect.position.x, CanvasMaxY, CanvasRect.position.z);
-        CanvasOpened = true;
-        CanvasInTransition = false;
-        UIPanel.SetActive(true);
+        yield return StartCoroutine(base.OpenCanvasRoutine());
         CanUpdateCanvasUI.Invoke();
     }
 
-    IEnumerator CloseStatisticsUIRoutine()
-    {
-        if (CanvasInTransition)
-        {
-            StopCurrentRoutine = true;
-            while (StopCurrentRoutine)
-                yield return null;
-        }
-        CanvasInTransition = true;
-        UIPanel.SetActive(false);
-        while (CanvasRect.sizeDelta.y > 0)
-        {
-            CanvasRect.sizeDelta -= Vector2.up * CanvasHeight * Time.deltaTime * CanvasMovementMultiplier;
-            CanvasRect.position -= Vector3.up * (CanvasMaxY - CanvasMinY) * Time.deltaTime * CanvasMovementMultiplier;
-            yield return null;
-            if (StopCurrentRoutine)
-            {
-                StopCurrentRoutine = false;
-                CanvasInTransition = false;
-                yield break;
-            }
-        }
-        CanvasRect.sizeDelta = new Vector2(CanvasRect.sizeDelta.x, 0);
-        CanvasRect.position = new Vector3(CanvasRect.position.x, CanvasMinY, CanvasRect.position.z);
-        CanvasOpened = true;
-        CanvasInTransition = false;
-        CanvasRect.gameObject.SetActive(false);
-    }
-
-    void LookAtCamera()
-    {
-        Vector3 pos = this.transform.position - Camera.main.transform.position;
-        this.transform.rotation = Quaternion.LookRotation(pos); /* + this.transform.position.y) *(3/4f), Camera.main.transform.position.z)));*/
-    }
     #endregion
 
     #region Input Information into the UI Panel Components

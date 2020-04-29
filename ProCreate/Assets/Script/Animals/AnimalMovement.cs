@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class AnimalMovement : MonoBehaviour
 {
+    #region Variables
+
     #region Movement variables
 
     [Header("Variables for Random Movement")]
@@ -35,6 +37,7 @@ public class AnimalMovement : MonoBehaviour
 
     #endregion
 
+
     #region Components
 
     AnimalStatistics AnimalStats;
@@ -42,6 +45,18 @@ public class AnimalMovement : MonoBehaviour
     BoxCollider coll;
 
     #endregion
+
+    #region Delegates
+
+    public delegate void PlayerDetected();
+    public PlayerDetected ToggleCanvas;
+    #endregion
+
+
+    #endregion
+
+
+    #region Functions
 
     #region Built In / Setup Functions
 
@@ -91,7 +106,6 @@ public class AnimalMovement : MonoBehaviour
     }
 
     #endregion
-
 
     #region Movement Functions
 
@@ -200,7 +214,8 @@ public class AnimalMovement : MonoBehaviour
             {
                 if (!PlayerIsNear)
                 {
-                    AnimalStats.DisplayStatistics();
+                    if (ToggleCanvas != null)
+                        ToggleCanvas.Invoke();
                     PlayerIsNear = true;
                 }
             }
@@ -208,7 +223,8 @@ public class AnimalMovement : MonoBehaviour
             {
                 if(PlayerIsNear)
                 {
-                    AnimalStats.HideStatistics();
+                    if (ToggleCanvas != null)
+                        ToggleCanvas.Invoke();
                     PlayerIsNear = false;
                 }
             }
@@ -217,7 +233,8 @@ public class AnimalMovement : MonoBehaviour
         {
             if (PlayerIsNear)
             {
-                AnimalStats.HideStatistics();
+                if (ToggleCanvas != null)
+                    ToggleCanvas.Invoke();
                 PlayerIsNear = false;
             }
 
@@ -252,6 +269,9 @@ public class AnimalMovement : MonoBehaviour
     {
         return TimeBetweenMovements;
     }
+
+    #endregion
+
 
     #endregion
 

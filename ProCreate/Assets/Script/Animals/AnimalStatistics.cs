@@ -191,8 +191,6 @@ public class AnimalStatistics : MonoBehaviour, Animal
     #endregion
 
 
-    #region Canvas Related Functions
-
     #region Updating the Canvas objects
 
     public void UpdateCanvasUI()
@@ -206,21 +204,6 @@ public class AnimalStatistics : MonoBehaviour, Animal
         NewCanvas.transform.parent = this.gameObject.transform;
         this.AnimalCanvas = NewCanvas.GetComponent<AnimalCanvas>();
     }
-    #endregion
-
-    #region Open/Close Canvas
-
-    public void DisplayStatistics()
-    {
-        AnimalCanvas.OpenStatisticsUI();
-    }
-
-    public void HideStatistics()
-    {
-        AnimalCanvas.CloseStatisticsUI();
-    }
-    #endregion
-
     #endregion
 
     #region Get Attributes
