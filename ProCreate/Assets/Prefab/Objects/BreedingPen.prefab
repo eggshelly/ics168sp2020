@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5508196785390238235}
   - component: {fileID: 5508196785390238234}
   - component: {fileID: 5508196785390238229}
-  m_Layer: 11
+  m_Layer: 10
   m_Name: BreedingPen
   m_TagString: Untagged
   m_Icon: {fileID: 0}

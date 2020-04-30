@@ -14,6 +14,8 @@ public class Shop : MonoBehaviour, Interactable
 
     PlayerMovement Player;
 
+    GameObject PurchasedItem;
+
     int PriceToPay = 0;
 
     #endregion
@@ -96,10 +98,11 @@ public class Shop : MonoBehaviour, Interactable
     public void TryPurchaseItem(int cost, GameObject ItemPrefab)
     {
         PriceToPay = -1 * cost;
-        GameObject PurchasedItem = Instantiate(ItemPrefab);
+        PurchasedItem = Instantiate(ItemPrefab);
         ItemMovement ItemMove = PurchasedItem.AddComponent<ItemMovement>();
         ItemMove.Purchased(Player.transform.position, this);
         PlacingObject = true;
+        SmoothCamera.instance.SwapTransform(PurchasedItem.transform, Player.transform, true);
         Canvas.ToggleShop();
     }
 
@@ -107,12 +110,16 @@ public class Shop : MonoBehaviour, Interactable
     {
         PlayerManager.instance.ChangeMoneyAmount(PriceToPay);
         PlacingObject = false;
+        SmoothCamera.instance.SwapTransform(PurchasedItem.transform, Player.transform, false);
+        PurchasedItem = null;
         Canvas.ToggleShop();
     }
 
     public void CancelPurchase()
     {
+        SmoothCamera.instance.SwapTransform(PurchasedItem.transform, Player.transform, false);
         PlacingObject = false;
+        PurchasedItem = null;
         Canvas.ToggleShop();
     }
 

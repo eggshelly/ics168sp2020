@@ -60,7 +60,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EmptyBucket: {fileID: 2638317422523926279}
-  FilledBucket: {fileID: 0}
+  FilledBucket: {fileID: 7595525476558059650}
   objType: 0
 --- !u!1001 &4587127398489845605
 PrefabInstance:
@@ -78,6 +78,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6251130685988198375, guid: 2b59db7b2ef1eb548bfb26bf6b98da9a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6961197118728447476, guid: 2b59db7b2ef1eb548bfb26bf6b98da9a,
         type: 3}
@@ -146,6 +151,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b59db7b2ef1eb548bfb26bf6b98da9a, type: 3}
+--- !u!1 &7595525476558059650 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6251130685988198375, guid: 2b59db7b2ef1eb548bfb26bf6b98da9a,
+    type: 3}
+  m_PrefabInstance: {fileID: 4587127398489845605}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6860077300822231697 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6961197118728447476, guid: 2b59db7b2ef1eb548bfb26bf6b98da9a,

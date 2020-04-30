@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 434870747451708114}
   - component: {fileID: 3345276655310768759}
   - component: {fileID: 130013493993153702}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: well (1)
   m_TagString: WaterSource
   m_Icon: {fileID: 0}

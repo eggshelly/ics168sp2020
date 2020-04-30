@@ -5,9 +5,11 @@ using UnityEngine;
 [RequireComponent(typeof(Camera))]
 public class SmoothCamera : MonoBehaviour
 {
+    public static SmoothCamera instance = null;
+
     #region Camera variables
     [Header("Look at targets")]
-    public List<Transform> targets;
+    [SerializeField] List<Transform> targets;
     [Header("Camera settings")]
     [SerializeField] Vector3 offset;
     [SerializeField] float easeFactor;
@@ -21,14 +23,11 @@ public class SmoothCamera : MonoBehaviour
     #region Built In Functions
     void Awake()
     {
+        if (instance == null)
+            instance = this;
         camera = GetComponent<Camera>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void LateUpdate()
     {
@@ -75,5 +74,18 @@ public class SmoothCamera : MonoBehaviour
         }
         return Mathf.Max(bounds.size.x,bounds.size.z);
     }
+
+    public void SwapTransform(Transform obj, Transform player, bool SwapToObj)
+    {
+        if(SwapToObj)
+        {
+            targets[targets.IndexOf(player)] = obj;
+        }
+        else
+        {
+            targets[targets.IndexOf(obj)] = player;
+        }
+    }
+
     #endregion
 }
