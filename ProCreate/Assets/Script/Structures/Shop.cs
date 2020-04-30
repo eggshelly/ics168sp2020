@@ -7,6 +7,9 @@ public class Shop : MonoBehaviour, Interactable
     [Header("Shop UI")]
     [SerializeField] ShopCanvas Canvas;
 
+    [Header("Objects For Camera")]
+    [SerializeField] GameObject CameraLookAtTrans;
+
     #region Variables for Player in Shop
 
     bool IsOccupied = false;
@@ -79,12 +82,14 @@ public class Shop : MonoBehaviour, Interactable
 
     void OpenShop()
     {
+        SmoothCamera.instance.SwapTransform(CameraLookAtTrans.transform, Player.gameObject.transform, true);
         Canvas.ToggleShop();
         Player.UsingShop(true);
     }
 
     void CloseShop()
     {
+        SmoothCamera.instance.SwapTransform(CameraLookAtTrans.transform, Player.gameObject.transform, false);
         Player.UsingShop(false);
         Player = null;
         Canvas.ToggleShop();
@@ -102,7 +107,7 @@ public class Shop : MonoBehaviour, Interactable
         ItemMovement ItemMove = PurchasedItem.AddComponent<ItemMovement>();
         ItemMove.Purchased(Player.transform.position, this);
         PlacingObject = true;
-        SmoothCamera.instance.SwapTransform(PurchasedItem.transform, Player.transform, true);
+        SmoothCamera.instance.SwapTransform(PurchasedItem.transform, CameraLookAtTrans.transform, true);
         Canvas.ToggleShop();
     }
 
@@ -110,14 +115,14 @@ public class Shop : MonoBehaviour, Interactable
     {
         PlayerManager.instance.ChangeMoneyAmount(PriceToPay);
         PlacingObject = false;
-        SmoothCamera.instance.SwapTransform(PurchasedItem.transform, Player.transform, false);
+        SmoothCamera.instance.SwapTransform(PurchasedItem.transform, CameraLookAtTrans.transform, false);
         PurchasedItem = null;
         Canvas.ToggleShop();
     }
 
     public void CancelPurchase()
     {
-        SmoothCamera.instance.SwapTransform(PurchasedItem.transform, Player.transform, false);
+        SmoothCamera.instance.SwapTransform(PurchasedItem.transform, CameraLookAtTrans.transform, false);
         PlacingObject = false;
         PurchasedItem = null;
         Canvas.ToggleShop();
