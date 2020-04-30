@@ -111,7 +111,7 @@ public class AnimalMovement : MonoBehaviour
 
     void TryToMove()
     {
-        if(InTransition)
+        if(InTransition || isPickedUp)
         {
             return;
         }

@@ -10,7 +10,8 @@ public class PlayerManager : MonoBehaviour
     [Header("Money Variables")]
     [SerializeField] int StartingMoney;
 
-    int TotalMoney = 0;
+
+    [SerializeField] int TotalMoney = 0;
 
     #endregion
 

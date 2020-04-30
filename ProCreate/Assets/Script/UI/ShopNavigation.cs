@@ -6,6 +6,9 @@ public class ShopNavigation : MonoBehaviour
 {
     #region Components
 
+    [Header("Needed Components")]
+    [SerializeField] Shop MainShop;
+
     ShopGrid Grid;
 
     #endregion
@@ -23,6 +26,7 @@ public class ShopNavigation : MonoBehaviour
         if (FinishedSetup)
         {
             Grid.DeselectedItem(SelectedIndex);
+            SelectedIndex = 0;
             Grid.SelectedItem(SelectedIndex);
             ShopOpen = true;
         }
@@ -85,9 +89,7 @@ public class ShopNavigation : MonoBehaviour
     {
         if(PlayerManager.instance.HasEnoughMoney(Grid.GetCostOfItem(SelectedIndex)))
         {
-            PlayerManager.instance.ChangeMoneyAmount(-1 * Grid.GetCostOfItem(SelectedIndex));
-            GameObject PurchasedItem = Instantiate(Grid.GetPurchasedItem(SelectedIndex));
-            Debug.Log("Purchased!");
+            MainShop.TryPurchaseItem(Grid.GetCostOfItem(SelectedIndex), Grid.GetPurchasedItem(SelectedIndex));
         }
         else
         {

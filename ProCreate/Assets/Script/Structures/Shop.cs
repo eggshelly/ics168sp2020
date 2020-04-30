@@ -10,8 +10,11 @@ public class Shop : MonoBehaviour, Interactable
     #region Variables for Player in Shop
 
     bool IsOccupied = false;
+    bool PlacingObject = false;
 
     PlayerMovement Player;
+
+    int PriceToPay = 0;
 
     #endregion
 
@@ -19,7 +22,9 @@ public class Shop : MonoBehaviour, Interactable
 
     BoxCollider box;
 
-    #endregion 
+    #endregion
+
+    #region Built In functions
 
     private void Awake()
     { 
@@ -28,7 +33,7 @@ public class Shop : MonoBehaviour, Interactable
 
     void Update()
     {
-        if(IsOccupied)
+        if(IsOccupied && !PlacingObject)
         {
             if(Input.GetKeyDown(KeyCode.Escape))
             {
@@ -37,6 +42,9 @@ public class Shop : MonoBehaviour, Interactable
         }
     }
 
+    #endregion;
+
+    #region Interaction
 
     public void Interact()
     {
@@ -63,6 +71,10 @@ public class Shop : MonoBehaviour, Interactable
         }
     }
 
+    #endregion
+
+    #region Open/Close Shop
+
     void OpenShop()
     {
         Canvas.ToggleShop();
@@ -76,5 +88,34 @@ public class Shop : MonoBehaviour, Interactable
         Canvas.ToggleShop();
         IsOccupied = false;
     }
+
+    #endregion
+
+    #region Try Purchase Item
+
+    public void TryPurchaseItem(int cost, GameObject ItemPrefab)
+    {
+        PriceToPay = -1 * cost;
+        GameObject PurchasedItem = Instantiate(ItemPrefab);
+        ItemMovement ItemMove = PurchasedItem.AddComponent<ItemMovement>();
+        ItemMove.Purchased(Player.transform.position, this);
+        PlacingObject = true;
+        Canvas.ToggleShop();
+    }
+
+    public void FinalizePurchase()
+    {
+        PlayerManager.instance.ChangeMoneyAmount(PriceToPay);
+        PlacingObject = false;
+        Canvas.ToggleShop();
+    }
+
+    public void CancelPurchase()
+    {
+        PlacingObject = false;
+        Canvas.ToggleShop();
+    }
+
+    #endregion 
 
 }

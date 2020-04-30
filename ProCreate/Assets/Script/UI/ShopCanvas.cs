@@ -5,7 +5,6 @@ using UnityEngine;
 public class ShopCanvas : GeneralCanvas
 {
 
-
     public void ToggleShop()
     {
         base.ToggleCanvas();
