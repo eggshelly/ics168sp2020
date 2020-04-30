@@ -154,7 +154,6 @@ public class AnimalMovement : MonoBehaviour
         }
         this.transform.position = TargetPos;
         InTransition = false;
-        Debug.Log("Finished with moving");
     }
 
     IEnumerator TurnAnimal()
@@ -173,7 +172,6 @@ public class AnimalMovement : MonoBehaviour
         }
         this.transform.rotation = NewRotation;
         InTransition = false;
-        Debug.Log("Finished with turning");
 
     }
 

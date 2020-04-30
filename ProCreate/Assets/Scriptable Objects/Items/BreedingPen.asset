@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea1fa49aba90606489fc590e61db05a3, type: 3}
+  m_Name: BreedingPen
+  m_EditorClassIdentifier: 
+  ItemName: Breeding Pen
+  ItemImage: {fileID: 0}
+  ItemPrefab: {fileID: 5508196785390238232, guid: 8c1c8ceafc20ab04ca3031e43386c819,
+    type: 3}
+  ItemCost: 300

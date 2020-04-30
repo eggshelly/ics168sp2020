@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Shop : MonoBehaviour, Interactable
 {
-
+    [Header("Shop UI")]
+    [SerializeField] ShopCanvas Canvas;
 
     #region Variables for Player in Shop
 
@@ -21,7 +22,7 @@ public class Shop : MonoBehaviour, Interactable
     #endregion 
 
     private void Awake()
-    {
+    { 
         box = this.GetComponent<BoxCollider>();
     }
 
@@ -57,16 +58,22 @@ public class Shop : MonoBehaviour, Interactable
             Player = colls[0].GetComponent<PlayerMovement>();
             if(Player != null)
             {
-                Debug.Log("Hey there " + Player.gameObject.name);
-                Player.UsingShop(true);
+                OpenShop();
             }
         }
+    }
+
+    void OpenShop()
+    {
+        Canvas.ToggleShop();
+        Player.UsingShop(true);
     }
 
     void CloseShop()
     {
         Player.UsingShop(false);
         Player = null;
+        Canvas.ToggleShop();
         IsOccupied = false;
     }
 
