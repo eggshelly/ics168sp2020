@@ -14,9 +14,16 @@ public enum Directions
     b_left,
     neutral
 }
+public enum Player
+{
+    player1,
+    player2,
+}
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] Player player;
+
     #region Movement Variables
     [Header("Movement Settings")]
     [SerializeField] float SpeedMultiplier = 10f;
@@ -82,8 +89,10 @@ public class PlayerMovement : MonoBehaviour
     //Updates the Directions variable holding the direction the player is facing
     Vector2 ChangePlayerDirection()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
+
+        float horizontal = 0;
+        float vertical = 0;
+        processInput(ref horizontal,ref vertical);
 
         if (horizontal < 0)
         {
@@ -136,6 +145,88 @@ public class PlayerMovement : MonoBehaviour
         }
 
         return new Vector2(horizontal, vertical);
+    }
+
+    void processInput(ref float horizontal, ref float vertical)
+    {
+        if (player == Player.player1)
+        {
+            horizontal = Input.GetAxisRaw("Horizontal_1");
+            vertical = Input.GetAxisRaw("Vertical_1");
+            //over ride and change direction if is controller: rotate 45* clockwise
+             if(Input.GetAxisRaw("Horizontal_1_C") != 0 || Input.GetAxisRaw("Vertical_1_C") != 0)
+              {
+                horizontal = Input.GetAxisRaw("Horizontal_1_C");
+                vertical = Input.GetAxisRaw("Vertical_1_C");
+                processController(ref horizontal, ref vertical);
+              }
+             
+            //Debug.Log(horizontal + " , " + vertical);
+        }
+        else if (player == Player.player2)
+        {
+            horizontal = Input.GetAxisRaw("Horizontal_2");
+            vertical = Input.GetAxisRaw("Vertical_2");
+            /*if (Input.GetAxisRaw("Horizontal_2_C") != 0 || Input.GetAxisRaw("Vertical_2_C") != 0)
+            {
+                processController(ref horizontal, ref vertical);
+            }*/
+        }
+       
+    }
+    void processController(ref float horizontal, ref float vertical)
+    {
+        Debug.Log(horizontal + " , " + vertical);
+        if (horizontal > 0)
+        {
+            if (vertical > 0)   // 1,1 --> 0,1
+            {
+                horizontal = 0f;
+                vertical = 1f;
+            }
+            else if (vertical < 0)  //1,-1 -->   1,0
+            {
+                horizontal = 1f;
+                vertical = 0f;
+            }
+            else             //1,0 --> 1,1
+            {
+                horizontal = 1f;
+                vertical = 1f;
+            }
+        }
+        else if(horizontal < 0)
+        {
+            if(vertical > 0)    //-1,1 --> -1,0
+            {
+                horizontal = -1f;
+                vertical = 0f;
+            }
+            else if(vertical < 0)  //-1,-1 --> 0,-1
+            {
+                horizontal = 0f;
+                vertical = -1f;
+            }
+            else            //-1,0 --> -1,-1
+            {
+                horizontal = -1f;
+                vertical = -1f;
+            }
+        }
+        else
+        {
+            if (vertical > 0)   //0,1 --> -1,1
+            {
+                horizontal = -1f;
+                vertical = 1f;
+            }
+            else if (vertical < 0) //0,-1 -->  1,-1
+            {
+                horizontal = 1f;
+                vertical = -1f;
+            }
+        }
+       
     }
 
 

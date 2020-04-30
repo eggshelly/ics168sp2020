@@ -35,7 +35,7 @@ public class SmoothCamera : MonoBehaviour
             return;
 
         moveCamera();
-        Debug.Log(GetGreatestDistance());
+        //Debug.Log(GetGreatestDistance());
         zoomCamera();
     }
 
