@@ -38,9 +38,9 @@ public class Shop : MonoBehaviour, Interactable
 
     void Update()
     {
-        if(IsOccupied && !PlacingObject)
+        if (IsOccupied && !PlacingObject)
         {
-            if(Input.GetKeyDown(KeyCode.Escape))
+            if(InputManager.cancel(Player.GetPlayer()))
             {
                 CloseShop();
             }
@@ -128,6 +128,13 @@ public class Shop : MonoBehaviour, Interactable
         Canvas.ToggleShop();
     }
 
-    #endregion 
+    #endregion
 
+
+    #region Get Attributes
+    public PlayerManager.Player GetPlayer()
+    {
+        return Player.GetPlayer();
+    }
+    #endregion
 }

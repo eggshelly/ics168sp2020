@@ -2,8 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerManager : MonoBehaviour
+
+public class PlayerManager : MonoBehaviour, PlayerDefine<PlayerManager.Player>
 {
+    #region player defination
+    public enum Player
+    {
+        player1,
+        player2
+    }
+    public Player PlayerEnum { get; set; }
+    #endregion
+
     public static PlayerManager instance = null;
 
     #region Player Resource Variables

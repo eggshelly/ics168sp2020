@@ -60,14 +60,14 @@ public class ItemMovement : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(InputManager.interact(Shop.GetPlayer()))
         {
             if(!Placing && CanPlace)
             {
-                StartCoroutine(PlaceObject());
+                PlaceObject();
             }
         }
-        else if (Input.GetKeyDown(KeyCode.Escape))
+        else if (InputManager.cancel(Shop.GetPlayer()))
         {
             Shop.CancelPurchase();
             Destroy(this.gameObject);
@@ -82,10 +82,12 @@ public class ItemMovement : MonoBehaviour
 
     void MoveObjectPosition()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
+        float horizontal = 0;//= Input.GetAxisRaw("Horizontal");
+        float vertical = 0;//= Input.GetAxisRaw("Vertical");
 
-        if(!Moving)
+        InputManager.processMovementInput(Shop.GetPlayer(), ref horizontal, ref vertical);
+
+        if (!Moving)
         {
             StartCoroutine(MoveObj(horizontal, vertical));
         }
@@ -105,26 +107,30 @@ public class ItemMovement : MonoBehaviour
         {
             CanPlace = true;
         }
-        Debug.Log("Can Place: " + CanPlace);
+        //Debug.Log("Can Place: " + CanPlace);
     }
 
     IEnumerator MoveObj(float hor, float vert)
     {
         Moving = true;
-
+        
         this.transform.position += (Vector3.right * hor + Vector3.forward * vert) * DistanceToMove;
 
-        yield return new WaitForSeconds(0.1f);
-
+        yield return new WaitForSeconds(0.2f);
+       
         Moving = false;
     }
     
-    IEnumerator PlaceObject()
+    public void PlaceObject()
     {
         Placing = true;
 
-        while (Moving)
+       /* while (Moving)
+        {
             yield return null;
+            
+        }*/
+            
 
         this.transform.position = new Vector3(this.transform.position.x, GroundYPos, this.transform.position.z);
 

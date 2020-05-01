@@ -52,15 +52,17 @@ public class ShopNavigation : MonoBehaviour
     {
         if (ShopOpen)
         {
-            if (Input.GetKeyDown(KeyCode.W))
+            float verticalInput = InputManager.verticalSelection(MainShop.GetPlayer());
+
+            if (verticalInput > 0)
             {
                 PreviousItem();
             }
-            else if (Input.GetKeyDown(KeyCode.S))
+            else if (verticalInput < 0)
             {
                 NextItem();
             }
-            else if (Input.GetKeyDown(KeyCode.Space))
+            else if(InputManager.interact(MainShop.GetPlayer()))
             {
                 PurchaseItem();
             }

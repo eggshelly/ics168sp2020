@@ -54,7 +54,7 @@ public class PlayerInteraction : MonoBehaviour
 
     void CheckForGeneralInteract()
     {
-        if(Input.GetKeyDown(GeneralInteractKey))
+        if(InputManager.interact(PlayerMove.GetPlayer()))
         {
             switch(CurrentState)
             {

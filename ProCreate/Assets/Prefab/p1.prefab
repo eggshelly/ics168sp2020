@@ -125,8 +125,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d65e2da2d5af2a64984338af76219c68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: 0
   SpeedMultiplier: 10
   FacingDirection: 2
   RaycastLength: 0.5
-  IsInsideStructure: 0
-  ParentStructure: {fileID: 0}
+  IsInsidePen: 0
+  PenStructure: {fileID: 0}
