@@ -87,5 +87,17 @@ public class SmoothCamera : MonoBehaviour
         }
     }
 
+    public void TargetCanvas(Transform Canvas, bool ShouldTarget)
+    {
+        if(ShouldTarget)
+        {
+            targets.Add(Canvas);
+        }
+        else
+        {
+            targets.RemoveAt(2);
+        }
+    }
+
     #endregion
 }

@@ -82,7 +82,9 @@ public class PlayerMovement : MonoBehaviour
     //Moves the transform of the player 
     void MovePlayer(Vector2 directions)
     {
-        this.transform.position += (Vector3.right * directions.x * ObjectInDirection.x + Vector3.forward * directions.y * ObjectInDirection.y) * Time.deltaTime * SpeedMultiplier;
+        Vector3 posOffset = (Vector3.right * directions.x * ObjectInDirection.x + Vector3.forward * directions.y * ObjectInDirection.y);
+        Debug.Log(posOffset * Time.deltaTime * SpeedMultiplier);
+        this.transform.position += posOffset * Time.deltaTime * SpeedMultiplier;
     }
 
     //Updates the Directions variable holding the direction the player is facing

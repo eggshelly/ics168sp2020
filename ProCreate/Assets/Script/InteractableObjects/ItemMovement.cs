@@ -6,7 +6,7 @@ public class ItemMovement : MonoBehaviour
 {
     [Header("Movement Values")]
     [SerializeField] float YOffset = 0.5f;
-    [SerializeField] float DistanceToMove = 2f;
+    [SerializeField] float DistanceToMove = 1f;
 
     float GroundYPos;
     LayerMask OriginalLayer;
@@ -64,7 +64,7 @@ public class ItemMovement : MonoBehaviour
         {
             if(!Placing && CanPlace)
             {
-                PlaceObject();
+                StartCoroutine(PlaceObject());
             }
         }
         else if (InputManager.cancel(Shop.GetPlayer()))
@@ -116,20 +116,20 @@ public class ItemMovement : MonoBehaviour
         
         this.transform.position += (Vector3.right * hor + Vector3.forward * vert) * DistanceToMove;
 
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.05f);
        
         Moving = false;
     }
     
-    public void PlaceObject()
+    IEnumerator PlaceObject()
     {
         Placing = true;
 
-       /* while (Moving)
+        while (Moving)
         {
             yield return null;
             
-        }*/
+        }
             
 
         this.transform.position = new Vector3(this.transform.position.x, GroundYPos, this.transform.position.z);

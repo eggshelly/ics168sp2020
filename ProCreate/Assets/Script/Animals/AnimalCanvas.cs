@@ -13,6 +13,9 @@ public class AnimalCanvas : GeneralCanvas
     [SerializeField] TextMeshProUGUI AnimalNickname;
     [SerializeField] TextMeshProUGUI AnimalBreed;
 
+    [Header("Camera Target")]
+    [SerializeField] GameObject CanvasTarget;
+
 
 
     public delegate void CanUpdateUI();
@@ -28,8 +31,16 @@ public class AnimalCanvas : GeneralCanvas
 
     protected override IEnumerator OpenCanvasRoutine()
     {
+        SmoothCamera.instance.TargetCanvas(CanvasTarget.transform, true);
         yield return StartCoroutine(base.OpenCanvasRoutine());
         CanUpdateCanvasUI.Invoke();
+    }
+
+    protected override IEnumerator CloseCanvasRoutine()
+    {
+        yield return base.CloseCanvasRoutine();
+        SmoothCamera.instance.TargetCanvas(CanvasTarget.transform, false);
+
     }
 
     #endregion

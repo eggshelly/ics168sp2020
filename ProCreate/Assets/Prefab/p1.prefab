@@ -126,7 +126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: 0
-  SpeedMultiplier: 10
+  SpeedMultiplier: 8
   FacingDirection: 2
   RaycastLength: 0.5
   IsInsidePen: 0

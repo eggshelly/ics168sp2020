@@ -99,7 +99,7 @@ public class GeneralCanvas : MonoBehaviour
         UIPanel.SetActive(true);
     }
 
-    IEnumerator CloseCanvasRoutine()
+    protected virtual IEnumerator CloseCanvasRoutine()
     {
         CanvasOpened = false;
         if (CanvasInTransition)
