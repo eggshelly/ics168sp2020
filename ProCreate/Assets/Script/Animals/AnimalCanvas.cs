@@ -23,6 +23,7 @@ public class AnimalCanvas : GeneralCanvas
 
     private void Awake()
     {
+        Debug.Log(this.transform.parent == null ? "Null" : this.transform.parent.name);
         this.transform.parent.GetComponent<AnimalMovement>().ToggleCanvas += base.ToggleCanvas;
     }
 

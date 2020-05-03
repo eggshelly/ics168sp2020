@@ -28,6 +28,8 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] float RaycastLength = 1f;
     GameObject RaycastedObject;
 
+    Vector3 BoxSize;
+
     #endregion
 
     #region Needed Components
@@ -42,6 +44,7 @@ public class PlayerInteraction : MonoBehaviour
     {
         box = this.GetComponent<BoxCollider>();
         PlayerMove = this.GetComponent<PlayerMovement>();
+        BoxSize = new Vector3(box.size.x * 0.8f, box.size.y / 2, box.size.z);
     }
 
     private void Update()
@@ -84,7 +87,7 @@ public class PlayerInteraction : MonoBehaviour
 
         Vector3 pos = this.transform.position + transform.forward * box.center.z;
 
-        if (Physics.BoxCast(pos, box.bounds.extents, transform.forward, out hit, this.transform.rotation, RaycastLength, ~(1 << LayerMask.NameToLayer("Player"))))
+        if (Physics.BoxCast(pos, BoxSize / 2f, transform.forward, out hit, this.transform.rotation,RaycastLength, ~(1 << LayerMask.NameToLayer("Player"))))
         {
             if (hit.collider != null)
             {
@@ -118,11 +121,10 @@ public class PlayerInteraction : MonoBehaviour
 
         Vector3 pos = this.transform.position + transform.forward * box.center.z;
 
-        if (Physics.BoxCast(pos, box.bounds.extents, transform.forward, out hit, this.transform.rotation, RaycastLength, ~(1 << LayerMask.NameToLayer("Player"))))
+        if (Physics.BoxCast(pos, BoxSize / 2f, transform.forward, out hit, this.transform.rotation, (CurrentState != PlayerState.EmptyHand ? RaycastLength * 3f : RaycastLength), ~(1 << LayerMask.NameToLayer("Player"))))
         {
             if (hit.collider != null)
             {
-                Debug.Log(hit.collider.gameObject.name + " " + LayerMask.LayerToName(hit.collider.gameObject.layer));
                 if (hit.collider.gameObject.GetComponent<Animal>() != null)
                 {
                     TryToUseObject(hit.collider.gameObject);
@@ -144,13 +146,13 @@ public class PlayerInteraction : MonoBehaviour
 
     void PickupAnimal(GameObject animal)
     {
+        PlayerMove.HoldingObject(animal.GetComponent<BoxCollider>());
+
         CurrentState = PlayerState.HoldingAnimal;
-        Vector3 worldPos = animal.transform.position;
-        Vector3 localPos = this.transform.InverseTransformPoint(worldPos);
 
         animal.GetComponent<AnimalMovement>().Pickedup();
         animal.transform.parent = this.gameObject.transform;
-        animal.transform.localPosition = localPos + Vector3.up * ChildVerticalOffset;
+        animal.transform.localPosition = transform.InverseTransformPoint(this.transform.position + transform.forward * 0.6f);
         animal.layer = LayerMask.NameToLayer("Player");
 
         ObjectInHand = animal;
@@ -160,23 +162,26 @@ public class PlayerInteraction : MonoBehaviour
 
     void DropAnimal()
     {
-        if(PlayerMove.PlayerInsidePen())
+        if (PlayerMove.IsFacingObstacle())
+            return;
+        else if (PlayerMove.PlayerInsidePen())
         {
             if (!AddAnimalToPen())
                 return;
         }
 
+        PlayerMove.PutDownObject();
+
         CurrentState = PlayerState.EmptyHand;
 
-        Vector3 localPos = ObjectInHand.transform.localPosition - Vector3.up * ChildVerticalOffset;
-        Vector3 worldPos = this.transform.TransformPoint(localPos);
+        Vector3 worldPos = this.transform.TransformPoint(ObjectInHand.transform.localPosition) + transform.forward * 0.2f;
 
         ObjectInHand.layer = LayerMask.NameToLayer("Animal");
 
-        ObjectInHand.GetComponent<AnimalMovement>().SetDown();
 
         ObjectInHand.transform.parent = null;
         ObjectInHand.transform.position = worldPos;
+        ObjectInHand.GetComponent<AnimalMovement>().SetDown();
         ObjectInHand = null;
     }
 
@@ -228,11 +233,9 @@ public class PlayerInteraction : MonoBehaviour
                     HeldObject held = ObjectInHand.GetComponent<HeldObject>();
                     if (held.GetTypeOfObject() != TypeOfObject.Bucket || held.IsCarryingUnits())
                     {
-                        Debug.Log("Breaking");
                         break;
                     }
                     held.SetNumUnitsHeld(source.UnitsTakenFromSource());
-                    Debug.Log("Changing state?");
                     held.ChangeObjectState();
                 }
                 break;
@@ -241,6 +244,9 @@ public class PlayerInteraction : MonoBehaviour
 
     void PickupObject(GameObject obj)
     {
+        PlayerMove.HoldingObject(obj.GetComponent<BoxCollider>());
+
+
         CurrentState = PlayerState.HoldingObject;
 
         obj.transform.parent = this.transform;
@@ -252,9 +258,13 @@ public class PlayerInteraction : MonoBehaviour
 
     void PutdownObject()
     {
+        if (PlayerMove.IsFacingObstacle())
+            return;
+
+        PlayerMove.PutDownObject();
         if(ObjectInHand != null && CurrentState == PlayerState.HoldingObject)
         {
-            Vector3 worldPos = this.transform.TransformPoint(ObjectInHand.transform.localPosition) + transform.forward * 0.4f;
+            Vector3 worldPos = this.transform.TransformPoint(ObjectInHand.transform.localPosition) + transform.forward * 0.2f;
             
 
             ObjectInHand.transform.parent = null;
@@ -301,6 +311,7 @@ public class PlayerInteraction : MonoBehaviour
         Destroy(ObjectInHand);
         CurrentState = PlayerState.EmptyHand;
         ObjectInHand = null;
+        PlayerMove.PutDownObject();
     }
 
     void ConsumedPerpetualObject()

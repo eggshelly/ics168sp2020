@@ -112,7 +112,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GeneralInteractKey: 32
   ChildVerticalOffset: 0.5
-  RaycastLength: 1
+  RaycastLength: 0.5
 --- !u!114 &4677521797157443935
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -26,6 +26,8 @@ public class AnimalMovement : MonoBehaviour
 
     bool InTransition = false;
 
+    float GroundYPos;
+
     #endregion
 
     #region Raycast Variables
@@ -63,6 +65,7 @@ public class AnimalMovement : MonoBehaviour
 
     private void Start()
     {
+        GroundYPos = this.transform.position.y;
         coll = this.GetComponent<BoxCollider>();
         AnimalStats = this.GetComponent<AnimalStatistics>();
         CurrentTimer = TimeBetweenMovements;
@@ -80,6 +83,8 @@ public class AnimalMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        Vector3 pos = this.transform.position + Vector3.up * coll.center.y;
+        ExtDebug.DrawBoxCastOnHit(pos, coll.bounds.extents, this.transform.rotation, transform.forward, RaycastLength, Color.red);
         CheckIfPlayerIsNear();
     }
 
@@ -165,6 +170,7 @@ public class AnimalMovement : MonoBehaviour
         {
             if (isPickedUp)
             {
+                this.transform.rotation = NewRotation;
                 InTransition = false;
                 yield break;
             }
@@ -183,6 +189,7 @@ public class AnimalMovement : MonoBehaviour
 
     public void SetDown()
     {
+        this.transform.position = new Vector3(this.transform.position.x, GroundYPos, this.transform.position.z);
         isPickedUp = false;
     }
 

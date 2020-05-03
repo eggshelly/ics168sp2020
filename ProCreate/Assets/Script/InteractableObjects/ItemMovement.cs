@@ -64,7 +64,7 @@ public class ItemMovement : MonoBehaviour
         {
             if(!Placing && CanPlace)
             {
-                StartCoroutine(PlaceObject());
+                PlaceObject();
             }
         }
         else if (InputManager.cancel(Shop.GetPlayer()))
@@ -97,6 +97,8 @@ public class ItemMovement : MonoBehaviour
     {
         Collider[] colls;
 
+        ExtDebug.DrawBoxCastOnHit(this.transform.position, coll.bounds.extents * 1.3f, this.transform.rotation, transform.forward, 0, Color.red);
+
         colls = Physics.OverlapBox(this.transform.position, coll.bounds.extents * 1.3f, this.transform.rotation, ~(1 << this.gameObject.layer));
 
         if(colls.Length > 0)
@@ -116,22 +118,13 @@ public class ItemMovement : MonoBehaviour
         
         this.transform.position += (Vector3.right * hor + Vector3.forward * vert) * DistanceToMove;
 
-        yield return new WaitForSeconds(0.01f);
+        yield return new WaitForSeconds(0.05f);
        
         Moving = false;
     }
     
-    IEnumerator PlaceObject()
+    void  PlaceObject()
     {
-        Placing = true;
-
-        while (Moving)
-        {
-            yield return null;
-            
-        }
-            
-
         this.transform.position = new Vector3(this.transform.position.x, GroundYPos, this.transform.position.z);
 
         Shop.FinalizePurchase();

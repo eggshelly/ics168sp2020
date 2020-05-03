@@ -30,6 +30,9 @@ public class PlayerMovement : MonoBehaviour
 
     Vector2 ObjectInDirection = new Vector2();
 
+    bool isHoldingObject;
+    BoxCollider ObjBox;
+
     #endregion
 
     #region Raycast Variables
@@ -266,7 +269,7 @@ public class PlayerMovement : MonoBehaviour
     {
         RaycastHit hit;
 
-        Vector3 pos = this.transform.position + transform.forward * (BoxCenter.z + BoxSize.z / 2);
+        Vector3 pos = GetPosToRaycastFrom();
 
 
         float longerRay = 2 * RaycastLength;
@@ -284,38 +287,86 @@ public class PlayerMovement : MonoBehaviour
 
     void GeneralRaycast()
     {
-        RaycastHit hit;
         Collider[] colls;
-        Collider coll;
+        Crossable cross;
+        Pen pen;
 
-        Vector3 pos = this.transform.position + transform.forward * BoxCenter.z ;
+        Vector3 pos = GetPosToBoxCastFrom();
+        Vector3 size = GetSizeOfBox(pos);
 
-        ExtDebug.DrawBoxCastOnHit(pos, BoxSize / 2, this.transform.rotation, transform.forward, RaycastLength, Color.red);
+        colls = Physics.OverlapBox(pos + transform.forward * RaycastLength, size, this.transform.rotation, ~(1 << LayerMask.NameToLayer("Player")));
 
-        bool hitByBoxCast = Physics.BoxCast(pos, BoxSize / 2, transform.forward, out hit, this.transform.rotation, RaycastLength, ~(1 << LayerMask.NameToLayer("Player")));
-        colls = Physics.OverlapBox(pos + transform.forward * BoxSize.z / 2, BoxSize / 2, this.transform.rotation, ~(1 << LayerMask.NameToLayer("Player")));
+        ExtDebug.DrawBox(pos + transform.forward * RaycastLength, size, this.transform.rotation, Color.black);
+
+
 
         CheckIfEnterOrLeftPen(colls);
 
 
-        if (hitByBoxCast || colls.Length > 0)
+        if (colls.Length > 0)
         {
-            coll = (hit.collider != null ? hit.collider : colls[0]);
-
-
-            //Checks if the object it collided with is something that can be crossed or if the player is inside the pen
-            Crossable cross = coll.gameObject.GetComponent<Crossable>();
-            Pen pen = coll.gameObject.GetComponent<Pen>();
-
-
-            if ((cross != null && cross.IsOpen()) || pen != null)
+            if(colls.Length == 1)
             {
-                UpdateObjectInDirection();
+                cross = colls[0].gameObject.GetComponent<Crossable>();
+                if ((cross != null && cross.IsOpen()))
+                {
+                    Debug.Log("Hit only the gate");
+                    UpdateObjectInDirection();
+                    return;
+                }
+
+                pen = colls[0].gameObject.GetComponent<Pen>();
+                if (pen != null)
+                {
+                    Debug.Log("Hit only the pen");
+                    UpdateObjectInDirection();
+                    return;
+                }
+
+
+                UpdateObjectInDirection(colls[0].gameObject);
+
+            }
+            else if(colls.Length == 2)
+            {
+                cross = colls[0].gameObject.GetComponent<Crossable>();
+                pen = colls[1].gameObject.GetComponent<Pen>();
+
+                if((cross != null && cross.IsOpen()) && pen != null)
+                {
+                    UpdateObjectInDirection();
+                    return;
+                }
+
+                cross = colls[1].gameObject.GetComponent<Crossable>();
+                pen = colls[0].gameObject.GetComponent<Pen>();
+
+                if ((cross != null && cross.IsOpen()) && pen != null)
+                {
+                    UpdateObjectInDirection();
+                    return;
+                }
+
+                UpdateObjectInDirection(colls[0].gameObject);
+
             }
             else
             {
-                UpdateObjectInDirection(coll.gameObject);
+
+                for(int i = 0; i < colls.Length; ++i)
+                {
+                    cross = colls[0].gameObject.GetComponent<Crossable>();
+                    pen = colls[0].gameObject.GetComponent<Pen>();
+                    if (cross == null && pen == null)
+                    {
+                        UpdateObjectInDirection(colls[i].gameObject);
+                        return;
+                    }
+                }
             }
+
+            //Checks if the object it collided with is something that can be crossed or if the player is inside the pen
+
 
 
         }
@@ -341,6 +392,78 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    Vector3 GetPosToBoxCastFrom()
+    {
+        Vector3 pos;
+        if (isHoldingObject)
+        {
+            Vector3 ObjPos = this.transform.TransformPoint(ObjBox.gameObject.transform.localPosition + ObjBox.center);
+            ObjPos.y = this.transform.position.y;
+            pos = ((this.transform.position + transform.forward * BoxCenter.z) + ObjPos) / 2f;
+        }
+        else
+        {
+            pos = this.transform.position + transform.forward * BoxCenter.z;
+        }
+
+
+        return pos;
+    }
+
+    Vector3 GetPosToRaycastFrom()
+    {
+        Vector3 pos;
+        if(isHoldingObject)
+        {
+            pos = this.transform.TransformPoint(ObjBox.gameObject.transform.localPosition + ObjBox.center);
+            pos.y = this.transform.position.y;
+        }
+        else
+        {
+            pos = this.transform.position + transform.forward * BoxCenter.z;
+
+        }
+        return pos;
+    }
+
+    Vector3 GetSizeOfBox(Vector3 pos)
+    {
+        Vector3 size;
+        if (isHoldingObject)
+        {
+            float x = Mathf.Max(BoxSize.x, ObjBox.size.x);
+            float y = Mathf.Max(BoxSize.y, ObjBox.size.y);
+            float z = Mathf.Max(BoxSize.z + (pos - (this.transform.position + BoxCenter)).magnitude, ObjBox.size.z + (pos - (ObjBox.transform.position + ObjBox.center)).magnitude);
+
+            size = new Vector3(x, y, z) / 2;
+
+        }
+        else
+        {
+            size = BoxSize / 2;
+        }
+
+
+        return size;
+    }
+
+
+
+    #endregion
+
+    #region Update Object In Hand
+
+    public void HoldingObject(BoxCollider box)
+    {
+        isHoldingObject = true;
+        ObjBox = box;
+    }
+
+    public void PutDownObject()
+    {
+        isHoldingObject = false;
+        ObjBox = null;
+    }
 
     #endregion
 
@@ -367,6 +490,11 @@ public class PlayerMovement : MonoBehaviour
     public void UsingShop(bool b)
     {
         IsInShop = b;
+    }
+
+    public bool IsFacingObstacle()
+    {
+        return ObjectInDirection != Vector2.one;
     }
 
     #endregion

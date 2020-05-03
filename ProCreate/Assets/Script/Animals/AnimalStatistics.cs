@@ -119,11 +119,9 @@ public class AnimalStatistics : MonoBehaviour, Animal
 
     public void GiveFoodAndWater(float food, float water)
     {
-        Debug.Log("Original Hunger: " + CurrentHunger.ToString() + " Original Thirst: " + CurrentThirst.ToString());
         CurrentHunger += food;
         CurrentThirst += water;
 
-        Debug.Log("New Hunger: " + CurrentHunger.ToString() + " New Thirst: " + CurrentThirst.ToString());
         CurrentHunger = (CurrentHunger > MaxFoodNeeded ? MaxFoodNeeded : CurrentHunger);
         CurrentThirst = (CurrentThirst > MaxWaterNeeded ? MaxWaterNeeded : CurrentThirst);
 
@@ -200,8 +198,7 @@ public class AnimalStatistics : MonoBehaviour, Animal
 
     public void SetAnimalCanvas(GameObject CanvasPrefab)
     {
-        GameObject NewCanvas = Instantiate(CanvasPrefab);
-        NewCanvas.transform.parent = this.gameObject.transform;
+        GameObject NewCanvas = Instantiate(CanvasPrefab, this.transform);
         this.AnimalCanvas = NewCanvas.GetComponent<AnimalCanvas>();
     }
     #endregion

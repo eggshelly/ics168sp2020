@@ -89,8 +89,7 @@ public class GeneralCanvas : MonoBehaviour
             if (StopCurrentRoutine)
             {
                 StopCurrentRoutine = false;
-                CanvasInTransition = false;
-                yield break;
+                break;
             }
         }
         CanvasRect.sizeDelta = new Vector2(CanvasRect.sizeDelta.x, CanvasHeight);
@@ -118,8 +117,7 @@ public class GeneralCanvas : MonoBehaviour
             if (StopCurrentRoutine)
             {
                 StopCurrentRoutine = false;
-                CanvasInTransition = false;
-                yield break;
+                break;
             }
         }
         CanvasRect.sizeDelta = new Vector2(CanvasRect.sizeDelta.x, 0);
