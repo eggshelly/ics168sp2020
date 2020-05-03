@@ -116,7 +116,7 @@ public class ItemMovement : MonoBehaviour
         
         this.transform.position += (Vector3.right * hor + Vector3.forward * vert) * DistanceToMove;
 
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0.01f);
        
         Moving = false;
     }

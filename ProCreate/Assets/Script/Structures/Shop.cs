@@ -68,10 +68,12 @@ public class Shop : MonoBehaviour, Interactable
         colls = Physics.OverlapBox(this.transform.position + transform.forward * (box.center.sqrMagnitude + box.bounds.extents.z), box.bounds.extents, Quaternion.identity, (1 << LayerMask.NameToLayer("Player")));
         if(colls.Length > 0)
         {
-            Player = colls[0].GetComponent<PlayerMovement>();
-            if(Player != null)
+            for(int i = 0; i < colls.Length; ++i)
             {
-                OpenShop();
+                if((Player = colls[0].GetComponent<PlayerMovement>()) != null)
+                {
+                    OpenShop();
+                }
             }
         }
     }

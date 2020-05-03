@@ -31,7 +31,7 @@ public class PlayerInteraction : MonoBehaviour
     #endregion
 
     #region Needed Components
-
+    BoxCollider box;
     PlayerMovement PlayerMove;
 
     #endregion
@@ -40,6 +40,7 @@ public class PlayerInteraction : MonoBehaviour
 
     private void Awake()
     {
+        box = this.GetComponent<BoxCollider>();
         PlayerMove = this.GetComponent<PlayerMovement>();
     }
 
@@ -81,9 +82,9 @@ public class PlayerInteraction : MonoBehaviour
 
         RaycastHit hit;
 
+        Vector3 pos = this.transform.position + transform.forward * box.center.z;
 
-        Debug.DrawRay(this.transform.position + Vector3.down * 0.3f, transform.forward, Color.red, 3f);
-        if (Physics.Raycast(this.transform.position + Vector3.down * 0.3f, transform.forward, out hit, RaycastLength, ~(1 << LayerMask.NameToLayer("Player"))))
+        if (Physics.BoxCast(pos, box.bounds.extents, transform.forward, out hit, this.transform.rotation, RaycastLength, ~(1 << LayerMask.NameToLayer("Player"))))
         {
             if (hit.collider != null)
             {
@@ -115,9 +116,9 @@ public class PlayerInteraction : MonoBehaviour
     {
         RaycastHit hit;
 
+        Vector3 pos = this.transform.position + transform.forward * box.center.z;
 
-        Debug.DrawRay(this.transform.position + Vector3.down * 0.3f, transform.forward, Color.red, 3f);
-        if (Physics.Raycast(this.transform.position + Vector3.down * 0.3f, transform.forward, out hit, RaycastLength, ~(1 << LayerMask.NameToLayer("Player"))))
+        if (Physics.BoxCast(pos, box.bounds.extents, transform.forward, out hit, this.transform.rotation, RaycastLength, ~(1 << LayerMask.NameToLayer("Player"))))
         {
             if (hit.collider != null)
             {

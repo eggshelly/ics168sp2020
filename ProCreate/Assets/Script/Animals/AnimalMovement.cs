@@ -165,6 +165,7 @@ public class AnimalMovement : MonoBehaviour
         {
             if (isPickedUp)
             {
+                InTransition = false;
                 yield break;
             }
             this.transform.rotation = Quaternion.Lerp(transform.rotation, NewRotation, RotationSpeed * Time.deltaTime);
@@ -192,8 +193,10 @@ public class AnimalMovement : MonoBehaviour
     {
         RaycastHit hit;
 
-        Debug.DrawRay(this.transform.position + Vector3.up * 0.5f, transform.forward * RaycastLength, Color.red, 1f);
-        if (Physics.Raycast(this.transform.position + Vector3.up, transform.forward, out hit, RaycastLength, ~(1 << LayerMask.NameToLayer("Animal"))))
+        Vector3 pos = this.transform.position + Vector3.up * coll.center.y;
+        ExtDebug.DrawBoxCastOnHit(pos, coll.bounds.extents, this.transform.rotation, transform.forward, RaycastLength, Color.red);
+
+        if (Physics.BoxCast(pos, coll.bounds.extents, transform.forward, out hit, this.transform.rotation, RaycastLength, ~(1 << LayerMask.NameToLayer("Animal"))))
         {
             if (hit.collider != null)
             {
@@ -201,6 +204,7 @@ public class AnimalMovement : MonoBehaviour
             }
         }
         return false;
+
     }
 
     void CheckIfPlayerIsNear()

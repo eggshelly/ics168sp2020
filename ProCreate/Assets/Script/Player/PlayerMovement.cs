@@ -83,7 +83,6 @@ public class PlayerMovement : MonoBehaviour
     void MovePlayer(Vector2 directions)
     {
         Vector3 posOffset = (Vector3.right * directions.x * ObjectInDirection.x + Vector3.forward * directions.y * ObjectInDirection.y);
-        Debug.Log(posOffset * Time.deltaTime * SpeedMultiplier);
         this.transform.position += posOffset * Time.deltaTime * SpeedMultiplier;
     }
 
