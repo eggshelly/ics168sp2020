@@ -95,7 +95,7 @@ public class SmoothCamera : MonoBehaviour
         }
         else
         {
-            targets.RemoveAt(2);
+            targets.Remove(Canvas);
         }
     }
 
