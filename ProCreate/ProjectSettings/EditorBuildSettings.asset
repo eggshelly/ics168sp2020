@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Michelle/Michelle2_Experimental.unity
+    guid: d63526942e0432d4595a12a02660fcee
   m_configObjects: {}
