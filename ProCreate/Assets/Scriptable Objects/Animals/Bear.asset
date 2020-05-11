@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e396536204a2d54b8bd97b854078f7f, type: 3}
+  m_Name: Bear
+  m_EditorClassIdentifier: 
+  AnimalBreed: Bear
+  AnimalFamily: Bear
+  MaxWillingnessToBreed: 100
+  RequiredWillingnessToBreedPercent: 90
+  WillingnessChangeAmount: 10
+  WillingnessChangeTimer: 5
+  PostBreedPercent: 0.1
+  MaxFoodNeeded: 80
+  MaxWaterNeeded: 60
+  FoodDecrease: 0
+  WaterDecrease: 0
+  FoodDecreaseTimer: 0
+  WaterDecreaseTimer: 0
