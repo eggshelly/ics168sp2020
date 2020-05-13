@@ -64,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
     {
         box = this.GetComponent<BoxCollider>();
         BoxCenter = box.center;
-        BoxSize = new Vector3(box.size.x * 0.8f, box.size.y / 2, box.size.z);
+        BoxSize = new Vector3(box.size.x * 0.65f, box.size.y / 2, box.size.z);
         Physics.queriesHitBackfaces = true;
     }
 
@@ -294,9 +294,9 @@ public class PlayerMovement : MonoBehaviour
         Vector3 pos = GetPosToBoxCastFrom();
         Vector3 size = GetSizeOfBox(pos);
 
-        colls = Physics.OverlapBox(pos + transform.forward * RaycastLength, size, this.transform.rotation, ~(1 << LayerMask.NameToLayer("Player")));
+        colls = Physics.OverlapBox(pos + transform.forward * RaycastLength, size, this.transform.rotation,~(1 << LayerMask.NameToLayer("Player") | 1 << LayerMask.NameToLayer("Animal")));
 
-        ExtDebug.DrawBox(pos + transform.forward * RaycastLength, size, this.transform.rotation, Color.black);
+        //ExtDebug.DrawBox(pos + transform.forward * RaycastLength, size, this.transform.rotation, Color.black);
 
 
 

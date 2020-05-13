@@ -35,6 +35,7 @@ public class BreedingPen : BasicPen
 
     void BreedAnimals()
     {
+        Debug.Log("Trying to breed");
         GameObject parent1 = AnimalsInPen[0];
         GameObject parent2 = AnimalsInPen[1];
 
@@ -64,6 +65,7 @@ public class BreedingPen : BasicPen
         AnimalStatistics stats = Child.AddComponent<AnimalStatistics>();
         AnimalMovement move = Child.AddComponent<AnimalMovement>();
         BoxCollider coll = Child.AddComponent<BoxCollider>();
+        Debug.Log("Added Collider");
 
 
 
@@ -137,11 +139,14 @@ public class BreedingPen : BasicPen
         float WaterDec = (Random.value < 0.5f ? parent1.GetWaterDec() : parent2.GetWaterDec());
         float FoodDecTimer = (Random.value < 0.5f ? parent1.GetFoodDecTimer() : parent2.GetFoodDecTimer());
         float WaterDecTimer = (Random.value < 0.5f ? parent1.GetWaterDecTimer() : parent2.GetWaterDecTimer());
+        int RewardMoney = Mathf.FloorToInt(((parent1.GetRewardValue() + parent2.GetRewardValue()) / 2f) * Random.Range(0.5f, 2f));
+        string NewBreed = CreateNewBreed(parent1.GetBreed(), parent2.GetBreed());
+
 
         childStats.SetAnimalCanvas(AnimalManager.instance.GetCanvasPrefab());
 
         childStats.IsNewChild(StartWillPer, MaxWillBreed, ReqWillBreed, WillChangeAm, WillChangeTimer, PostBreedPer, StartHungPer, StartThirstPer,
-            MaxFood, MaxWater, FoodDec, WaterDec, FoodDecTimer, WaterDecTimer);
+            MaxFood, MaxWater, FoodDec, WaterDec, FoodDecTimer, WaterDecTimer, RewardMoney, NewBreed);
     }
 
     void PassInNewCollider(ref BoxCollider coll, BoxCollider parent)
@@ -155,8 +160,90 @@ public class BreedingPen : BasicPen
         move.SetVariables(parent.GetMoveDist(), parent.GetMoveSpeed(), parent.GetDegTurn(), parent.GetRotSpeed(), parent.GetMoveTimer());
     }
 
+    string CreateNewBreed(string breed1, string breed2)
+    {
+        Debug.Log("creating new breed");
+
+        string StartingBreed = Random.value < 0.5f ? breed1 : breed2;
+        string OtherBreed = string.Compare(StartingBreed, breed1) == 0 ? breed2 : breed1;
 
 
+        int i = 0, j = 0;
+        string NewBreed = "";
+        bool OnVowels = Utilities.IsAVowel(StartingBreed[0]);
+        while (i < StartingBreed.Length && j < OtherBreed.Length)
+        {
+            NewBreed += (OnVowels ? GetVowels(ref i, StartingBreed) : GetConsonants(ref i, StartingBreed));
+            OnVowels = !OnVowels;
+            NewBreed += (OnVowels ? GetVowels(ref j, OtherBreed) : GetConsonants(ref j, OtherBreed));
+            OnVowels = !OnVowels;
+        }
+
+        if(i < StartingBreed.Length)
+        {
+            NewBreed += StartingBreed.Substring(i);
+        }
+
+        if(j < OtherBreed.Length)
+        {
+            NewBreed += OtherBreed.Substring(j);
+        }
+        
+        return NewBreed;
+    }
+
+    string GetVowels(ref int StartingIndex, string Breed)
+    {
+        string vowels = "";
+        for (; StartingIndex < Breed.Length; ++StartingIndex)
+        {
+            if (Utilities.IsAVowel(Breed[StartingIndex]))
+            {
+                break;
+            }
+        }
+
+
+        for (; StartingIndex < Breed.Length; ++StartingIndex)
+        {
+            if(Utilities.IsAVowel(Breed[StartingIndex]))
+            {
+                vowels += Breed[StartingIndex];
+            }
+            else
+            {
+                return vowels;
+            }
+        }
+        return vowels;
+    }
+
+    string GetConsonants(ref int StartingIndex, string Breed)
+    {
+        string consonants = "";
+
+        for (; StartingIndex < Breed.Length; ++StartingIndex)
+        {
+            if (!Utilities.IsAVowel(Breed[StartingIndex]))
+            {
+                break;
+            }
+        }
+
+
+        for (; StartingIndex < Breed.Length; ++StartingIndex)
+        {
+            if(!Utilities.IsAVowel(Breed[StartingIndex]))
+            {
+                consonants += Breed[StartingIndex];
+            }
+            else
+            {
+                return consonants;
+            }
+        }
+        return consonants;
+    }
 
     #endregion
 

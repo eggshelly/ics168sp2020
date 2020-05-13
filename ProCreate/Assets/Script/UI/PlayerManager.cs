@@ -48,6 +48,7 @@ public class PlayerManager : MonoBehaviour, PlayerDefine<PlayerManager.Player>
     public void ChangeMoneyAmount(int amount)
     {
         TotalMoney += amount;
+        Debug.Log(TotalMoney);
     }
 
     public bool HasEnoughMoney(int cost)

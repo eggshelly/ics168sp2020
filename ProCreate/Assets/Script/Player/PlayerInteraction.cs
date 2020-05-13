@@ -44,7 +44,7 @@ public class PlayerInteraction : MonoBehaviour
     {
         box = this.GetComponent<BoxCollider>();
         PlayerMove = this.GetComponent<PlayerMovement>();
-        BoxSize = new Vector3(box.size.x * 0.8f, box.size.y / 2, box.size.z);
+        BoxSize = new Vector3(box.size.x, box.size.y / 2, box.size.z * 2f);
     }
 
     private void Update()
@@ -83,31 +83,35 @@ public class PlayerInteraction : MonoBehaviour
     void InteractionRaycast()
     {
 
-        RaycastHit hit;
+        Collider[] colls;
 
         Vector3 pos = this.transform.position + transform.forward * box.center.z;
 
-        if (Physics.BoxCast(pos, BoxSize / 2f, transform.forward, out hit, this.transform.rotation,RaycastLength, ~(1 << LayerMask.NameToLayer("Player"))))
+        ExtDebug.DrawBox(pos + transform.forward * RaycastLength, BoxSize / 2, this.transform.rotation, Color.black);
+
+        colls = Physics.OverlapBox(pos + transform.forward * RaycastLength, BoxSize / 2, this.transform.rotation, ~(1 << LayerMask.NameToLayer("Player")));
+
+        if (colls.Length > 0)
         {
-            if (hit.collider != null)
+            if (colls[0] != null)
             {
                 Debug.Log("Not null");
-                if (hit.collider.gameObject.GetComponent<Animal>() != null)
+                if (colls[0].gameObject.GetComponent<Animal>() != null)
                 {
-                    PickupAnimal(hit.collider.gameObject);
+                    PickupAnimal(colls[0].gameObject);
                 }
-                else if(hit.collider.gameObject.GetComponent<ResourceSource>() != null)
+                else if(colls[0].gameObject.GetComponent<ResourceSource>() != null)
                 {
-                    CollectResource(hit.collider.gameObject);
+                    CollectResource(colls[0].gameObject);
                 }
-                else if(hit.collider.gameObject.GetComponent<Interactable>() != null)
+                else if(colls[0].gameObject.GetComponent<Interactable>() != null)
                 {
                     Debug.Log("Here");
-                    hit.collider.gameObject.GetComponent<Interactable>().Interact();
+                    colls[0].gameObject.GetComponent<Interactable>().Interact();
                 }
-                else if(hit.collider.gameObject.GetComponent<HeldObject>() != null)
+                else if(colls[0].gameObject.GetComponent<HeldObject>() != null)
                 {
-                    PickupObject(hit.collider.gameObject);
+                    PickupObject(colls[0].gameObject);
                 }
 
             }

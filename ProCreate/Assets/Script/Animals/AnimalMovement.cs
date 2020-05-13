@@ -63,7 +63,7 @@ public class AnimalMovement : MonoBehaviour
     #region Built In / Setup Functions
 
 
-    private void Awake()
+    private void Start()
     {
         GroundYPos = this.transform.position.y;
         coll = this.GetComponent<BoxCollider>();

@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Sheep
   m_EditorClassIdentifier: 
   AnimalBreed: Sheep
-  AnimalFamily: Sheep
+  RewardMoney: 70
   MaxWillingnessToBreed: 100
-  RequiredWillingnessToBreedPercent: 70
+  RequiredWillingnessToBreedPercent: 0.7
   WillingnessChangeAmount: 10
-  WillingnessChangeTimer: 0.5
+  WillingnessChangeTimer: 5
   PostBreedPercent: 0.1
   MaxFoodNeeded: 30
   MaxWaterNeeded: 30

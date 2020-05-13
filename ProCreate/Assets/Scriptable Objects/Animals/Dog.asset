@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Dog
   m_EditorClassIdentifier: 
   AnimalBreed: Dog
-  AnimalFamily: Canine
+  RewardMoney: 50
   MaxWillingnessToBreed: 100
   RequiredWillingnessToBreedPercent: 0.7
   WillingnessChangeAmount: 10

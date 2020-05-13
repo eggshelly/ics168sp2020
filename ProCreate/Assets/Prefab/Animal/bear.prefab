@@ -65,12 +65,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AnimalCanvas: {fileID: 7955769531694408358}
-  Animal: {fileID: 0}
+  Animal: {fileID: 11400000, guid: 3acca0ce644b35f42a4be10fe91b6ec8, type: 2}
   StartingHungerPercent: 0.5
   StartingThirstPercent: 0.5
   CurrentHunger: 0
   CurrentThirst: 0
-  Nickname: bear
   StartingWTBPercent: 0.8
   CurrentWillingnessToBreed: 0
 --- !u!114 &1619644169506454524
@@ -200,7 +199,7 @@ GameObject:
   - component: {fileID: 2592672278195034712}
   - component: {fileID: 7701396353648797389}
   - component: {fileID: 5641545036723927332}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: tail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -279,7 +278,7 @@ GameObject:
   - component: {fileID: 5888526526366896440}
   - component: {fileID: 7615787025650469171}
   - component: {fileID: 2454307765905736956}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -359,7 +358,7 @@ GameObject:
   - component: {fileID: 4978188982218622331}
   - component: {fileID: 9203821168205058193}
   - component: {fileID: 2158207231941712060}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: F_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -439,7 +438,7 @@ GameObject:
   - component: {fileID: 5703897208676224477}
   - component: {fileID: 3295970838323902992}
   - component: {fileID: 5212361073118963344}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: B_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -519,7 +518,7 @@ GameObject:
   - component: {fileID: 2100851335635129206}
   - component: {fileID: 8950934689447161231}
   - component: {fileID: 1075209956980566100}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: F_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -599,7 +598,7 @@ GameObject:
   - component: {fileID: 7738279019781084705}
   - component: {fileID: 2576806223053975013}
   - component: {fileID: 1740149614916878803}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -679,7 +678,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8800729856819112504}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: tail_attach
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -709,7 +708,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8800729857608652460}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: leg_attach
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -739,7 +738,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8800729857739865721}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: legs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -773,7 +772,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8800729857987270234}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: head_attach
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -805,7 +804,7 @@ GameObject:
   - component: {fileID: 2509967381821683476}
   - component: {fileID: 8981477033085510154}
   - component: {fileID: 6357034867283714483}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: B_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}

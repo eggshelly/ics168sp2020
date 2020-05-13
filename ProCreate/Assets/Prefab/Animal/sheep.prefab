@@ -65,12 +65,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AnimalCanvas: {fileID: 7955769530921504141}
-  Animal: {fileID: 0}
+  Animal: {fileID: 11400000, guid: 59dda7444d3b68e46bc385bba1d1981b, type: 2}
   StartingHungerPercent: 0.8
   StartingThirstPercent: 0.8
   CurrentHunger: 0
   CurrentThirst: 0
-  Nickname: sheep
   StartingWTBPercent: 0.8
   CurrentWillingnessToBreed: 0
 --- !u!114 &8238785852225049615
@@ -200,7 +199,7 @@ GameObject:
   - component: {fileID: 2900347346147421507}
   - component: {fileID: 7015416444153614806}
   - component: {fileID: 5040043010386054719}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: tail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -279,7 +278,7 @@ GameObject:
   - component: {fileID: 6486063714580309539}
   - component: {fileID: 7064928229859049000}
   - component: {fileID: 3005146495743112167}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -357,7 +356,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6813630004935890323}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: tail_attach
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -387,7 +386,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4587724965571868817}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: leg_attach
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -419,7 +418,7 @@ GameObject:
   - component: {fileID: 5669200394210505312}
   - component: {fileID: 8359126960476596106}
   - component: {fileID: 1605640138008620967}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: F_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -498,7 +497,7 @@ GameObject:
   - component: {fileID: 4941380568591989446}
   - component: {fileID: 2740083289621253387}
   - component: {fileID: 4894596955727466891}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: B_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -577,7 +576,7 @@ GameObject:
   - component: {fileID: 1629359755248247917}
   - component: {fileID: 8611731951276284564}
   - component: {fileID: 383077523611082575}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: F_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -654,7 +653,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8185686039030616485}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: legs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -690,7 +689,7 @@ GameObject:
   - component: {fileID: 6978605785335243066}
   - component: {fileID: 2916565245003143934}
   - component: {fileID: 1413391285983327944}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -772,7 +771,7 @@ GameObject:
   - component: {fileID: 2985373292338085903}
   - component: {fileID: 8583723445175997713}
   - component: {fileID: 6017836870086137512}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: B_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -849,7 +848,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 630499329361494963}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: head_attach
   m_TagString: Untagged
   m_Icon: {fileID: 0}

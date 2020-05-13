@@ -10,7 +10,6 @@ public class AnimalCanvas : GeneralCanvas
     [SerializeField] BarUI HungerBar;
     [SerializeField] BarUI ThirstBar;
     [SerializeField] BarUI WillBreedBar;
-    [SerializeField] TextMeshProUGUI AnimalNickname;
     [SerializeField] TextMeshProUGUI AnimalBreed;
 
     [Header("Camera Target")]
@@ -23,7 +22,6 @@ public class AnimalCanvas : GeneralCanvas
 
     private void Awake()
     {
-        Debug.Log(this.transform.parent == null ? "Null" : this.transform.parent.name);
         this.transform.parent.GetComponent<AnimalMovement>().ToggleCanvas += base.ToggleCanvas;
     }
 
@@ -48,12 +46,11 @@ public class AnimalCanvas : GeneralCanvas
 
     #region Input Information into the UI Panel Components
 
-    public void UpdateCanvas(float CurrentHungerPercent, float CurrentThirstPercent, float CurrentBreedPercent, string nickname = "None", string breed = "None")
+    public void UpdateCanvas(float CurrentHungerPercent, float CurrentThirstPercent, float CurrentBreedPercent, string breed = "None")
     {
         HungerBar.UpdateProgressBar(CurrentHungerPercent);
         ThirstBar.UpdateProgressBar(CurrentThirstPercent);
         WillBreedBar.UpdateProgressBar(CurrentBreedPercent);
-        AnimalNickname.text = nickname;
         AnimalBreed.text = breed;
     }
 

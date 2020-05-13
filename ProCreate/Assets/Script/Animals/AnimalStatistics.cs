@@ -10,12 +10,18 @@ public class AnimalStatistics : MonoBehaviour, Animal
     [Header("Animal Health")]
     [SerializeField] ScriptableAnimal Animal;
 
+    #region AnimalInfo
+
+    int NewBreedReward;
+    string Breed;
+
+    #endregion
+
     #region Animal Stats
     [SerializeField]  float StartingHungerPercent;
     [SerializeField]  float StartingThirstPercent;
     [SerializeField]  float CurrentHunger = 0f;
     [SerializeField]  float CurrentThirst = 0f;
-    [SerializeField]  string Nickname;
 
 
     float MaxFoodNeeded;
@@ -79,6 +85,8 @@ public class AnimalStatistics : MonoBehaviour, Animal
         WaterDecrease = (Animal != null ? Animal.WaterDecrease : WaterDecrease);
         FoodDecreaseTimer = (Animal != null ? Animal.FoodDecreaseTimer : FoodDecreaseTimer);
         WaterDecreaseTimer = (Animal != null ? Animal.WaterDecreaseTimer : WaterDecreaseTimer);
+        NewBreedReward = (Animal != null ? Animal.RewardMoney : NewBreedReward);
+        Breed = (Animal != null ? Animal.AnimalBreed : Breed);
 
         MaxWillingnessToBreed = (Animal != null ? Animal.MaxWillingnessToBreed : MaxWillingnessToBreed);
         RequiredWillingsnessToBreedPercent = (Animal != null ? Animal.RequiredWillingnessToBreedPercent : RequiredWillingsnessToBreedPercent);
@@ -168,7 +176,7 @@ public class AnimalStatistics : MonoBehaviour, Animal
     }
 
     public void IsNewChild( float StartWillPer, float MaxWillBreed, float ReqWillBreed, float WillChangeAm, float WillChangeTimer, float PostBreedPer, float StartHungPer, float StartThirstPer, 
-        float MaxFood, float MaxWater, float FoodDec, float WaterDec, float FoodDecTimer, float WaterDecTimer)
+        float MaxFood, float MaxWater, float FoodDec, float WaterDec, float FoodDecTimer, float WaterDecTimer, int reward, string breed)
     {
         StartingWTBPercent = StartWillPer;
         MaxWillingnessToBreed = MaxWillBreed;
@@ -184,6 +192,12 @@ public class AnimalStatistics : MonoBehaviour, Animal
         WaterDecrease = WaterDec;
         FoodDecreaseTimer = FoodDecTimer;
         WaterDecreaseTimer = WaterDecTimer;
+        NewBreedReward = reward;
+        this.Breed = breed;
+
+        Utilities.RecursivelySetLayer(this.gameObject.transform, LayerMask.NameToLayer("Animal"));
+
+        PlayerManager.instance.ChangeMoneyAmount(NewBreedReward);
     }
 
     #endregion
@@ -193,7 +207,7 @@ public class AnimalStatistics : MonoBehaviour, Animal
 
     public void UpdateCanvasUI()
     {
-        AnimalCanvas.UpdateCanvas((CurrentHunger / MaxFoodNeeded), (CurrentThirst / MaxWaterNeeded), (CurrentWillingnessToBreed / MaxWillingnessToBreed));
+        AnimalCanvas.UpdateCanvas((CurrentHunger / MaxFoodNeeded), (CurrentThirst / MaxWaterNeeded), (CurrentWillingnessToBreed / MaxWillingnessToBreed), this.Breed);
     }
 
     public void SetAnimalCanvas(GameObject CanvasPrefab)
@@ -281,6 +295,16 @@ public class AnimalStatistics : MonoBehaviour, Animal
     public float GetWaterDecTimer()
     {
         return WaterDecreaseTimer;
+    }
+
+    public float GetRewardValue()
+    {
+        return NewBreedReward;
+    }
+
+    public string GetBreed()
+    {
+        return Breed;
     }
 
     #endregion

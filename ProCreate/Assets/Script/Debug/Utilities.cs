@@ -17,8 +17,26 @@ public static class Utilities
         {Directions.neutral, Directions.neutral }
     };
 
+    static List<char> Vowels = new List<char>{ 'a', 'e', 'i', 'o', 'u' };
+
+    public static bool IsAVowel(char c)
+    {
+        return Vowels.Contains(c);
+    }
+
     public static Directions GetReverseDirection(Directions dir)
     {
         return ReverseDirections[dir];
     }
+
+    public static void RecursivelySetLayer(Transform trans, LayerMask newLayer)
+    {
+        trans.gameObject.layer = newLayer;
+
+        foreach (Transform t in trans.transform)
+        {
+            RecursivelySetLayer(t, newLayer);
+        }
+    }
+
 }

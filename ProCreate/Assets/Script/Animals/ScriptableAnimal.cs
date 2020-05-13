@@ -5,9 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "ScriptableAnimal", menuName = "ScriptableAnimal")]
 public class ScriptableAnimal : ScriptableObject
 {
-    [Header("Animal Stats: Type")]
+    [Header("Other Animal Info")]
     public string AnimalBreed;
-    public string AnimalFamily;
+    public int RewardMoney;
 
     [Header("Animal Stats: Breeding")]
     public float MaxWillingnessToBreed;

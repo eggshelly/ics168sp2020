@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Cat
   m_EditorClassIdentifier: 
   AnimalBreed: Cat
-  AnimalFamily: Feline
+  RewardMoney: 30
   MaxWillingnessToBreed: 100
   RequiredWillingnessToBreedPercent: 0.7
   WillingnessChangeAmount: 10

@@ -37,18 +37,9 @@ public class ItemMovement : MonoBehaviour
             this.GetComponent<AnimalMovement>().Pickedup();
         }
         
-        RecursivelySetLayer(this.gameObject.transform, LayerMask.NameToLayer("CurrentStructure"));
+        Utilities.RecursivelySetLayer(this.gameObject.transform, LayerMask.NameToLayer("CurrentStructure"));
     }
 
-    void RecursivelySetLayer(Transform trans, LayerMask newLayer)
-    {
-        trans.gameObject.layer = newLayer;
-
-        foreach(Transform t in trans.transform)
-        {
-            RecursivelySetLayer(t, newLayer);
-        }
-    }
 
 
     public void Purchased(Vector3 playerPos, Shop s)
@@ -131,7 +122,7 @@ public class ItemMovement : MonoBehaviour
 
         Shop.FinalizePurchase();
 
-        RecursivelySetLayer(this.transform, OriginalLayer);
+        Utilities.RecursivelySetLayer(this.transform, OriginalLayer);
 
         if (OriginalLayer == LayerMask.NameToLayer("Animal"))
         {

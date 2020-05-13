@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Rabbit
   m_EditorClassIdentifier: 
   AnimalBreed: Rabbit
-  AnimalFamily: Rodent
+  RewardMoney: 40
   MaxWillingnessToBreed: 100
   RequiredWillingnessToBreedPercent: 0.6
   WillingnessChangeAmount: 10

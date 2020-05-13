@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: Bear
   m_EditorClassIdentifier: 
   AnimalBreed: Bear
-  AnimalFamily: Bear
+  RewardMoney: 100
   MaxWillingnessToBreed: 100
-  RequiredWillingnessToBreedPercent: 90
+  RequiredWillingnessToBreedPercent: 0.8
   WillingnessChangeAmount: 10
   WillingnessChangeTimer: 5
   PostBreedPercent: 0.1
   MaxFoodNeeded: 80
   MaxWaterNeeded: 60
-  FoodDecrease: 0
-  WaterDecrease: 0
-  FoodDecreaseTimer: 0
-  WaterDecreaseTimer: 0
+  FoodDecrease: 2
+  WaterDecrease: 2
+  FoodDecreaseTimer: 7
+  WaterDecreaseTimer: 3
