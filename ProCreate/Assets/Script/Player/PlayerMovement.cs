@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -76,6 +76,8 @@ public class PlayerMovement : MonoBehaviour
         Vector2 directions = ChangePlayerDirection();
         GeneralRaycast();
         MovePlayer(directions);
+
+        //Debug.Log("Facing: " + FacingDirection.ToString());
     }
 
 
@@ -153,6 +155,87 @@ public class PlayerMovement : MonoBehaviour
 
     #region Raycast Entities
 
+    bool FacingOppositeOfObject(GameObject obstacle)
+    {
+        Directions obsDir;
+
+        float obx = obstacle.transform.position.x;
+        float obz = obstacle.transform.position.z;
+
+        float x = transform.position.x;
+        float z = transform.position.z;
+
+        float diffx = Mathf.Abs(obx - x);
+        float diffz = Mathf.Abs(obz - z);
+
+        if(diffx < 0.5f) // > x means down right, < x means up left, > z u right, < z down left, < x && > z up, > x < z down, < x && < z left, > x && > z right
+        {
+            if(diffz < 0.5f)
+            {
+                obsDir = Directions.neutral;
+            }
+            else
+            {
+                if (obz > z)
+                {
+                    obsDir = Directions.forward;
+                }
+                else
+                {
+                    obsDir = Directions.backwards;
+                }
+
+            }
+        }
+        else
+        {
+            if(diffz < 0.5f)
+            {
+                if(obx < x)
+                {
+                    obsDir = Directions.left;
+                }
+                else
+                {
+                    obsDir = Directions.right;
+                }
+            }
+            else
+            {
+                if(obx < x)
+                {
+                    if(obz < z)
+                    {
+                        obsDir = Directions.b_left;
+                    }
+                    else
+                    {
+                        obsDir = Directions.f_left;
+                    }
+                }
+                else
+                {
+                    if (obz > z)
+                    {
+                        obsDir = Directions.f_right;
+                    }
+                    else
+                    {
+                        obsDir = Directions.b_right;
+                    }
+                }
+            }
+        }
+
+        Debug.Log(FacingDirection == Utilities.GetReverseDirection(obsDir));
+
+
+        return FacingDirection == Utilities.GetReverseDirection(obsDir);
+
+        
+
+    }
+
     void UpdateObjectInDirection(GameObject obstacle = null)
     {
         if(obstacle == null)
@@ -161,8 +244,18 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
+        if (FacingOppositeOfObject(obstacle))
+        {
+            Debug.Log("Here!");
+            ObjectInDirection = Vector2.one;
+            return;
+        }
+        
+
 
         bool HitObject = false;
+
+        Debug.Log(FacingDirection);
 
         switch (FacingDirection)
         {
@@ -269,12 +362,12 @@ public class PlayerMovement : MonoBehaviour
     {
         RaycastHit hit;
 
-        Vector3 pos = GetPosToRaycastFrom();
+        Vector3 pos = GetPosToRaycastFrom() + Vector3.down;
 
 
         float longerRay = 2 * RaycastLength;
 
-        Debug.DrawRay(pos, dir * RaycastLength, Color.red, 3f);
+        Debug.DrawRay(pos, dir * RaycastLength, Color.red, 10f);
         if (Physics.Raycast(pos, dir, out hit, (isDiagonal ? Mathf.Sqrt(2 * Mathf.Pow(longerRay, 2)) : longerRay), ~(1 << LayerMask.NameToLayer("Player"))))
         {
             if (hit.collider != null)

@@ -91,30 +91,46 @@ public class PlayerInteraction : MonoBehaviour
 
         colls = Physics.OverlapBox(pos + transform.forward * RaycastLength, BoxSize / 2, this.transform.rotation, ~(1 << LayerMask.NameToLayer("Player")));
 
-        if (colls.Length > 0)
+        if (colls.Length > 0) //Uhh this whole thing should run in O(n)? i think the way i set up the overlap box itself the max length <= 10? so shouldn't be too resource consuming
         {
-            if (colls[0] != null)
+            for(int i = 0; i < colls.Length; ++i)
             {
-                Debug.Log("Not null");
-                if (colls[0].gameObject.GetComponent<Animal>() != null)
+                if (colls[i].gameObject.GetComponent<Animal>() != null)
                 {
-                    PickupAnimal(colls[0].gameObject);
+                    PickupAnimal(colls[i].gameObject);
+                    return;
                 }
-                else if(colls[0].gameObject.GetComponent<ResourceSource>() != null)
-                {
-                    CollectResource(colls[0].gameObject);
-                }
-                else if(colls[0].gameObject.GetComponent<Interactable>() != null)
-                {
-                    Debug.Log("Here");
-                    colls[0].gameObject.GetComponent<Interactable>().Interact();
-                }
-                else if(colls[0].gameObject.GetComponent<HeldObject>() != null)
-                {
-                    PickupObject(colls[0].gameObject);
-                }
-
             }
+           
+           
+            for (int i = 0; i < colls.Length; ++i)
+            {
+                if (colls[i].gameObject.GetComponent<Interactable>() != null)
+                {
+                    colls[i].gameObject.GetComponent<Interactable>().Interact();
+                    return;
+                }
+            }
+           
+           
+            for (int i = 0; i < colls.Length; ++i)
+            {
+                if (colls[i].gameObject.GetComponent<HeldObject>() != null)
+                {
+                    PickupObject(colls[i].gameObject);
+                    return;
+                }
+            }
+           
+            for (int i = 0; i < colls.Length; ++i)
+            {
+                if (colls[i].gameObject.GetComponent<ResourceSource>() != null)
+                {
+                    CollectResource(colls[i].gameObject);
+                    return;
+                }
+            }
+
         }
 
     }
