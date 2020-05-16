@@ -20,16 +20,19 @@ public class GeneralCanvas : MonoBehaviour
     bool StopCurrentRoutine = false;
     bool CanvasOpened = false;
 
+    Vector3 OriginalPos;
+
     #endregion
 
     #region Built In Functions
 
+
     private void Start()
     {
         CanvasRect.gameObject.GetComponent<Canvas>().worldCamera = Camera.main;
-        LookAtCamera();
         CanvasRect.sizeDelta = new Vector2(CanvasRect.sizeDelta.x, 0);
         CanvasRect.position = new Vector3(CanvasRect.position.x, CanvasMinY, CanvasRect.position.z);
+        OriginalPos = CanvasRect.position;
         UIPanel.SetActive(false);
         CanvasRect.gameObject.SetActive(false);
     }
@@ -71,15 +74,15 @@ public class GeneralCanvas : MonoBehaviour
 
     protected virtual IEnumerator OpenCanvasRoutine()
     {
-        LookAtCamera();
-        CanvasOpened = true;
-        CanvasRect.gameObject.SetActive(true);
         if (CanvasInTransition)
         {
             StopCurrentRoutine = true;
             while (StopCurrentRoutine)
                 yield return null;
         }
+        LookAtCamera();
+        CanvasOpened = true;
+        CanvasRect.gameObject.SetActive(true);
         CanvasInTransition = true;
         while (CanvasRect.sizeDelta.y < CanvasHeight)
         {
@@ -88,7 +91,6 @@ public class GeneralCanvas : MonoBehaviour
             yield return null;
             if (StopCurrentRoutine)
             {
-                StopCurrentRoutine = false;
                 break;
             }
         }
@@ -96,6 +98,8 @@ public class GeneralCanvas : MonoBehaviour
         CanvasRect.position = new Vector3(CanvasRect.position.x, CanvasMaxY, CanvasRect.position.z);
         CanvasInTransition = false;
         UIPanel.SetActive(true);
+        StopCurrentRoutine = false;
+        Debug.Log("Done with open routine");
     }
 
     protected virtual IEnumerator CloseCanvasRoutine()
@@ -116,20 +120,21 @@ public class GeneralCanvas : MonoBehaviour
             yield return null;
             if (StopCurrentRoutine)
             {
-                StopCurrentRoutine = false;
                 break;
             }
         }
         CanvasRect.sizeDelta = new Vector2(CanvasRect.sizeDelta.x, 0);
-        CanvasRect.position = new Vector3(CanvasRect.position.x, CanvasMinY, CanvasRect.position.z);
+        CanvasRect.position = new Vector3(OriginalPos.x, CanvasMinY, OriginalPos.z);
         CanvasInTransition = false;
         CanvasRect.gameObject.SetActive(false);
+        StopCurrentRoutine = false;
+        Debug.Log("Done with closing routine");
     }
 
     void LookAtCamera()
     {
         Vector3 pos = this.transform.position - Camera.main.transform.position;
-        this.transform.rotation = Quaternion.LookRotation(pos); /* + this.transform.position.y) *(3/4f), Camera.main.transform.position.z)));*/
+        this.transform.rotation = Quaternion.LookRotation(pos, Vector3.up); /* + this.transform.position.y) *(3/4f), Camera.main.transform.position.z)));*/
     }
 
     #endregion

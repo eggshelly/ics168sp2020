@@ -63,7 +63,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Welcome!
+  m_text: 'Schmeckles: 500'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -132,10 +132,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 152767713}
-    characterCount: 8
+    characterCount: 15
     spriteCount: 0
-    spaceCount: 0
-    wordCount: 1
+    spaceCount: 1
+    wordCount: 2
     linkCount: 0
     lineCount: 1
     pageCount: 1
@@ -604,7 +604,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1112026389}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 4.23, z: 1.41}
+  m_LocalPosition: {x: 0, y: 4.25, z: 1.41}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1683476375}
@@ -627,8 +627,9 @@ MonoBehaviour:
   UIPanel: {fileID: 2125622603}
   CanvasHeight: 150
   CanvasMinY: 2
-  CanvasMaxY: 6
+  CanvasMaxY: 7
   CanvasMovementMultiplier: 5
+  MoneyText: {fileID: 152767713}
 --- !u!1 &1683476374
 GameObject:
   m_ObjectHideFlags: 0
@@ -822,10 +823,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1a12047dc700ad849a42c94c70a75953, type: 2}
   - {fileID: 11400000, guid: 3dbba77f9988fb94983ef0c4a23c1cd6, type: 2}
   - {fileID: 11400000, guid: 38272883e1edc024d93ee6aa64cf4af1, type: 2}
-  - {fileID: 11400000, guid: 38272883e1edc024d93ee6aa64cf4af1, type: 2}
-  - {fileID: 11400000, guid: 38272883e1edc024d93ee6aa64cf4af1, type: 2}
-  - {fileID: 11400000, guid: 38272883e1edc024d93ee6aa64cf4af1, type: 2}
-  - {fileID: 11400000, guid: 38272883e1edc024d93ee6aa64cf4af1, type: 2}
   Grid: {fileID: 1050848477}
   ItemPrefab: {fileID: 6260261244719624509, guid: dd77ad7aac3237742bab3df89d0830ab,
     type: 3}
@@ -869,7 +866,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1647099376500663669}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 7.61, z: 0}
+  m_LocalPosition: {x: 0, y: 8.42, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5635221681307819148}

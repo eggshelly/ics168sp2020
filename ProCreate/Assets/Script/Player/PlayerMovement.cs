@@ -227,10 +227,8 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        Debug.Log(FacingDirection == Utilities.GetReverseDirection(obsDir));
 
-
-        return FacingDirection == Utilities.GetReverseDirection(obsDir);
+        return Utilities.IsAReverseDirection(FacingDirection, obsDir);
 
         
 

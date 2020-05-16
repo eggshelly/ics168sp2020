@@ -25,7 +25,6 @@ public class ItemMovement : MonoBehaviour
     private void Awake()
     {
         coll = this.GetComponent<BoxCollider>();
-        DetectLayer();
     }
 
     void DetectLayer()
@@ -44,6 +43,7 @@ public class ItemMovement : MonoBehaviour
 
     public void Purchased(Vector3 playerPos, Shop s)
     {
+        DetectLayer();
         GroundYPos = this.transform.position.y;
         Debug.Log(GroundYPos);
         this.transform.position = playerPos + Vector3.up * YOffset;

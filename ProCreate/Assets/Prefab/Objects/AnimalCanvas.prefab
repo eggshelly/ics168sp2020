@@ -1416,7 +1416,7 @@ MonoBehaviour:
   UIPanel: {fileID: 7955769531296234319}
   CanvasHeight: 100
   CanvasMinY: 2
-  CanvasMaxY: 5
+  CanvasMaxY: 4.5
   CanvasMovementMultiplier: 5
   HungerBar: {fileID: 7955769531180941167}
   ThirstBar: {fileID: 7955769530302752048}
