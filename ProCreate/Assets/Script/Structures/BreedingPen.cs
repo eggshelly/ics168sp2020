@@ -139,6 +139,9 @@ public class BreedingPen : BasicPen
         float WaterDec = (Random.value < 0.5f ? parent1.GetWaterDec() : parent2.GetWaterDec());
         float FoodDecTimer = (Random.value < 0.5f ? parent1.GetFoodDecTimer() : parent2.GetFoodDecTimer());
         float WaterDecTimer = (Random.value < 0.5f ? parent1.GetWaterDecTimer() : parent2.GetWaterDecTimer());
+        float ResDecTimer = (Random.value < 0.5f ? parent1.GetResDecTimer(): parent2.GetResDecTimer());
+        float ResourceInc = (Random.value < 0.5f ? parent1.GetResourceIncrease() : parent2.GetResourceIncrease());
+        float ResourceValue = (Random.value < 0.5f ? parent1.GetResourceValue() : parent2.GetResourceValue());
         int RewardMoney = Mathf.FloorToInt(((parent1.GetRewardValue() + parent2.GetRewardValue()) / 2f) * Random.Range(0.5f, 2f));
         string NewBreed = CreateNewBreed(parent1.GetBreed(), parent2.GetBreed());
 
@@ -146,7 +149,7 @@ public class BreedingPen : BasicPen
         childStats.SetAnimalCanvas(AnimalManager.instance.GetCanvasPrefab());
 
         childStats.IsNewChild(StartWillPer, MaxWillBreed, ReqWillBreed, WillChangeAm, WillChangeTimer, PostBreedPer, StartHungPer, StartThirstPer,
-            MaxFood, MaxWater, FoodDec, WaterDec, FoodDecTimer, WaterDecTimer, RewardMoney, NewBreed);
+            MaxFood, MaxWater, FoodDec, WaterDec, FoodDecTimer, WaterDecTimer, ResDecTimer, ResourceInc, ResourceValue, RewardMoney, NewBreed);
     }
 
     void PassInNewCollider(ref BoxCollider coll, BoxCollider parent)

@@ -7,7 +7,7 @@ public class AnimalStatistics : MonoBehaviour, Animal
     [Header("Animal UI")]
     [SerializeField] AnimalCanvas AnimalCanvas;
 
-    [Header("Animal Health")]
+    [Header("Animal Stats")]
     [SerializeField] ScriptableAnimal Animal;
 
     #region AnimalInfo
@@ -32,6 +32,18 @@ public class AnimalStatistics : MonoBehaviour, Animal
     float WaterDecreaseTimer;
     #endregion
 
+    #region Animal Resource Variables
+    [Header("Animal Resource Variables")]
+    [SerializeField] float StartingResourcePercent = 0.3f;
+    [SerializeField] float CurrentResourceReadiness;
+
+    float ResourceDecreaseTimer;
+    float ResourceIncrease;
+    float MaxResource = 100f;
+
+    float ResourceValue;
+    #endregion
+
     #region Animal Breeding Variables
     [Header("Breeding Variables")]
     [SerializeField]  float StartingWTBPercent = 0.8f;
@@ -50,6 +62,7 @@ public class AnimalStatistics : MonoBehaviour, Animal
     float ThirstTimer;
     float HungerTimer;
     float WillingnessTimer;
+    float ResourceTimer;
 
     #endregion
 
@@ -60,11 +73,13 @@ public class AnimalStatistics : MonoBehaviour, Animal
     void Start()
     {
         SetupVariables();
+        CurrentResourceReadiness = (CurrentResourceReadiness == 0 ? StartingResourcePercent * MaxResource : CurrentResourceReadiness);
         CurrentHunger = (CurrentHunger == 0 ? StartingHungerPercent * MaxFoodNeeded : CurrentHunger);
         CurrentThirst = (CurrentThirst == 0 ? StartingThirstPercent * MaxWaterNeeded : CurrentThirst);
         CurrentWillingnessToBreed = (CurrentWillingnessToBreed  == 0 ? StartingWTBPercent * MaxWillingnessToBreed : CurrentWillingnessToBreed);
         ThirstTimer = WaterDecreaseTimer;
         HungerTimer = FoodDecreaseTimer;
+        ResourceTimer = ResourceDecreaseTimer;
         WillingnessTimer = WillingnessChangeTimer;
         AnimalCanvas.CanUpdateCanvasUI += UpdateCanvasUI;
     }
@@ -74,6 +89,7 @@ public class AnimalStatistics : MonoBehaviour, Animal
     private void Update()
     {
         DecrementHungerAndThirst();
+        DecrementResourceTimer();
         ChangeWillingnessToBreed();
     }
 
@@ -93,6 +109,35 @@ public class AnimalStatistics : MonoBehaviour, Animal
         WillingnessChangeAmount = (Animal != null ? Animal.WillingnessChangeAmount : WillingnessChangeAmount);
         WillingnessChangeTimer = (Animal != null ? Animal.WillingnessChangeTimer : WillingnessChangeTimer);
         PostBreedPercent = (Animal != null ? Animal.PostBreedPercent : PostBreedPercent);
+
+        ResourceIncrease = (Animal != null ? Animal.ResourceIncrease : ResourceIncrease);
+        ResourceDecreaseTimer = (Animal != null ? Animal.ResourceTimer : ResourceDecreaseTimer);
+        ResourceValue = (Animal != null ? Animal.ResourceValue : ResourceValue);
+    }
+
+    #endregion
+
+    #region Changing Resource Variables
+
+    void DecrementResourceTimer()
+    {
+        if(ResourceTimer <= 0)
+        {
+            CurrentResourceReadiness += ResourceIncrease;
+            CurrentResourceReadiness = (CurrentResourceReadiness >= 100 ? 100 : CurrentResourceReadiness);
+            ResourceTimer = ResourceDecreaseTimer;
+        }
+        else
+        {
+            ResourceTimer -= Time.deltaTime;
+        }
+    }
+
+    public void RetrieveResourceFromAnimal()
+    {
+        PlayerManager.instance.ChangeMoneyAmount((int)ResourceValue);
+        CurrentResourceReadiness = 0f;
+        UpdateCanvasUI();
     }
 
     #endregion
@@ -176,7 +221,7 @@ public class AnimalStatistics : MonoBehaviour, Animal
     }
 
     public void IsNewChild( float StartWillPer, float MaxWillBreed, float ReqWillBreed, float WillChangeAm, float WillChangeTimer, float PostBreedPer, float StartHungPer, float StartThirstPer, 
-        float MaxFood, float MaxWater, float FoodDec, float WaterDec, float FoodDecTimer, float WaterDecTimer, int reward, string breed)
+        float MaxFood, float MaxWater, float FoodDec, float WaterDec, float FoodDecTimer, float WaterDecTimer, float ResDecTimer, float RecInc, float ResVal, int reward, string breed)
     {
         StartingWTBPercent = StartWillPer;
         MaxWillingnessToBreed = MaxWillBreed;
@@ -186,12 +231,19 @@ public class AnimalStatistics : MonoBehaviour, Animal
         PostBreedPercent = PostBreedPer;
         StartingHungerPercent = StartHungPer;
         StartingThirstPercent = StartThirstPer;
+
+
         MaxFoodNeeded = MaxFood;
         MaxWaterNeeded = MaxWater;
         FoodDecrease = FoodDec;
         WaterDecrease = WaterDec;
         FoodDecreaseTimer = FoodDecTimer;
         WaterDecreaseTimer = WaterDecTimer;
+
+        ResourceDecreaseTimer = ResDecTimer;
+        ResourceIncrease = RecInc;
+        ResourceValue = ResVal;
+
         NewBreedReward = reward;
         this.Breed = breed;
 
@@ -207,7 +259,7 @@ public class AnimalStatistics : MonoBehaviour, Animal
 
     public void UpdateCanvasUI()
     {
-        AnimalCanvas.UpdateCanvas((CurrentHunger / MaxFoodNeeded), (CurrentThirst / MaxWaterNeeded), (CurrentWillingnessToBreed / MaxWillingnessToBreed), this.Breed);
+        AnimalCanvas.UpdateCanvas((CurrentHunger / MaxFoodNeeded), (CurrentThirst / MaxWaterNeeded), (CurrentWillingnessToBreed / MaxWillingnessToBreed), (CurrentResourceReadiness / MaxResource), this.Breed);
     }
 
     public void SetAnimalCanvas(GameObject CanvasPrefab)
@@ -305,6 +357,21 @@ public class AnimalStatistics : MonoBehaviour, Animal
     public string GetBreed()
     {
         return Breed;
+    }
+
+    public float GetResDecTimer()
+    {
+        return ResourceDecreaseTimer;
+    }
+
+    public float GetResourceIncrease()
+    {
+        return ResourceIncrease;
+    }
+
+    public float GetResourceValue()
+    {
+        return ResourceValue;
     }
 
     #endregion
