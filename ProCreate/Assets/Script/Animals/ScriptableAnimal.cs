@@ -23,4 +23,9 @@ public class ScriptableAnimal : ScriptableObject
     public float WaterDecrease;
     public float FoodDecreaseTimer;
     public float WaterDecreaseTimer;
+
+    [Header("Animal Resource Variables")]
+    public float ResourceIncrease;
+    public float ResourceTimer;
+    public float ResourceValue;
 }
