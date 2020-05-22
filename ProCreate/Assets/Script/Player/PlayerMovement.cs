@@ -76,8 +76,6 @@ public class PlayerMovement : MonoBehaviour
         Vector2 directions = ChangePlayerDirection();
         GeneralRaycast();
         MovePlayer(directions);
-
-        //Debug.Log("Facing: " + FacingDirection.ToString());
     }
 
 
@@ -236,11 +234,14 @@ public class PlayerMovement : MonoBehaviour
 
     void UpdateObjectInDirection(GameObject obstacle = null)
     {
+
         if(obstacle == null)
         {
             ObjectInDirection = Vector2.one;
             return;
         }
+
+        Debug.Log("Hit an obstacle");
 
         if (FacingOppositeOfObject(obstacle))
         {
@@ -270,108 +271,245 @@ public class PlayerMovement : MonoBehaviour
                 ObjectInDirection.x = 0;
                 break;
             case Directions.b_left:
-                if (DirectionalRaycast(Vector3.right * -1))
+                Debug.Log(FacingDirection.ToString());
+                if (DirectionalRaycast(Vector3.right * -1, Color.red))
                 {
                     HitObject = true;
                     ObjectInDirection.x = 0;
+                    Debug.Log("Hit Horizontally");
                 }
-                if (DirectionalRaycast(Vector3.back))
+                if (DirectionalRaycast(Vector3.back, Color.cyan))
                 {
                     HitObject = true;
                     ObjectInDirection.y = 0;
+                    Debug.Log("Hit vertically");
                 }
 
                 if (!HitObject)
                 {
-                    if (DirectionalRaycast(transform.forward))
+                    if (DirectionalRaycast(transform.forward, Color.black, true))
                     {
+                        Debug.Log("Hit diagonally");
                         ObjectInDirection = Vector2.zero;
                     }
                 }
 
                 break;
             case Directions.b_right:
-                if (DirectionalRaycast(Vector3.right))
+                Debug.Log(FacingDirection.ToString());
+                if (DirectionalRaycast(Vector3.right, Color.red))
                 {
                     HitObject = true;
                     ObjectInDirection.x = 0;
+                    Debug.Log("Hit Horizontally");
                 }
-                if (DirectionalRaycast(Vector3.back))
+                if (DirectionalRaycast(Vector3.back, Color.cyan))
                 {
                     HitObject = true;
                     ObjectInDirection.y = 0;
+                    Debug.Log("Hit vertically");
                 }
 
                 if (!HitObject)
                 {
-                    if (DirectionalRaycast(transform.forward))
+                    if (DirectionalRaycast(transform.forward, Color.black, true))
                     {
+                        Debug.Log("Hit diagonally");
                         ObjectInDirection = Vector2.zero;
                     }
                 }
 
                 break;
             case Directions.f_left:
-                if (DirectionalRaycast(Vector3.right * -1))
+                Debug.Log(FacingDirection.ToString());
+                if (DirectionalRaycast(Vector3.right * -1, Color.red))
                 {
                     HitObject = true;
                     ObjectInDirection.x = 0;
+                    Debug.Log("Hit Horizontally");
                 }
-                if (DirectionalRaycast(Vector3.forward))
+                if (DirectionalRaycast(Vector3.forward, Color.cyan))
                 {
                     HitObject = true;
                     ObjectInDirection.y = 0;
+                    Debug.Log("Hit vertically");
                 }
 
                 if (!HitObject)
                 {
-                    if (DirectionalRaycast(transform.forward))
+                    if (DirectionalRaycast(transform.forward, Color.black, true))
                     {
+                        Debug.Log("Hit diagonally");
                         ObjectInDirection = Vector2.zero;
                     }
                 }
                 break;
             case Directions.f_right:
-                if (DirectionalRaycast(Vector3.right))
+                Debug.Log(FacingDirection.ToString());
+                if (DirectionalRaycast(Vector3.right, Color.red))
                 {
                     HitObject = true;
                     ObjectInDirection.x = 0;
+                    Debug.Log("Hit Horizontally");
                 }
-                if (DirectionalRaycast(Vector3.forward))
+                if (DirectionalRaycast(Vector3.forward, Color.cyan))
                 {
                     HitObject = true;
                     ObjectInDirection.y = 0;
+                    Debug.Log("Hit vertically");
                 }
 
                 if (!HitObject)
                 {
-                    if (DirectionalRaycast(transform.forward))
+                    if (DirectionalRaycast(transform.forward, Color.black, true))
                     {
+                        Debug.Log("Hit diagonally");
                         ObjectInDirection = Vector2.zero;
                     }
                 }
 
                 break;
         }
+        Debug.Log(ObjectInDirection);
 
     }
 
-    bool DirectionalRaycast(Vector3 dir, bool isDiagonal = false)
-    {
-        RaycastHit hit;
-
-        Vector3 pos = GetPosToRaycastFrom() + Vector3.down;
-
-
-        float longerRay = 2 * RaycastLength;
-
-        Debug.DrawRay(pos, dir * RaycastLength, Color.red, 10f);
-        if (Physics.Raycast(pos, dir, out hit, (isDiagonal ? Mathf.Sqrt(2 * Mathf.Pow(longerRay, 2)) : longerRay), ~(1 << LayerMask.NameToLayer("Player"))))
+    #region collision testing
+    /*
+     * 
+        switch (FacingDirection)
         {
-            if (hit.collider != null)
-            {
-                return true;
-            }
+            case Directions.backwards:
+                ObjectInDirection.y = 0;
+                break;
+            case Directions.forward:
+                ObjectInDirection.y = 0;
+                break;
+            case Directions.left:
+                ObjectInDirection.x = 0;
+                break;
+            case Directions.right:
+                ObjectInDirection.x = 0;
+                break;
+            case Directions.b_left: // (transform.right + transform.forward).normalized
+                Debug.Log(FacingDirection.ToString());
+                if (DirectionalRaycast((transform.right + transform.forward).normalized, Color.red))
+                {
+                    HitObject = true;
+                    ObjectInDirection.x = 0;
+                    Debug.Log("Hit Horizontally");
+                }
+                if (DirectionalRaycast(((transform.right * -1) + transform.forward).normalized, Color.cyan))
+                {
+                    HitObject = true;
+                    ObjectInDirection.y = 0;
+                    Debug.Log("Hit vertically");
+                }
+
+                if (!HitObject)
+                {
+                    if (DirectionalRaycast(transform.forward, Color.black))
+                    {
+                        Debug.Log("Hit diagonally");
+                        ObjectInDirection = Vector2.zero;
+                    }
+                }
+
+                break;
+            case Directions.b_right:
+                Debug.Log(FacingDirection.ToString());
+                if (DirectionalRaycast(((transform.right * -1) + transform.forward).normalized, Color.red))
+                {
+                    HitObject = true;
+                    ObjectInDirection.x = 0;
+                    Debug.Log("Hit Horizontally");
+                }
+                if (DirectionalRaycast((transform.right + transform.forward).normalized, Color.cyan))
+                {
+                    HitObject = true;
+                    ObjectInDirection.y = 0;
+                    Debug.Log("Hit vertically");
+                }
+
+                if (!HitObject)
+                {
+                    if (DirectionalRaycast(transform.forward, Color.black))
+                    {
+                        Debug.Log("Hit diagonally");
+                        ObjectInDirection = Vector2.zero;
+                    }
+                }
+
+                break;
+            case Directions.f_left:
+                Debug.Log(FacingDirection.ToString());
+                if (DirectionalRaycast(((transform.right * -1) + transform.forward).normalized, Color.red))
+                {
+                    HitObject = true;
+                    ObjectInDirection.x = 0;
+                    Debug.Log("Hit Horizontally");
+                }
+                if (DirectionalRaycast((transform.right + transform.forward).normalized, Color.cyan))
+                {
+                    HitObject = true;
+                    ObjectInDirection.y = 0;
+                    Debug.Log("Hit vertically");
+                }
+
+                if (!HitObject)
+                {
+                    if (DirectionalRaycast(transform.forward, Color.black))
+                    {
+                        Debug.Log("Hit diagonally");
+                        ObjectInDirection = Vector2.zero;
+                    }
+                }
+                break;
+            case Directions.f_right:
+                Debug.Log(FacingDirection.ToString());
+                if (DirectionalRaycast((transform.right + transform.forward).normalized, Color.red))
+                {
+                    HitObject = true;
+                    ObjectInDirection.x = 0;
+                    Debug.Log("Hit Horizontally");
+                }
+                if (DirectionalRaycast(((transform.right * -1) + transform.forward).normalized, Color.cyan))
+                {
+                    HitObject = true;
+                    ObjectInDirection.y = 0;
+                    Debug.Log("Hit vertically");
+                }
+
+                if (!HitObject)
+                {
+                    if (DirectionalRaycast(transform.forward, Color.black))
+                    {
+                        Debug.Log("Hit diagonally");
+                        ObjectInDirection = Vector2.zero;
+                    }
+                }
+
+                break;
+        }
+    */
+
+    #endregion
+
+    bool DirectionalRaycast(Vector3 dir, Color col,  bool isDiagonal = false)
+    {
+        Collider[] colls;
+
+        Vector3 pos = GetPosToBoxCastFrom() + Vector3.down * 0.7f;
+        Vector3 size = (dir == Vector3.right || dir == Vector3.right * -1  ? new Vector3(0.6f, 0.1f, 0.1f) : new Vector3(0.1f, 0.1f, 0.6f));
+        float longerRay = RaycastLength;
+
+        ExtDebug.DrawBox(pos + dir * (isDiagonal ? Mathf.Sqrt(Mathf.Pow(longerRay, 2)) : longerRay), size, (isDiagonal ? this.transform.rotation : Quaternion.identity), col);
+
+        colls = Physics.OverlapBox(pos + dir * (isDiagonal ? Mathf.Sqrt(2 * Mathf.Pow(longerRay, 2)) : longerRay), size, Quaternion.identity, ~(1 << LayerMask.NameToLayer("Player")));
+
+        if (colls.Length > 0)
+        {
+            return true;
         }
         return false;
     }
@@ -387,7 +525,7 @@ public class PlayerMovement : MonoBehaviour
 
         colls = Physics.OverlapBox(pos + transform.forward * RaycastLength, size, this.transform.rotation,~(1 << LayerMask.NameToLayer("Player") | 1 << LayerMask.NameToLayer("Animal")));
 
-        //ExtDebug.DrawBox(pos + transform.forward * RaycastLength, size, this.transform.rotation, Color.black);
+        ExtDebug.DrawBox(pos + transform.forward * RaycastLength, size, this.transform.rotation, Color.black);
 
 
 

@@ -95,6 +95,7 @@ public class GeneralCanvas : MonoBehaviour
             }
         }
         CanvasRect.sizeDelta = new Vector2(CanvasRect.sizeDelta.x, CanvasHeight);
+        CanvasRect.localPosition = Vector3.zero;
         CanvasRect.position = new Vector3(CanvasRect.position.x, CanvasMaxY, CanvasRect.position.z);
         CanvasInTransition = false;
         UIPanel.SetActive(true);
@@ -124,7 +125,8 @@ public class GeneralCanvas : MonoBehaviour
             }
         }
         CanvasRect.sizeDelta = new Vector2(CanvasRect.sizeDelta.x, 0);
-        CanvasRect.position = new Vector3(OriginalPos.x, CanvasMinY, OriginalPos.z);
+        CanvasRect.localPosition = Vector3.zero;
+        CanvasRect.position = new Vector3(CanvasRect.position.x, CanvasMinY, CanvasRect.position.z);
         CanvasInTransition = false;
         CanvasRect.gameObject.SetActive(false);
         StopCurrentRoutine = false;
