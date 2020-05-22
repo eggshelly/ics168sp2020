@@ -254,7 +254,6 @@ public class AnimalStatistics : MonoBehaviour, Animal
 
     #endregion
 
-
     #region Updating the Canvas objects
 
     public void UpdateCanvasUI()

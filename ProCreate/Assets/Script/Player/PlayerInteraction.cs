@@ -311,8 +311,12 @@ public class PlayerInteraction : MonoBehaviour
 
             float food = 0;
             float water = 0;
-            switch(obj.GetTypeOfObject())
+            switch (obj.GetTypeOfObject())
             {
+                case TypeOfObject.ResourceCollector:
+                    stats.RetrieveResourceFromAnimal();
+                    break;
+                
                 case TypeOfObject.Bucket:                    
                     water = (obj.IsCarryingUnits() ? obj.GetNumUnitsHeld() : 0);
                     ConsumedPerpetualObject();

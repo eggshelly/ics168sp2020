@@ -25,3 +25,6 @@ MonoBehaviour:
   WaterDecrease: 2
   FoodDecreaseTimer: 7
   WaterDecreaseTimer: 3
+  ResourceIncrease: 8
+  ResourceTimer: 1
+  ResourceValue: 40

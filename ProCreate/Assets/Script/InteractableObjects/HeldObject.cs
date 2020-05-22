@@ -6,6 +6,7 @@ public enum TypeOfObject
 {
     Bucket,
     Hay,
+    ResourceCollector,
     None
 }
 
