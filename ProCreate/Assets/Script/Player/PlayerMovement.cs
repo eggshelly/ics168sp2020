@@ -252,7 +252,6 @@ public class PlayerMovement : MonoBehaviour
 
         bool HitObject = false;
 
-        Debug.Log(FacingDirection);
 
         switch (FacingDirection)
         {
@@ -523,7 +522,6 @@ public class PlayerMovement : MonoBehaviour
                 cross = colls[0].gameObject.GetComponent<Crossable>();
                 if ((cross != null && cross.IsOpen()))
                 {
-                    Debug.Log("Hit only the gate");
                     UpdateObjectInDirection();
                     return;
                 }
@@ -531,7 +529,6 @@ public class PlayerMovement : MonoBehaviour
                 pen = colls[0].gameObject.GetComponent<Pen>();
                 if (pen != null)
                 {
-                    Debug.Log("Hit only the pen");
                     UpdateObjectInDirection();
                     return;
                 }

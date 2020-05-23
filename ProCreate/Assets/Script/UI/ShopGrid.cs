@@ -38,23 +38,32 @@ public class ShopGrid : MonoBehaviour
         PopulateGrid();
     }
 
+
     private void OnEnable()
     {
         ResetScrollRect();
     }
 
-
     private void PopulateGrid()
     {
         ShopItems = new List<ItemUI>();
-        for(int i = 0; i < Items.Count; ++i)
+        int i = 0;
+        for(; i < Items.Count; ++i)
         {
             GameObject NewItem = Instantiate(ItemPrefab, Grid);
             ItemUI ui = NewItem.GetComponent<ItemUI>();
             ui.SetupUI(Items[i].ItemName, Items[i].ItemCost, Items[i].ItemImage);
             ShopItems.Add(ui);
         }
-        ScrollPercent = (spacing + height) / ((float)ShopItems.Count * (spacing + height));
+        while(i % 4 > 0)
+        {
+            GameObject NewItem = Instantiate(ItemPrefab, Grid);
+            ItemUI ui = NewItem.GetComponent<ItemUI>();
+            ui.SetupUI();
+            ++i;
+        }
+        Debug.Log(i);
+        ScrollPercent = 0.25f / (((i / 4) - 2) == 0 ? 1f :2 *( (i / 4) - 2));
         Debug.Log(ScrollPercent);
     }
 
@@ -69,6 +78,7 @@ public class ShopGrid : MonoBehaviour
 
     void UpdateScrollRectPosition(int index)
     {
+        Debug.Log(string.Format("Array: {0}, {1}, {2}, {3}   Index: {4}", IndexesOnScreen[0], IndexesOnScreen[1], IndexesOnScreen[2], IndexesOnScreen[3], index));
         if(IndexesOnScreen.Contains(index))
         {
             return;
@@ -81,35 +91,38 @@ public class ShopGrid : MonoBehaviour
                 ScrollRect.verticalNormalizedPosition = 1f;
                 IndexesOnScreen.Clear();
                 IndexesOnScreen.AddRange(new int[] { 0, 1, 2, 3});
+
             }
             else
             {
-                for (int i = 1; i < IndexesOnScreen.Count; ++i)
+                for (int i = IndexesOnScreen.Count - 1; i > 0; --i)
                 {
                     IndexesOnScreen[i] = IndexesOnScreen[i - 1];
                 }
                 IndexesOnScreen[0] = index;
 
-                ScrollRect.verticalNormalizedPosition += (ScrollPercent * 2f);
+                ScrollRect.verticalNormalizedPosition += ScrollPercent;
+                Debug.Log(ScrollRect.verticalNormalizedPosition);
             }
         }
         else
         {
             if(index == ShopItems.Count - 1)
             {
-                ScrollRect.verticalNormalizedPosition = 0f;
+                ScrollRect.verticalNormalizedPosition = 0f + ((4 - (index + 1) % 4)) * ScrollPercent;
                 IndexesOnScreen.Clear();
                 IndexesOnScreen.AddRange(new int[] { ShopItems.Count - 4, ShopItems.Count - 3, ShopItems.Count - 2, ShopItems.Count - 1 });
             }
             else
             {
-                for (int i = 0; i < IndexesOnScreen.Count - 1; ++i)
+                for (int i = 0; i < (IndexesOnScreen.Count - 1); ++i)
                 {
                     IndexesOnScreen[i] = IndexesOnScreen[i + 1];
                 }
                 IndexesOnScreen[IndexesOnScreen.Count - 1] = index;
 
-                ScrollRect.verticalNormalizedPosition -= (ScrollPercent * 2f);
+                ScrollRect.verticalNormalizedPosition -= ScrollPercent;
+                Debug.Log(ScrollRect.verticalNormalizedPosition);
             }
         }
     }

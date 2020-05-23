@@ -35,7 +35,6 @@ public class BreedingPen : BasicPen
 
     void BreedAnimals()
     {
-        Debug.Log("Trying to breed");
         GameObject parent1 = AnimalsInPen[0];
         GameObject parent2 = AnimalsInPen[1];
 
@@ -65,7 +64,6 @@ public class BreedingPen : BasicPen
         AnimalStatistics stats = Child.AddComponent<AnimalStatistics>();
         AnimalMovement move = Child.AddComponent<AnimalMovement>();
         BoxCollider coll = Child.AddComponent<BoxCollider>();
-        Debug.Log("Added Collider");
 
 
 
@@ -165,7 +163,6 @@ public class BreedingPen : BasicPen
 
     string CreateNewBreed(string breed1, string breed2)
     {
-        Debug.Log("creating new breed");
 
         string StartingBreed = Random.value < 0.5f ? breed1 : breed2;
         string OtherBreed = string.Compare(StartingBreed, breed1) == 0 ? breed2 : breed1;
@@ -182,15 +179,6 @@ public class BreedingPen : BasicPen
             OnVowels = !OnVowels;
         }
 
-        if(i < StartingBreed.Length)
-        {
-            NewBreed += StartingBreed.Substring(i);
-        }
-
-        if(j < OtherBreed.Length)
-        {
-            NewBreed += OtherBreed.Substring(j);
-        }
         
         return NewBreed;
     }

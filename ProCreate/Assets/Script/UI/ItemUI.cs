@@ -22,12 +22,13 @@ public class ItemUI : MonoBehaviour
     }
 
 
-    public void SetupUI(string name, int cost, Sprite sprite)
+    public void SetupUI(string name = "", int cost = 0, Sprite sprite = null)
     {
         ItemName.text = name;
         ItemCost.text = cost.ToString();
         ItemSprite.color = Random.ColorHSV();
     }
+
 
     public void SelectItem()
     {
