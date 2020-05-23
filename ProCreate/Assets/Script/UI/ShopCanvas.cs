@@ -17,7 +17,7 @@ public class ShopCanvas : GeneralCanvas
 
     void UpdateMoneyText()
     {
-        MoneyText.text = "Schmeckles: " + PlayerManager.instance.GetMoneyAmount().ToString();
+        MoneyText.text = "Wallet: $" + PlayerManager.instance.GetMoneyAmount().ToString();
     }
 
 }

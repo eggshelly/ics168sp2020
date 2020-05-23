@@ -100,7 +100,6 @@ public class GeneralCanvas : MonoBehaviour
         CanvasInTransition = false;
         UIPanel.SetActive(true);
         StopCurrentRoutine = false;
-        Debug.Log("Done with open routine");
     }
 
     protected virtual IEnumerator CloseCanvasRoutine()
@@ -130,7 +129,6 @@ public class GeneralCanvas : MonoBehaviour
         CanvasInTransition = false;
         CanvasRect.gameObject.SetActive(false);
         StopCurrentRoutine = false;
-        Debug.Log("Done with closing routine");
     }
 
     void LookAtCamera()

@@ -241,11 +241,9 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        Debug.Log("Hit an obstacle");
 
         if (FacingOppositeOfObject(obstacle))
         {
-            Debug.Log("Here!");
             ObjectInDirection = Vector2.one;
             return;
         }
@@ -276,20 +274,17 @@ public class PlayerMovement : MonoBehaviour
                 {
                     HitObject = true;
                     ObjectInDirection.x = 0;
-                    Debug.Log("Hit Horizontally");
                 }
                 if (DirectionalRaycast(Vector3.back, Color.cyan))
                 {
                     HitObject = true;
                     ObjectInDirection.y = 0;
-                    Debug.Log("Hit vertically");
                 }
 
                 if (!HitObject)
                 {
                     if (DirectionalRaycast(transform.forward, Color.black, true))
                     {
-                        Debug.Log("Hit diagonally");
                         ObjectInDirection = Vector2.zero;
                     }
                 }
@@ -301,45 +296,38 @@ public class PlayerMovement : MonoBehaviour
                 {
                     HitObject = true;
                     ObjectInDirection.x = 0;
-                    Debug.Log("Hit Horizontally");
                 }
                 if (DirectionalRaycast(Vector3.back, Color.cyan))
                 {
                     HitObject = true;
                     ObjectInDirection.y = 0;
-                    Debug.Log("Hit vertically");
                 }
 
                 if (!HitObject)
                 {
                     if (DirectionalRaycast(transform.forward, Color.black, true))
                     {
-                        Debug.Log("Hit diagonally");
                         ObjectInDirection = Vector2.zero;
                     }
                 }
 
                 break;
             case Directions.f_left:
-                Debug.Log(FacingDirection.ToString());
                 if (DirectionalRaycast(Vector3.right * -1, Color.red))
                 {
                     HitObject = true;
                     ObjectInDirection.x = 0;
-                    Debug.Log("Hit Horizontally");
                 }
                 if (DirectionalRaycast(Vector3.forward, Color.cyan))
                 {
                     HitObject = true;
                     ObjectInDirection.y = 0;
-                    Debug.Log("Hit vertically");
                 }
 
                 if (!HitObject)
                 {
                     if (DirectionalRaycast(transform.forward, Color.black, true))
                     {
-                        Debug.Log("Hit diagonally");
                         ObjectInDirection = Vector2.zero;
                     }
                 }
@@ -350,27 +338,23 @@ public class PlayerMovement : MonoBehaviour
                 {
                     HitObject = true;
                     ObjectInDirection.x = 0;
-                    Debug.Log("Hit Horizontally");
                 }
                 if (DirectionalRaycast(Vector3.forward, Color.cyan))
                 {
                     HitObject = true;
                     ObjectInDirection.y = 0;
-                    Debug.Log("Hit vertically");
                 }
 
                 if (!HitObject)
                 {
                     if (DirectionalRaycast(transform.forward, Color.black, true))
                     {
-                        Debug.Log("Hit diagonally");
                         ObjectInDirection = Vector2.zero;
                     }
                 }
 
                 break;
         }
-        Debug.Log(ObjectInDirection);
 
     }
 
