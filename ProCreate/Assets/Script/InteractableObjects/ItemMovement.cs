@@ -14,7 +14,8 @@ public class ItemMovement : MonoBehaviour
 
     Shop Shop;
 
-
+    public AudioClip errorPlacement;
+    public AudioSource audio;
 
     bool Moving = false;
     bool Placing = false;
@@ -93,8 +94,10 @@ public class ItemMovement : MonoBehaviour
 
         colls = Physics.OverlapBox(this.transform.position, coll.bounds.extents * 1.3f, this.transform.rotation, ~(1 << this.gameObject.layer));
 
+       
         if(colls.Length > 0)
         {
+            this.audio.PlayOneShot(errorPlacement);
             CanPlace = false;
         }
         else
