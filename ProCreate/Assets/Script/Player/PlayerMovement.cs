@@ -76,6 +76,7 @@ public class PlayerMovement : MonoBehaviour
         Vector2 directions = ChangePlayerDirection();
         GeneralRaycast();
         MovePlayer(directions);
+        
     }
 
 
@@ -87,6 +88,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 posOffset = (Vector3.right * directions.x * ObjectInDirection.x + Vector3.forward * directions.y * ObjectInDirection.y);
         this.transform.position += posOffset * Time.deltaTime * SpeedMultiplier;
+        //FindObjectOfType<AudioManager>().Play("walkingSFX"); //stuck on loop because it gets played everytime there is a fixed update regardless of character movement or not
     }
 
     //Updates the Directions variable holding the direction the player is facing
@@ -96,7 +98,7 @@ public class PlayerMovement : MonoBehaviour
         float horizontal = 0;
         float vertical = 0;
         InputManager.processMovementInput(player, ref horizontal,ref vertical);
-
+        
         if (horizontal < 0)
         {
             if (vertical < 0)
@@ -147,6 +149,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
+        
         return new Vector2(horizontal, vertical);
     }
     #endregion

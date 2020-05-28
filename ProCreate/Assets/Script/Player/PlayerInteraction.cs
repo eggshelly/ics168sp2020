@@ -257,6 +257,7 @@ public class PlayerInteraction : MonoBehaviour
                     }
                     held.SetNumUnitsHeld(source.UnitsTakenFromSource());
                     held.ChangeObjectState();
+                    FindObjectOfType<AudioManager>().Play("wellSFX");
                 }
                 break;
         }

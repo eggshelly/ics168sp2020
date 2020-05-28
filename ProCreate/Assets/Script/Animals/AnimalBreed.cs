@@ -134,6 +134,7 @@ public class AnimalBreed : MonoBehaviour
         NewMethod(main, second, newAnimal, newchild);
         //set child between to parent
         newchild.transform.position = (gameObject.transform.position + other.transform.position) / 2;
+      
     }
 
     private static void NewMethod(Material main, Material second, GameObject[] newAnimal, GameObject newchild)

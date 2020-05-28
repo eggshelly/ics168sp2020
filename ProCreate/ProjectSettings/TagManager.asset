@@ -7,6 +7,11 @@ TagManager:
   - WaterSource
   - BreedingPen
   - LivingPen
+  - bear
+  - rabbit
+  - cat
+  - sheep
+  - dog
   layers:
   - Default
   - TransparentFX

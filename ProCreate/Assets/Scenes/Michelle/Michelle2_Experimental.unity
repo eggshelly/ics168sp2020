@@ -6434,6 +6434,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3083164033947203611, guid: 81d7229896fd5144386feb77f48f28b3,
+        type: 3}
+      propertyPath: m_TagString
+      value: dog
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 81d7229896fd5144386feb77f48f28b3, type: 3}
 --- !u!1001 &565018178
@@ -13811,7 +13816,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: -180
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -6436326351604003249, guid: 8c1c8ceafc20ab04ca3031e43386c819, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8c1c8ceafc20ab04ca3031e43386c819, type: 3}
 --- !u!4 &1084766659 stripped
 Transform:
@@ -16987,7 +16993,7 @@ RectTransform:
   m_Children:
   - {fileID: 87940662}
   m_Father: {fileID: 0}
-  m_RootOrder: 26
+  m_RootOrder: 27
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -23416,6 +23422,90 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.1999998, y: 0.27731705, z: 3.2}
   m_Center: {x: 0, y: -0.11134148, z: 0}
+--- !u!1 &1876590925
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1876590927}
+  - component: {fileID: 1876590926}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1876590926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1876590925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d5b988af2af3f54483f11b2f7b6d510, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - audioName: wellSFX
+    clip: {fileID: 8300000, guid: bd793d61e845c2e418843e930de34f97, type: 3}
+    volume: 0.499
+    source: {fileID: 0}
+  - audioName: errorSound
+    clip: {fileID: 8300000, guid: ba66a266a9f8cb44f8f3d82235b16814, type: 3}
+    volume: 0.17
+    source: {fileID: 0}
+  - audioName: dogSFX
+    clip: {fileID: 8300000, guid: ca2bae96942d47b498aef83e35e3a417, type: 3}
+    volume: 0.05
+    source: {fileID: 0}
+  - audioName: catSFX
+    clip: {fileID: 8300000, guid: 2ff7bf272f70329459885b457bd3fc8c, type: 3}
+    volume: 0.05
+    source: {fileID: 0}
+  - audioName: menuSelection
+    clip: {fileID: 8300000, guid: 3605a3dc8cb864c41b84bbe38f012f02, type: 3}
+    volume: 0.085
+    source: {fileID: 0}
+  - audioName: rabbitSFX
+    clip: {fileID: 8300000, guid: 1895cf81c5f208240864a751d69dd264, type: 3}
+    volume: 0.1
+    source: {fileID: 0}
+  - audioName: birthSFX
+    clip: {fileID: 8300000, guid: a6539a84196f9e643bf2ba5defc2f542, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - audioName: bearSFX
+    clip: {fileID: 8300000, guid: f0cb94589fb321a46b0237174a8cd72e, type: 3}
+    volume: 0.05
+    source: {fileID: 0}
+  - audioName: sheepSFX
+    clip: {fileID: 8300000, guid: 5445f6579fdbac247b8103f38fece456, type: 3}
+    volume: 0.05
+    source: {fileID: 0}
+  - audioName: walkingSFX
+    clip: {fileID: 8300000, guid: acaee67ae2622c64eaa4690a1a7e3bb8, type: 3}
+    volume: 0.152
+    source: {fileID: 0}
+--- !u!4 &1876590927
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1876590925}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.527525, y: -5.7501173, z: -8.50439}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 26
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1883341356
 PrefabInstance:
   m_ObjectHideFlags: 0

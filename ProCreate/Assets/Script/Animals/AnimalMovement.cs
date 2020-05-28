@@ -140,6 +140,7 @@ public class AnimalMovement : MonoBehaviour
                 StartCoroutine(TurnAnimal());
             }
         }
+        FindObjectOfType<AudioManager>().Play(this.tag + "SFX");
     }
 
     IEnumerator MoveAnimal()
@@ -184,6 +185,7 @@ public class AnimalMovement : MonoBehaviour
 
     public void Pickedup()
     {
+        FindObjectOfType<AudioManager>().Play(this.tag + "SFX");
         isPickedUp = true;
     }
 

@@ -53,9 +53,10 @@ public class BreedingPen : BasicPen
         Material second = (Random.Range(0f, 1f) < 0.5f ? parent1.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().sharedMaterials[1] :
             parent2.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().sharedMaterials[1]);
         //Debug.Log(main.name);
-       // Debug.Log(second.name);
+        // Debug.Log(second.name);
+      
         CreateChildObject(main, second, parent1, parent2);
-
+        FindObjectOfType<AudioManager>().Play("birthSFX");
     }
 
     void CreateChildObject(Material main, Material second, GameObject parent1, GameObject parent2)
