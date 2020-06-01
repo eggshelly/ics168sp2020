@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Michelle/Michelle2_Experimental.unity
+    path: Assets/Scenes/Opening.unity
+    guid: beaa503fdaaf66747bf4d2d620a4fd2b
+  - enabled: 1
+    path: Assets/Scenes/main.unity
     guid: d63526942e0432d4595a12a02660fcee
   m_configObjects: {}

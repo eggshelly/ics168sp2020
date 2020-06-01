@@ -6,12 +6,15 @@ public class InputManager : MonoBehaviour
 {
     public static InputManager instance = null;
     private bool vertAxisInUse = false;
+    [SerializeField] MenuNav manunav;
+
     private void Awake()
     {
         if (instance == null)
         {
             instance = this;
         }
+        manunav = this.gameObject.GetComponent<MenuNav>();
     }
 
     // Start is called before the first frame update
@@ -23,7 +26,13 @@ public class InputManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetButtonDown("pause")){
+            if (Time.timeScale == 1)
+                manunav.pause();
+            else
+                manunav.unpause();
+
+        }
     }
 
     #region interaction
