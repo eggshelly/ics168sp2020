@@ -66,10 +66,12 @@ public class PlayerMovement : MonoBehaviour
         BoxCenter = box.center;
         BoxSize = new Vector3(box.size.x * 0.65f, box.size.y / 2, box.size.z);
         Physics.queriesHitBackfaces = true;
+        Debug.Log("HI");
     }
 
     private void FixedUpdate()
     {
+
         if (IsInShop)
             return;
 
@@ -245,12 +247,12 @@ public class PlayerMovement : MonoBehaviour
         }
 
 
-        if (FacingOppositeOfObject(obstacle))
+        /*if (FacingOppositeOfObject(obstacle))
         {
             ObjectInDirection = Vector2.one;
             return;
         }
-        
+        */
 
 
         bool HitObject = false;
@@ -564,6 +566,7 @@ public class PlayerMovement : MonoBehaviour
                 }
 
                 UpdateObjectInDirection(colls[0].gameObject);
+                UpdateObjectInDirection(colls[1].gameObject);
 
             }
             else
