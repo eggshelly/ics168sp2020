@@ -285,6 +285,7 @@ public class PlayerMovement : MonoBehaviour
 
                 if (!HitObject)
                 {
+                    Debug.Log("Checking for diagonal");
                     if (DirectionalRaycast(transform.forward, Color.black, true))
                     {
                         ObjectInDirection = Vector2.zero;
@@ -293,7 +294,6 @@ public class PlayerMovement : MonoBehaviour
 
                 break;
             case Directions.b_right:
-                Debug.Log(FacingDirection.ToString());
                 if (DirectionalRaycast(Vector3.right, Color.red))
                 {
                     HitObject = true;
@@ -307,6 +307,7 @@ public class PlayerMovement : MonoBehaviour
 
                 if (!HitObject)
                 {
+                    Debug.Log("Checking for diagonal");
                     if (DirectionalRaycast(transform.forward, Color.black, true))
                     {
                         ObjectInDirection = Vector2.zero;
@@ -328,6 +329,7 @@ public class PlayerMovement : MonoBehaviour
 
                 if (!HitObject)
                 {
+                    Debug.Log("Checking for diagonal");
                     if (DirectionalRaycast(transform.forward, Color.black, true))
                     {
                         ObjectInDirection = Vector2.zero;
@@ -349,6 +351,7 @@ public class PlayerMovement : MonoBehaviour
 
                 if (!HitObject)
                 {
+                    Debug.Log("Checking for diagonal");
                     if (DirectionalRaycast(transform.forward, Color.black, true))
                     {
                         ObjectInDirection = Vector2.zero;

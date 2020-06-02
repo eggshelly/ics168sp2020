@@ -108,6 +108,7 @@ public class BreedingPen : BasicPen
         PassInNewCollider(ref coll, (Random.value < 0.5f ? parent1.GetComponent<BoxCollider>() : parent2.GetComponent<BoxCollider>()));
         PassInNewMoveVars(ref move, (Random.value < 0.5f ? parent1.GetComponent<AnimalMovement>() : parent2.GetComponent<AnimalMovement>()));
 
+        Child.tag = (Random.value < 0.5f ? parent1.tag : parent2.tag);
         Child.transform.position = (parent1.transform.position + parent2.transform.position) / 2f;
     }
 
@@ -143,6 +144,7 @@ public class BreedingPen : BasicPen
         float ResourceValue = (Random.value < 0.5f ? parent1.GetResourceValue() : parent2.GetResourceValue());
         int RewardMoney = Mathf.FloorToInt(((parent1.GetRewardValue() + parent2.GetRewardValue()) / 2f) * Random.Range(0.5f, 2f));
         string NewBreed = CreateNewBreed(parent1.GetBreed(), parent2.GetBreed());
+        
 
 
         childStats.SetAnimalCanvas(AnimalManager.instance.GetCanvasPrefab());
