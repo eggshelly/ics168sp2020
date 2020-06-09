@@ -80,6 +80,8 @@ public class GeneralCanvas : MonoBehaviour
             while (StopCurrentRoutine)
                 yield return null;
         }
+
+
         LookAtCamera();
         CanvasOpened = true;
         CanvasRect.gameObject.SetActive(true);
@@ -104,13 +106,15 @@ public class GeneralCanvas : MonoBehaviour
 
     protected virtual IEnumerator CloseCanvasRoutine()
     {
-        CanvasOpened = false;
         if (CanvasInTransition)
         {
             StopCurrentRoutine = true;
             while (StopCurrentRoutine)
                 yield return null;
         }
+
+
+        CanvasOpened = false;
         CanvasInTransition = true;
         UIPanel.SetActive(false);
         while (CanvasRect.sizeDelta.y > 0)
