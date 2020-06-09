@@ -490,12 +490,12 @@ public class PlayerMovement : MonoBehaviour
         Collider[] colls;
 
         Vector3 pos = GetPosToBoxCastFrom() + Vector3.down * 0.7f;
-        Vector3 size = (dir == Vector3.right || dir == Vector3.right * -1  ? new Vector3((isHoldingObject ? 1.2f : 0.6f), 0.1f, 0.1f) : new Vector3(0.1f, 0.1f, (isHoldingObject ? 1.2f : 0.6f)));
+        Vector3 size = (dir == Vector3.right || dir == Vector3.right * -1  ? new Vector3((isHoldingObject ? 0.8f : 0.6f), 0.1f, 0.1f) : new Vector3(0.1f, 0.1f, (isHoldingObject ? 0.8f : 0.6f)));
         float longerRay = RaycastLength;
 
         ExtDebug.DrawBox(pos + dir * (isDiagonal ? Mathf.Sqrt(Mathf.Pow(longerRay, 2)) : longerRay), size, (isDiagonal ? this.transform.rotation : Quaternion.identity), col);
 
-        colls = Physics.OverlapBox(pos + dir * (isDiagonal ? Mathf.Sqrt(2 * Mathf.Pow(longerRay, 2)) : longerRay), size, Quaternion.identity, ~(1 << LayerMask.NameToLayer("Player")));
+        colls = Physics.OverlapBox(pos + dir * (isHoldingObject ? 2f : 1f) * (isDiagonal ? Mathf.Sqrt(2 * Mathf.Pow(longerRay, 2)) : longerRay), size, Quaternion.identity, ~(1 << LayerMask.NameToLayer("Player")));
 
         if (colls.Length > 0)
         {
