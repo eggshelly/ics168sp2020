@@ -49,7 +49,6 @@ public class PlayerManager : MonoBehaviour, PlayerDefine<PlayerManager.Player>
     public void ChangeMoneyAmount(int amount)
     {
         TotalMoney += amount;
-        Debug.Log(TotalMoney);
         MoneyText.text = string.Format("${0}", TotalMoney);
     }
 

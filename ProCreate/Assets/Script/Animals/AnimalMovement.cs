@@ -62,10 +62,13 @@ public class AnimalMovement : MonoBehaviour
 
     #region Built In / Setup Functions
 
+    private void Awake()
+    {
+        GroundYPos = this.transform.position.y;
+    }
 
     private void Start()
     {
-        GroundYPos = this.transform.position.y;
         coll = this.GetComponent<BoxCollider>();
         AnimalStats = this.GetComponent<AnimalStatistics>();
         CurrentTimer = TimeBetweenMovements;
@@ -191,6 +194,7 @@ public class AnimalMovement : MonoBehaviour
 
     public void SetDown()
     {
+        Debug.Log(GroundYPos.ToString());
         this.transform.position = new Vector3(this.transform.position.x, GroundYPos, this.transform.position.z);
         isPickedUp = false;
     }

@@ -26,6 +26,7 @@ public class ItemMovement : MonoBehaviour
     private void Awake()
     {
         coll = this.GetComponent<BoxCollider>();
+        audio = this.GetComponent<AudioSource>();
     }
 
     void DetectLayer()
@@ -45,8 +46,6 @@ public class ItemMovement : MonoBehaviour
     public void Purchased(Vector3 playerPos, Shop s)
     {
         DetectLayer();
-        GroundYPos = this.transform.position.y;
-        Debug.Log(GroundYPos);
         this.transform.position = playerPos + Vector3.up * YOffset;
         this.Shop = s;
     }
@@ -120,9 +119,6 @@ public class ItemMovement : MonoBehaviour
     
     void  PlaceObject()
     {
-        Debug.Log("Placing: " + GroundYPos);
-        this.transform.position = new Vector3(this.transform.position.x, GroundYPos, this.transform.position.z);
-
         Shop.FinalizePurchase();
 
         Utilities.RecursivelySetLayer(this.transform, OriginalLayer);

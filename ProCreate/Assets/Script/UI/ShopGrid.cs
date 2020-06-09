@@ -62,9 +62,7 @@ public class ShopGrid : MonoBehaviour
             ui.SetupUI();
             ++i;
         }
-        Debug.Log(i);
         ScrollPercent = 0.25f / (((i / 4) - 2) == 0 ? 1f :2 *( (i / 4) - 2));
-        Debug.Log(ScrollPercent);
     }
 
     #endregion
@@ -78,7 +76,6 @@ public class ShopGrid : MonoBehaviour
 
     void UpdateScrollRectPosition(int index)
     {
-        Debug.Log(string.Format("Array: {0}, {1}, {2}, {3}   Index: {4}", IndexesOnScreen[0], IndexesOnScreen[1], IndexesOnScreen[2], IndexesOnScreen[3], index));
         if(IndexesOnScreen.Contains(index))
         {
             return;

@@ -66,7 +66,6 @@ public class PlayerMovement : MonoBehaviour
         BoxCenter = box.center;
         BoxSize = new Vector3(box.size.x * 0.65f, box.size.y / 2, box.size.z);
         Physics.queriesHitBackfaces = true;
-        Debug.Log("HI");
     }
 
     private void FixedUpdate()
@@ -491,7 +490,7 @@ public class PlayerMovement : MonoBehaviour
         Collider[] colls;
 
         Vector3 pos = GetPosToBoxCastFrom() + Vector3.down * 0.7f;
-        Vector3 size = (dir == Vector3.right || dir == Vector3.right * -1  ? new Vector3(0.6f, 0.1f, 0.1f) : new Vector3(0.1f, 0.1f, 0.6f));
+        Vector3 size = (dir == Vector3.right || dir == Vector3.right * -1  ? new Vector3((isHoldingObject ? 1.2f : 0.6f), 0.1f, 0.1f) : new Vector3(0.1f, 0.1f, (isHoldingObject ? 1.2f : 0.6f)));
         float longerRay = RaycastLength;
 
         ExtDebug.DrawBox(pos + dir * (isDiagonal ? Mathf.Sqrt(Mathf.Pow(longerRay, 2)) : longerRay), size, (isDiagonal ? this.transform.rotation : Quaternion.identity), col);
@@ -522,10 +521,27 @@ public class PlayerMovement : MonoBehaviour
 
         CheckIfEnterOrLeftPen(colls);
 
+        bool obstruction = false;
 
         if (colls.Length > 0)
         {
-            if(colls.Length == 1)
+            for(int i = 0; i < colls.Length; ++i)
+            {
+                cross = colls[i].gameObject.GetComponent<Crossable>();
+                pen = colls[i].gameObject.GetComponent<Pen>();
+                if ((cross == null || !cross.IsOpen()) && pen == null)
+                {
+                    UpdateObjectInDirection(colls[i].gameObject);
+                    obstruction = true;
+                }
+            }
+            if(!obstruction)
+            {
+                UpdateObjectInDirection();
+            }
+
+
+            /*if(colls.Length == 1)
             {
                 cross = colls[0].gameObject.GetComponent<Crossable>();
                 if ((cross != null && cross.IsOpen()))
@@ -574,18 +590,17 @@ public class PlayerMovement : MonoBehaviour
 
                 for(int i = 0; i < colls.Length; ++i)
                 {
-                    cross = colls[0].gameObject.GetComponent<Crossable>();
-                    pen = colls[0].gameObject.GetComponent<Pen>();
+                    cross = colls[i].gameObject.GetComponent<Crossable>();
+                    pen = colls[i].gameObject.GetComponent<Pen>();
                     if (cross == null && pen == null)
                     {
                         UpdateObjectInDirection(colls[i].gameObject);
-                        return;
                     }
                 }
             }
 
             //Checks if the object it collided with is something that can be crossed or if the player is inside the pen
-
+            */
 
 
         }
