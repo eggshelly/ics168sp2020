@@ -18,6 +18,7 @@ public enum Directions
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] bool CheckForOpposite = true;
     #region player defination
 
     [SerializeField] PlayerManager.Player player;
@@ -246,12 +247,13 @@ public class PlayerMovement : MonoBehaviour
         }
 
 
-        /*if (FacingOppositeOfObject(obstacle))
+        if (CheckForOpposite && FacingOppositeOfObject(obstacle))
         {
+  
             ObjectInDirection = Vector2.one;
             return;
         }
-        */
+        
 
 
         bool HitObject = false;
@@ -272,7 +274,6 @@ public class PlayerMovement : MonoBehaviour
                 ObjectInDirection.x = 0;
                 break;
             case Directions.b_left:
-                Debug.Log(FacingDirection.ToString());
                 if (DirectionalRaycast(Vector3.right * -1, Color.red))
                 {
                     HitObject = true;
@@ -286,7 +287,6 @@ public class PlayerMovement : MonoBehaviour
 
                 if (!HitObject)
                 {
-                    Debug.Log("Checking for diagonal");
                     if (DirectionalRaycast(transform.forward, Color.black, true))
                     {
                         ObjectInDirection = Vector2.zero;
@@ -308,7 +308,6 @@ public class PlayerMovement : MonoBehaviour
 
                 if (!HitObject)
                 {
-                    Debug.Log("Checking for diagonal");
                     if (DirectionalRaycast(transform.forward, Color.black, true))
                     {
                         ObjectInDirection = Vector2.zero;
@@ -330,7 +329,6 @@ public class PlayerMovement : MonoBehaviour
 
                 if (!HitObject)
                 {
-                    Debug.Log("Checking for diagonal");
                     if (DirectionalRaycast(transform.forward, Color.black, true))
                     {
                         ObjectInDirection = Vector2.zero;
@@ -352,7 +350,6 @@ public class PlayerMovement : MonoBehaviour
 
                 if (!HitObject)
                 {
-                    Debug.Log("Checking for diagonal");
                     if (DirectionalRaycast(transform.forward, Color.black, true))
                     {
                         ObjectInDirection = Vector2.zero;
