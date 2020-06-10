@@ -46,6 +46,7 @@ public class ItemMovement : MonoBehaviour
     public void Purchased(Vector3 playerPos, Shop s)
     {
         DetectLayer();
+        GroundYPos = this.transform.position.y;
         this.transform.position = playerPos + Vector3.up * YOffset;
         this.Shop = s;
     }
@@ -126,6 +127,10 @@ public class ItemMovement : MonoBehaviour
         if (OriginalLayer == LayerMask.NameToLayer("Animal"))
         {
             this.GetComponent<AnimalMovement>().SetDown();
+        }
+        else
+        {
+            this.transform.position = new Vector3(this.transform.position.x, GroundYPos, this.transform.position.z);
         }
 
         Destroy(this);
