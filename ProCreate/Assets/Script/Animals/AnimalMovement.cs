@@ -50,8 +50,11 @@ public class AnimalMovement : MonoBehaviour
 
     #region Delegates
 
-    public delegate void PlayerDetected();
-    public PlayerDetected ToggleCanvas;
+    public delegate void PlayerNear();
+    public PlayerNear OpenCanvas;
+
+    public delegate void PlayerFar();
+    public PlayerFar CloseCanvas;
     #endregion
 
 
@@ -227,32 +230,22 @@ public class AnimalMovement : MonoBehaviour
             Collider[] colls = Physics.OverlapSphere(this.transform.position + coll.center, 2f, 1 << LayerMask.NameToLayer("Player"));
             if(colls.Length > 0)
             {
-                if (!PlayerIsNear)
-                {
-                    if (ToggleCanvas != null)
-                        ToggleCanvas.Invoke();
-                    PlayerIsNear = true;
-                }
+                if (OpenCanvas != null)
+                    OpenCanvas.Invoke();
+                PlayerIsNear = true;
             }
             else
             {
-                if(PlayerIsNear)
-                {
-                    if (ToggleCanvas != null)
-                        ToggleCanvas.Invoke();
-                    PlayerIsNear = false;
-                }
+                if (CloseCanvas != null)
+                    CloseCanvas.Invoke();
+                PlayerIsNear = false; 
             }
         }
         else
         {
-            if (PlayerIsNear)
-            {
-                if (ToggleCanvas != null)
-                    ToggleCanvas.Invoke();
-                PlayerIsNear = false;
-            }
-
+            if (CloseCanvas != null)
+                CloseCanvas.Invoke();
+            PlayerIsNear = false;
         }
     }
 

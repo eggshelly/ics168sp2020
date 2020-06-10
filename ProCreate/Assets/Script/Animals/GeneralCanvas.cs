@@ -20,6 +20,9 @@ public class GeneralCanvas : MonoBehaviour
     bool StopCurrentRoutine = false;
     bool CanvasOpened = false;
 
+    bool Opening = false;
+    bool Closing = false;
+
     Vector3 OriginalPos;
 
     #endregion
@@ -49,7 +52,7 @@ public class GeneralCanvas : MonoBehaviour
 
     #region Changing UI Panel State
 
-    protected void ToggleCanvas()
+    /*protected void ToggleCanvas()
     {
         if (CanvasOpened)
         {
@@ -59,21 +62,30 @@ public class GeneralCanvas : MonoBehaviour
         {
             OpenCanvas();
         }
+    }*/
+
+
+    protected void OpenCanvas()
+    {
+        if(!Opening && !CanvasOpened)
+        {
+            Debug.Log("Opening");
+            StartCoroutine(OpenCanvasRoutine());
+        }
     }
 
-
-    void OpenCanvas()
+    protected void CloseCanvas()
     {
-        StartCoroutine(OpenCanvasRoutine());
-    }
-
-    void CloseCanvas()
-    {
-        StartCoroutine(CloseCanvasRoutine());
+        if (!Closing && CanvasOpened)
+        {
+            Debug.Log("Closing");
+            StartCoroutine(CloseCanvasRoutine());
+        }
     }
 
     protected virtual IEnumerator OpenCanvasRoutine()
     {
+        Opening = true;
         if (CanvasInTransition)
         {
             StopCurrentRoutine = true;
@@ -83,7 +95,6 @@ public class GeneralCanvas : MonoBehaviour
 
 
         LookAtCamera();
-        CanvasOpened = true;
         CanvasRect.gameObject.SetActive(true);
         CanvasInTransition = true;
         while (CanvasRect.sizeDelta.y < CanvasHeight)
@@ -102,19 +113,20 @@ public class GeneralCanvas : MonoBehaviour
         CanvasInTransition = false;
         UIPanel.SetActive(true);
         StopCurrentRoutine = false;
+        Opening = false;
+        CanvasOpened = true;
     }
 
     protected virtual IEnumerator CloseCanvasRoutine()
     {
+        Closing = true;
+
         if (CanvasInTransition)
         {
             StopCurrentRoutine = true;
             while (StopCurrentRoutine)
                 yield return null;
         }
-
-
-        CanvasOpened = false;
         CanvasInTransition = true;
         UIPanel.SetActive(false);
         while (CanvasRect.sizeDelta.y > 0)
@@ -133,6 +145,8 @@ public class GeneralCanvas : MonoBehaviour
         CanvasInTransition = false;
         CanvasRect.gameObject.SetActive(false);
         StopCurrentRoutine = false;
+        CanvasOpened = false;
+        Closing = false;
     }
 
     void LookAtCamera()

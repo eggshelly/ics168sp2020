@@ -85,7 +85,7 @@ public class Shop : MonoBehaviour, Interactable
     void OpenShop()
     {
         SmoothCamera.instance.SwapTransform(CameraLookAtTrans.transform, Player.gameObject.transform, true);
-        Canvas.ToggleShop();
+        Canvas.OpenShop();
         Player.UsingShop(true);
     }
 
@@ -94,7 +94,7 @@ public class Shop : MonoBehaviour, Interactable
         SmoothCamera.instance.SwapTransform(CameraLookAtTrans.transform, Player.gameObject.transform, false);
         Player.UsingShop(false);
         Player = null;
-        Canvas.ToggleShop();
+        Canvas.CloseShop();
         IsOccupied = false;
     }
 
@@ -110,7 +110,7 @@ public class Shop : MonoBehaviour, Interactable
         ItemMove.Purchased(Player.transform.position, this);
         PlacingObject = true;
         SmoothCamera.instance.SwapTransform(PurchasedItem.transform, CameraLookAtTrans.transform, true);
-        Canvas.ToggleShop();
+        Canvas.CloseShop();
     }
 
     public void FinalizePurchase()
@@ -119,7 +119,7 @@ public class Shop : MonoBehaviour, Interactable
         PlacingObject = false;
         SmoothCamera.instance.SwapTransform(PurchasedItem.transform, CameraLookAtTrans.transform, false);
         PurchasedItem = null;
-        Canvas.ToggleShop();
+        Canvas.OpenShop();
     }
 
     public void CancelPurchase()
@@ -127,7 +127,7 @@ public class Shop : MonoBehaviour, Interactable
         SmoothCamera.instance.SwapTransform(PurchasedItem.transform, CameraLookAtTrans.transform, false);
         PlacingObject = false;
         PurchasedItem = null;
-        Canvas.ToggleShop();
+        Canvas.OpenShop();
     }
 
     #endregion

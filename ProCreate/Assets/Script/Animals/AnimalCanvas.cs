@@ -23,7 +23,8 @@ public class AnimalCanvas : GeneralCanvas
 
     private void Awake()
     {
-        this.transform.parent.GetComponent<AnimalMovement>().ToggleCanvas += base.ToggleCanvas;
+        this.transform.parent.GetComponent<AnimalMovement>().OpenCanvas += base.OpenCanvas;
+        this.transform.parent.GetComponent<AnimalMovement>().CloseCanvas += base.CloseCanvas;
     }
 
 

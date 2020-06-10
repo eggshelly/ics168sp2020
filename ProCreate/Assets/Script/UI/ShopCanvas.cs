@@ -9,10 +9,15 @@ public class ShopCanvas : GeneralCanvas
     [SerializeField] TextMeshProUGUI MoneyText;
 
 
-    public void ToggleShop()
+    public void OpenShop()
     {
-        base.ToggleCanvas();
+        base.OpenCanvas();
         UpdateMoneyText();
+    }
+
+    public void CloseShop()
+    {
+        base.CloseCanvas();
     }
 
     void UpdateMoneyText()
