@@ -39,7 +39,7 @@ public class AnimalCanvas : GeneralCanvas
 
     protected override IEnumerator CloseCanvasRoutine()
     {
-        yield return base.CloseCanvasRoutine();
+        yield return StartCoroutine(base.CloseCanvasRoutine());
         SmoothCamera.instance.TargetCanvas(CanvasTarget.transform, false);
 
     }

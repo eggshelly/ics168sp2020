@@ -42,6 +42,7 @@ public class Shop : MonoBehaviour, Interactable
         {
             if(InputManager.cancel(Player.GetPlayer()))
             {
+                Debug.Log("Player left shop");
                 CloseShop();
             }
         }
@@ -72,6 +73,7 @@ public class Shop : MonoBehaviour, Interactable
             {
                 if((Player = colls[0].GetComponent<PlayerMovement>()) != null)
                 {
+                    Debug.Log("Person using shop");
                     OpenShop();
                 }
             }
@@ -84,18 +86,21 @@ public class Shop : MonoBehaviour, Interactable
 
     void OpenShop()
     {
+        Debug.Log("Opening Shop");
         SmoothCamera.instance.SwapTransform(CameraLookAtTrans.transform, Player.gameObject.transform, true);
         Canvas.OpenShop();
         Player.UsingShop(true);
+        Debug.Log("Shop opened");
     }
 
     void CloseShop()
     {
+        Debug.Log("Closing Shop");
         SmoothCamera.instance.SwapTransform(CameraLookAtTrans.transform, Player.gameObject.transform, false);
-        Player.UsingShop(false);
-        Player = null;
         Canvas.CloseShop();
+        Player.UsingShop(false);
         IsOccupied = false;
+        Debug.Log("Shop closed");
     }
 
     #endregion
@@ -136,7 +141,7 @@ public class Shop : MonoBehaviour, Interactable
     #region Get Attributes
     public PlayerManager.Player GetPlayer()
     {
-        return Player.GetPlayer();
+        return Player == null ? PlayerManager.Player.none : Player.GetPlayer();
     }
     #endregion
 }

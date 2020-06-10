@@ -10,7 +10,8 @@ public class PlayerManager : MonoBehaviour, PlayerDefine<PlayerManager.Player>
     public enum Player
     {
         player1,
-        player2
+        player2,
+        none
     }
     public Player PlayerEnum { get; set; }
     #endregion

@@ -50,6 +50,11 @@ public class InputManager : MonoBehaviour
     
     public static float verticalSelection(PlayerManager.Player player)
     {
+        if(player == PlayerManager.Player.none)
+        {
+            return 0;
+        }
+
         float vertical = 0;
 
         if (player == PlayerManager.Player.player1)

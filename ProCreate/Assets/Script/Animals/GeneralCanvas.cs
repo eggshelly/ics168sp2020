@@ -67,7 +67,7 @@ public class GeneralCanvas : MonoBehaviour
 
     protected void OpenCanvas()
     {
-        if(!Opening && !CanvasOpened)
+        if((!Opening && !CanvasOpened) || Closing)
         {
             Debug.Log("Opening");
             StartCoroutine(OpenCanvasRoutine());
@@ -76,7 +76,7 @@ public class GeneralCanvas : MonoBehaviour
 
     protected void CloseCanvas()
     {
-        if (!Closing && CanvasOpened)
+        if ((!Closing && CanvasOpened) || Opening)
         {
             Debug.Log("Closing");
             StartCoroutine(CloseCanvasRoutine());
